@@ -45,7 +45,7 @@ jobs:
       -
         name: log
         run: |
-          echo ${github.ref}
+          echo ${{ github.ref }}
       -
         name: Build and push
         uses: docker/build-push-action@v3
