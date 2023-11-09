@@ -37,7 +37,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
+      -
+        name: log
+        run: |
+          echo ${github.ref}
       -
         name: Build and push
         uses: docker/build-push-action@v3
