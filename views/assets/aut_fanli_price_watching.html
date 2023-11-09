@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>系统参数 - autMan后台管理系统</title>
+	<link rel="icon" href="favicon.ico" type="image/ico">
+	<meta name="keywords" content="autMan,后台管理系统">
+	<meta name="description" content="autMan后台管理系统">
+	<meta name="author" content="autMan">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+		<div class="row">
+			<div class="col-lg-12">
+				<!--card-->
+				<div class="card">
+					<div class="card-body">
+						<form method="post" name="edit-form" class="edit-form">
+							<div class="form-group">
+								<label for="fanli-watching_remind">价格监控开关</label>
+								<label class="lyear-switch switch-solid switch-primary">
+									<input type="checkbox" checked="" name="fanli-watching_remind"
+										id="fanli-watching_remind">
+									<span></span>
+								</label>
+							</div>
+							<div class="form-group">
+								<button class="btn btn-primary" type="button" onclick="submitParams()">保存</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<!--end card-->
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--消息提示-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<script type="text/javascript" src="js/lightyear.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/fill_input.js"></script>
+</body>
+
+</html>

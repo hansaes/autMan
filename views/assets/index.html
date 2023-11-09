@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>首页 - autMan后台管理系统</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="autMan,后台管理系统">
+  <meta name="description" content="autMan后台管理系统">
+  <meta name="author" content="autMan">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="js/bootstrap-multitabs/multitabs.min.css">
+  <link href="css/style.min.css" rel="stylesheet">
+  <style>
+    .icon-palette a {
+      color: inherit;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+      <!--左侧导航-->
+      <aside class="lyear-layout-sidebar">
+
+        <!-- logo -->
+        <div id="logo" class="sidebar-header">
+          <a href="index.html"><img src="images/logo-sidebar.png" title="LightYear" alt="LightYear"
+              id="logo_image" /></a>
+        </div>
+
+        <div class="lyear-layout-sidebar-scroll">
+
+          <nav class="sidebar-main">
+            <ul class="nav nav-drawer">
+              <li class="nav-item active"> <a class="multitabs" href="lyear_main.html"><i class="mdi mdi-home"></i>
+                  <span>后台首页</span></a> </li>
+              <!--aut云市场-->
+              <li class="nav-item"> <a class="multitabs" href="aut_ui_cloud.html"><i class="mdi mdi-cloud-download"></i>
+                  <span>云应用市场</span></a> </li>
+
+              <!--系统管理-->
+              <li class="nav-item nav-item-has-subnav">
+                <a href="javascript:void(0)"><i class="mdi mdi-settings"></i> <span>系统管理</span></a>
+                <ul class="nav nav-subnav">
+                  <li> <a class="multitabs" href="aut_config_pages_system.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-settings-box"></i>系统参数</a> </li>
+                  <li> <a class="multitabs" href="aut_ui_carry.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-cursor-pointer"></i>搬运设置</a> </li>
+                  <li> <a class="multitabs" href="aut_ui_reply.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-comment-question-outline"></i>知识仓库</a> </li>
+                  <li> <a class="multitabs" href="aut_ui_clock.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-clock-fast"></i>定时发送</a> </li>
+                  <li> <a class="multitabs" href="aut_ui_gallery.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-file-image"></i>图库图床</a> </li>
+                  <li> <a class="multitabs" href="aut_ui_instructions.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-code-tags"></i>指令集合</a> </li>
+                  <li> <a class="multitabs" href="aut_ui_app.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-application"></i>应用设置</a> </li>
+
+                </ul>
+              </li>
+              <!--End 系统管理-->
+
+              <!--本地应用-->
+              <li class="nav-item nav-item-has-subnav">
+                <a href="javascript:void(0)"><i class="mdi mdi-package"></i> <span>本地开发</span></a>
+                <ul class="nav nav-subnav">
+                  <li> <a class="multitabs" href="aut_plugins.html"><i class="mdi mdi-18px m-r-5 mdi-cards"></i>
+                      <span>本地应用</span></a> </li>
+                  <li> <a class="multitabs" href="aut_ui_database.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-database"></i>数据管理</a> </li>
+                  <li> <a class="multitabs" href="aut_ui_terminal.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-plex"></i>WEB终端</a> </li>
+                  <li> <a class="multitabs" href="aut_ui_logs.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-receipt"></i>实时日志</a> </li>
+                  <li> <a class="multitabs" href="aut_chat.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-comment-processing"></i>网页对话</a> </li>
+                  <li> <a class="multitabs" href="https://apifox.com/apidoc/shared-b8d45b97-245a-4fd1-82e7-37cce5a70189"><i
+                        class="mdi mdi-18px m-r-5 mdi-arrange-send-to-back"></i>开放接口</a> </li>
+                </ul>
+              </li>
+
+              <!--web插件-->
+              <li class="nav-item nav-item-has-subnav">
+                <a href="javascript:void(0)"><i class="mdi mdi-web"></i> <span>Web插件</span></a>
+                <ul class="nav nav-subnav" id="web_plugins">
+
+                </ul>
+              </li>
+              <!--End Web插件-->
+
+              <!--用户管理-->
+              <li class="nav-item nav-item-has-subnav">
+                <a href="javascript:void(0)"><i class="mdi mdi-account-multiple"></i> <span>用户管理</span></a>
+                <ul class="nav nav-subnav">
+                  <li> <a class="multitabs" href="aut_users_basic.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-account"></i>基本配置</a> </li>
+                  <li> <a class="multitabs" href="aut_users_details.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-account-card-details"></i>用户数据</a> </li>
+                </ul>
+              </li>
+              <!--End 用户管理-->
+
+              <!--返利管理-->
+              <li class="nav-item nav-item-has-subnav">
+                <a href="javascript:void(0)"><i class="mdi mdi-crown"></i> <span>返利管理</span></a>
+                <ul class="nav nav-subnav">
+                  <li> <a class="multitabs" href="aut_fanli_pages_basic.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-codepen"></i>返利参数</a> </li>
+                  <li> <a class="multitabs" href="aut_fanli_mode.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-projector-screen"></i>显示模式</a> </li>
+                  <li> <a class="multitabs" href="aut_fanli_transfer.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-inbox-arrow-up"></i>转链转发</a> </li>
+                  <li> <a class="multitabs" href="aut_fanli_jpk.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-chart-donut-variant"></i>京品线报</a> </li>
+                  <li> <a class="multitabs" href="aut_fanli_xianbao.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-information-outline"></i>京粉线报</a> </li>
+                  <li> <a class="multitabs" href="aut_fanli_waimai.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-rice"></i>外卖返利</a> </li>
+                  <li> <a class="multitabs" href="aut_fanli_price_watching.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-chart-histogram"></i>价格追踪</a> </li>
+                  <li> <a class="multitabs" href="aut_fanli_forward.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-cube-send"></i>自主转发设置</a> </li>
+                </ul>
+              </li>
+              <!--End 返利管理-->
+
+              <!--东芝管理-->
+              <li class="nav-item nav-item-has-subnav">
+                <a href="javascript:void(0)"><i class="mdi mdi-collage"></i> <span>脚本容器</span></a>
+                <ul class="nav nav-subnav">
+                  <li> <a class="multitabs" href="aut_vss_cron.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-calendar-clock"></i>定时任务</a> </li>
+                  <li> <a class="multitabs" href="aut_vss_sub.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-format-section"></i>订阅管理</a> </li>
+                  <li> <a class="multitabs" href="aut_vss_env.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-cards-variant"></i>环境变量</a> </li>
+                  <li> <a class="multitabs" href="aut_vss_cfg.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-pi-box"></i>配置文件</a> </li>
+                  <li> <a class="multitabs" href="aut_vss_script.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-script"></i>脚本管理</a> </li>
+                  <li> <a class="multitabs" href="aut_vss_dep.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-hexagon-multiple"></i>依赖管理</a> </li>
+                  <li> <a class="multitabs" href="aut_vss_log.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-file-document"></i>日志管理</a> </li>
+                </ul>
+              </li>
+              <!--End 东芝管理-->
+
+              <!--东芝管理-->
+              <li class="nav-item nav-item-has-subnav">
+                <a href="javascript:void(0)"><i class="mdi mdi-cookie"></i> <span>容器管理</span></a>
+                <ul class="nav nav-subnav">
+                  <li><a class="multitabs" href="aut_cookie_qinglong.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-link"></i>对接容器</a>
+                  </li>
+                  <li> <a class="multitabs" href="aut_cookie_varrule.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-ruler"></i>变量整理</a> </li>
+                  <li> <a class="multitabs" href="aut_cookie_pages_login.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-image-filter-hdr"></i>东芝设置</a> </li>
+                  <li> <a class="multitabs" href="aut_cookie_binding.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-link-variant"></i>账号绑定</a> </li>
+                  <li> <a class="multitabs" href="aut_cookie_varckmap.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-eye"></i>CK识别</a> </li>
+                  <li> <a class="multitabs" href="aut_cookie_varscript.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-bullseye"></i>洞察变量</a> </li>
+                  <li> <a class="multitabs" href="aut_cookie_varlink.html"><i
+                        class="mdi mdi-18px m-r-5 mdi-regex"></i>链接解析</a> </li>
+                </ul>
+              </li>
+              <!--End 东芝管理-->
+
+              <!--HA-->
+              <!-- <li class="nav-item"><a class="multitabs" href="aut_ha.html"><i class="mdi mdi-home-assistant"></i>
+                  <span>HomeAssistant</span></a></li> -->
+              <!--End HA-->
+
+            </ul>
+          </nav>
+
+          <div class="sidebar-footer">
+            <p>
+              <b>autMan交流群</b><br>
+              公众号：<a href="https://mp.weixin.qq.com/s/gh_b5da96720b93">autMan服务</a><br>
+              QQ群组：<a href="qq://909137152">909137152</a><br>
+              TG群组：<a href="https://t.me/+2Uig6vDYF2o2NTE1">autMan学苑(tgbot)</a><br>
+              <!-- TG群组：<a href="https://t.me/+ZBhtBBvbbxFkOGQ1">autMan学苑(tdlib)</a><br>
+              TG频道：<a href="https://t.me/aut_ch">t.me/aut_ch</a><br> -->
+              QQ频道：<a href="https://pd.qq.com/s/baga1c6ip">autMan学苑</a><br>
+            </p>
+            <hr>
+            <p class="copyright">Copyright &copy; 2023. <a target="_blank"
+                href="https://hdbjlizhe.github.io/fanli/">autMan</a> All rights reserved.</p>
+            <p class="m-t-5 m-b-5"><a href="https://beian.miit.gov.cn/" id="icp"></a></p>
+          </div>
+        </div>
+
+      </aside>
+      <!--End 左侧导航-->
+
+      <!--头部信息-->
+      <header class="lyear-layout-header">
+
+        <nav class="navbar navbar-default">
+          <div class="topbar">
+
+            <div class="topbar-left">
+              <div class="lyear-aside-toggler">
+                <span class="lyear-toggler-bar"></span>
+                <span class="lyear-toggler-bar"></span>
+                <span class="lyear-toggler-bar"></span>
+              </div>
+            </div>
+
+            <ul class="topbar-right">
+              <li class="dropdown dropdown-profile">
+                <a href="javascript:void(0)" data-toggle="dropdown">
+                  <img class="img-avatar img-avatar-48 m-r-10" src="images/users/avatar.png" alt="autMan" />
+                  <span id="username">autMan <span class="caret"></span></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li> <a class="multitabs" data-url="aut_pages_profile.html" href="javascript:void(0)"><i
+                        class="mdi mdi-account"></i> 个人信息</a> </li>
+                  <li> <a class="multitabs" data-url="aut_pages_edit_pwd.html" href="javascript:void(0)"><i
+                        class="mdi mdi-lock-outline"></i> 修改密码</a> </li>
+                  <!-- <li> <a href="javascript:void(0)"><i class="mdi mdi-delete"></i> 清空缓存</a></li> -->
+                  <li class="divider"></li>
+                  <li> <a href="#!" onclick="logout()"><i class="mdi mdi-logout-variant"></i> 退出登录</a> </li>
+                </ul>
+              </li>
+
+              <!--切换主题配色-->
+              <li class="dropdown dropdown-skin">
+                <span data-toggle="dropdown" class="icon-palette" title="主题"><i
+                    class="mdi mdi-24px mdi-palette"></i></span>
+                <ul class="dropdown-menu dropdown-menu-right" data-stopPropagation="true">
+                  <li class="drop-title">
+                    <p>LOGO</p>
+                  </li>
+                  <li class="drop-skin-li clearfix">
+                    <span class="inverse">
+                      <input type="radio" name="logo_bg" value="default" id="logo_bg_1" checked>
+                      <label for="logo_bg_1"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="logo_bg" value="color_2" id="logo_bg_2">
+                      <label for="logo_bg_2"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="logo_bg" value="color_3" id="logo_bg_3">
+                      <label for="logo_bg_3"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="logo_bg" value="color_4" id="logo_bg_4">
+                      <label for="logo_bg_4"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="logo_bg" value="color_5" id="logo_bg_5">
+                      <label for="logo_bg_5"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="logo_bg" value="color_6" id="logo_bg_6">
+                      <label for="logo_bg_6"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="logo_bg" value="color_7" id="logo_bg_7">
+                      <label for="logo_bg_7"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="logo_bg" value="color_8" id="logo_bg_8">
+                      <label for="logo_bg_8"></label>
+                    </span>
+                  </li>
+                  <li class="drop-title">
+                    <p>头部</p>
+                  </li>
+                  <li class="drop-skin-li clearfix">
+                    <span class="inverse">
+                      <input type="radio" name="header_bg" value="default" id="header_bg_1" checked>
+                      <label for="header_bg_1"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="header_bg" value="color_2" id="header_bg_2">
+                      <label for="header_bg_2"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="header_bg" value="color_3" id="header_bg_3">
+                      <label for="header_bg_3"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="header_bg" value="color_4" id="header_bg_4">
+                      <label for="header_bg_4"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="header_bg" value="color_5" id="header_bg_5">
+                      <label for="header_bg_5"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="header_bg" value="color_6" id="header_bg_6">
+                      <label for="header_bg_6"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="header_bg" value="color_7" id="header_bg_7">
+                      <label for="header_bg_7"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="header_bg" value="color_8" id="header_bg_8">
+                      <label for="header_bg_8"></label>
+                    </span>
+                  </li>
+                  <li class="drop-title">
+                    <p>侧边栏</p>
+                  </li>
+                  <li class="drop-skin-li clearfix">
+                    <span class="inverse">
+                      <input type="radio" name="sidebar_bg" value="default" id="sidebar_bg_1" checked>
+                      <label for="sidebar_bg_1"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="sidebar_bg" value="color_2" id="sidebar_bg_2">
+                      <label for="sidebar_bg_2"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="sidebar_bg" value="color_3" id="sidebar_bg_3">
+                      <label for="sidebar_bg_3"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="sidebar_bg" value="color_4" id="sidebar_bg_4">
+                      <label for="sidebar_bg_4"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="sidebar_bg" value="color_5" id="sidebar_bg_5">
+                      <label for="sidebar_bg_5"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="sidebar_bg" value="color_6" id="sidebar_bg_6">
+                      <label for="sidebar_bg_6"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="sidebar_bg" value="color_7" id="sidebar_bg_7">
+                      <label for="sidebar_bg_7"></label>
+                    </span>
+                    <span>
+                      <input type="radio" name="sidebar_bg" value="color_8" id="sidebar_bg_8">
+                      <label for="sidebar_bg_8"></label>
+                    </span>
+                  </li>
+                </ul>
+              </li>
+              <!--切换主题配色-->
+
+              <!-- 文档 -->
+              <li class="dropdown dropdown-skin">
+                <span class="icon-palette" title="帮助"><a target="_blank" href="https://hdbjlizhe.github.io/fanli"><i
+                      class="mdi mdi-24px mdi-help-circle"></i></a></span>
+              </li>
+
+              <!--论坛-->
+              <li class="dropdown dropdown-skin">
+                <span class="icon-palette" title="论坛"><a target="_blank" href="https://bbs.autman.cn"><i
+                      class="mdi mdi-24px mdi-forum"></i></a></span>
+              </li>
+
+              <!--插件市场-->
+              <li class="dropdown dropdown-skin">
+                <span class="icon-palette" title="重启"><a href="#!" onclick="reboot()"><i
+                      class="mdi mdi-24px mdi-orbit"></i></a></span>
+              </li>
+
+            </ul>
+          </div>
+        </nav>
+
+      </header>
+      <!--End 头部信息-->
+
+      <!--页面主要内容-->
+      <main class="lyear-layout-content">
+
+        <div id="iframe-content"></div>
+
+      </main>
+      <!--End 页面主要内容-->
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-multitabs/multitabs.js"></script>
+  <script type="text/javascript" src="js/index.min.js"></script>
+  <!--消息提示-->
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <script type="text/javascript" src="js/lightyear.js"></script>
+  <script type="text/javascript">
+    //定义3个变量用于存储logo_bg、header_bg、sidebar_bg的值
+    var logo_bg_a = "default", header_bg_a = "default", sidebar_bg_a = "default";
+    $(document).ready(function () {
+
+      //避免缓存问题
+      $('.multitabs').each(function () {
+        var timestamp = new Date().getTime(); // 获取当前时间戳
+        var href = $(this).attr('href'); // 获取当前链接的 href 属性值
+        var newHref = href + '?t=' + timestamp; // 在原有的 href 上添加时间戳参数
+        $(this).attr('href', newHref); // 更新链接的 href 属性值
+      });
+
+      // 检查登录状态
+      $.get("/login", function (response) {
+        console.log(response)
+        if (response.code == 200) {
+          $("#username").html(response.data.user + '<span class="caret"></span>')
+        } else {
+          timestamp = new Date().getTime()
+          location.href = "aut_pages_login.html?t=" + timestamp
+        }
+      }).fail(function () {
+        timestamp = new Date().getTime()
+        location.href = "aut_pages_login.html?t=" + timestamp
+      })
+
+      //设置主题
+      $.get("/theme", function (data) {
+        console.log(data)
+        if (data.code == 200) {
+          logo_bg_a = data.data.logo_bg ? data.data.logo_bg : "default"
+          header_bg_a = data.data.header_bg ? data.data.header_bg : "default"
+          sidebar_bg_a = data.data.sidebar_bg ? data.data.sidebar_bg : "default"
+          console.log(logo_bg_a, header_bg_a, sidebar_bg_a)
+          //设置radio元素选中
+          $(`input[type="radio"][name="logo_bg"][value="${logo_bg_a}"]`).attr("checked", true);
+          $(`input[type="radio"][name="header_bg"][value="${header_bg_a}"]`).attr("checked", true);
+          $(`input[type="radio"][name="sidebar_bg"][value="${sidebar_bg_a}"]`).attr("checked", true);
+          //刷新显示
+          $(`input[type="radio"][name="logo_bg"][value="${logo_bg_a}"]`).trigger('click');
+          $(`input[type="radio"][name="header_bg"][value="${header_bg_a}"]`).trigger('click');
+          $(`input[type="radio"][name="sidebar_bg"][value="${sidebar_bg_a}"]`).trigger('click');
+          //如果logo_bg为log_bg_1则logo元素的孙子结点image源为logo.png
+          if (data.data.logo_bg != "default") {
+            $("#logo_image").attr("src", "images/logo-sidebar2.png")
+          } else {
+            $("#logo_image").attr("src", "images/logo-sidebar.png")
+          }
+        }
+      });
+
+      // 填充icp备案号
+      $.get("/icp", function (data) {
+        console.log(data)
+        $("#icp").html(data.data)
+      });
+
+      // 填充web插件
+      $.get("/webplugin", function (data) {
+        console.log(data)
+        let web_plugins = $("#web_plugins")
+        for (let i = 0; i < data.data.length; i++) {
+          const element = data.data[i];
+          web_plugins.append(`<li> <a class="multitabs" href="/${element}/static"><i
+        class="mdi mdi-18px m-r-5 mdi-web"></i>${element}</a> </li>`)
+        }
+      })
+
+      // 绑定logo_bg事件
+      $('input[type="radio"][name$="_bg"]').on('change', function () {
+        //分别获取id为"logo_bg"、"header_bg"、"sidebar_bg"的radio元素选中的值
+        var logo_bg = $('input[type="radio"][name="logo_bg"]:checked').val();
+        var header_bg = $('input[type="radio"][name="header_bg"]:checked').val();
+        var sidebar_bg = $('input[type="radio"][name="sidebar_bg"]:checked').val();
+
+        if (logo_bg == logo_bg_a && header_bg == header_bg_a && sidebar_bg == sidebar_bg_a) {
+          return
+        }
+
+        //将以上数据json化
+        var data = {
+          logo_bg: logo_bg,
+          header_bg: header_bg,
+          sidebar_bg: sidebar_bg
+        };
+
+        console.log(data)
+        //将选中的值提交服务器存储
+        $.ajax({
+          url: '/theme', // 请求URL
+          type: 'POST', // 请求方法
+          contentType: 'application/json',
+          data: JSON.stringify(data),
+          success: function (response) { // 请求成功的回调函数
+            console.log('Success:', response);
+            //如果logo_bg为log_bg_1则logo元素的孙子结点image源为logo.png
+            if (logo_bg != "default") {
+              $("#logo_image").attr("src", "images/logo-sidebar2.png")
+            } else {
+              $("#logo_image").attr("src", "images/logo-sidebar.png")
+            }
+            // 更新变量
+            logo_bg_a = logo_bg
+            header_bg_a = header_bg
+            sidebar_bg_a = sidebar_bg
+          },
+          error: function (xhr, status, error) { // 请求失败的回调函数
+            console.log('Error:', error);
+          }
+        });
+      });
+    })
+
+    // 退出登录
+    function logout() {
+      $.get("/logout", function (response) {
+        console.log(response)
+        if (response.code == 200) {
+          timestamp = new Date().getTime()
+          location.href = "aut_pages_login.html?t=" + timestamp
+        }
+      })
+    }
+
+    // 重启函数
+    function reboot() {
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          lightyear.notify(`${5 - i}秒后重启`, 'success', 1000);
+        }, 1000 * i);
+      }
+      //ajax post请求重启
+      $.ajax({
+        url: '/restart', // 请求URL
+        type: 'POST', // 请求方法
+        success: function (response) { // 请求成功的回调函数
+          console.log('Success:', response);
+          if (response.code == 200) {
+            //6秒后刷新页面
+            setTimeout(() => {
+              location.reload()
+            }, 6000);
+          }
+        },
+        error: function (xhr, status, error) { // 请求失败的回调函数
+          console.log('Error:', error);
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

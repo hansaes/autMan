@@ -5,7 +5,7 @@
 #   $1: URL
 #   $2: 超时时间（秒）
 function make_request() {
-    local url="http://localhost:8080/otto${1}"
+    local url="http://localhost:9999/otto${1}"
     local timeout=$2
 
     # 发送GET请求，并设置超时时间

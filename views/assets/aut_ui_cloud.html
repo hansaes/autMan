@@ -1,0 +1,451 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>首页 - autMan后台管理系统</title>
+	<link rel="icon" href="favicon.ico" type="image/ico">
+	<meta name="keywords" content="autMan,后台管理系统">
+	<meta name="description" content="autMan后台管理系统">
+	<meta name="author" content="autMan">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/materialdesignicons.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="js/bootstrap-multitabs/multitabs.min.css">
+	<link href="css/style.min.css" rel="stylesheet">
+
+	<!--评价组件-->
+	<link rel="stylesheet" href="css/starability-all.min.css">
+	<!--对话框-->
+	<link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+	<style>
+		/* 新增样式用于限制介绍文字长度 */
+		.card-text {
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.rounded-div {
+			background-color: rgba(51, 202, 187, 0.05);
+			/* 初始颜色 */
+			border-radius: 10px;
+			/* 圆角效果 */
+			padding: 20px;
+			/* 边框 */
+			border: 1px solid rgba(51, 202, 187, 0.5);
+			transition: background-color 0.3s ease-in-out;
+			/* 背景色渐变过渡 */
+		}
+
+		.pinned-rounded-div {
+			background-color: rgba(51, 202, 187, 0.2);
+			/* 初始颜色 */
+			border-radius: 10px;
+			/* 圆角效果 */
+			padding: 20px;
+			/* 边框 */
+			border: 1px solid rgba(51, 202, 187, 0.5);
+			transition: background-color 0.3s ease-in-out;
+			/* 背景色渐变过渡 */
+		}
+
+		.rounded-div:hover {
+			background-color: rgba(51, 202, 187, 0.2);
+			/* 鼠标滑过的颜色 */
+		}
+
+		.pinned-rounded-div:hover {
+			background-color: rgba(51, 202, 187, 0.4);
+			/* 鼠标滑过的颜色 */
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container-fluid p-t-15">
+
+		<div class="row">
+			<div class="col-lg-12">
+
+				<div class="card m-b-0 p-b-0">
+					<!--应用分类-->
+					<div class="card-toolbar clearfix">
+						<div class="pull-right search-bar">
+							<div class="input-group">
+								<input type="text" class="form-control" id="keyword" placeholder="请输入关键词...">
+								<span class="input-group-btn">
+									<button class="btn btn-primary" type="button" onclick="jssearch()">搜索</button>
+								</span>
+							</div>
+						</div>
+						<div class="toolbar-btn-action">
+							<!-- <a class="btn btn-primary m-r-5" href="#!" onclick="classify('')"><i
+									class="mdi mdi-arrow-down"></i>
+								更新时间</a> -->
+							<a class="btn btn-success m-r-5" href="#!" onclick="rank('download')"><i
+									class="mdi mdi-arrow-down"></i>
+								下载排行</a>
+							<a class="btn btn-info m-r-5" href="#!" onclick="rank('appraise')"><i
+									class="mdi mdi-arrow-down"></i> 好评排行</a>
+							<a class="btn btn-warning m-r-5" href="#!" onclick="rank('price')"><i
+									class="mdi mdi-arrow-down"></i>
+								价格排序</a>
+
+						</div>
+					</div>
+
+					<div class="card-toolbar clearfix p-b-10">
+						<a class="m-r-5" href="javascript:void(0)" onclick="classify('')"><b>全部</b></a>
+						<a class="m-r-5" href="javascript:void(0)" onclick="classify('新闻类')"><b>新闻类</b></a>
+						<a class="m-r-5" href="javascript:void(0)" onclick="classify('管理类')"><b>管理类</b></a>
+						<a class="m-r-5" href="javascript:void(0)" onclick="classify('工具类')"><b>工具类</b></a>
+						<a class="m-r-5" href="javascript:void(0)" onclick="classify('生活类')"><b>生活类</b></a>
+						<a class="m-r-5" href="javascript:void(0)" onclick="classify('游戏类')"><b>游戏类</b></a>
+						<a class="m-r-5" href="javascript:void(0)" onclick="classify('图片类')"><b>图片类</b></a>
+						<a class="m-r-5" href="javascript:void(0)" onclick="classify('影音类')"><b>影音类</b></a>
+						<a class="m-r-5" href="javascript:void(0)" onclick="classify('娱乐类')"><b>娱乐类</b></a>
+						<a class="m-r-5" href="javascript:void(0)" onclick="classify('查询类')"><b>查询类</b></a>
+						<a class="m-r-5" href="javascript:void(0)" onclick="classify('开发类')"><b>开发类</b></a>
+						<span style="float: right;" id="aut">(AUT:0)</span>
+						<a class="m-r-5" style="float: right;" href="javascript:void(0)" onclick="my()"><b>我的</b></a>
+						<a class="m-r-5" style="float: right;" href="javascript:void(0)"
+							onclick="bought()"><b>已购买</b></a>
+					</div>
+					<div class="card-body" style="overflow: auto;">
+						<!-- Content -->
+						<div class="row" id="plugins">
+
+
+						</div>
+					</div>
+
+					<!--分页-->
+					<div class="card-footer">
+
+					</div>
+				</div>
+			</div>
+
+			<!--container-fluid-->
+		</div>
+	</div>
+
+
+	<!--模态弹出框-详细信息-->
+	<div class="modal fade" id="myModalDescript" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">插件详情</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table table-bordered">
+						<tr>
+							<td width="20%">名称</td>
+							<td width="80%" id="desc-title"></td>
+						</tr>
+						<tr>
+							<td>语言</td>
+							<td id="desc-language"></td>
+						</tr>
+						<tr>
+							<td>价格</td>
+							<td id="desc-price"></td>
+						</tr>
+						<tr>
+							<td>分类</td>
+							<td id="desc-class"></td>
+						</tr>
+						<tr>
+							<td>作者</td>
+							<td id="desc-author"></td>
+						</tr>
+						<tr>
+							<td>时间</td>
+							<td id="desc-created_at"></td>
+						</tr>
+						<tr>
+							<td>版本</td>
+							<td id="desc-version"></td>
+						</tr>
+						<tr>
+							<td>下载</td>
+							<td id="desc-download"></td>
+						</tr>
+						<tr>
+							<td>平台</td>
+							<td id="desc-platform"></td>
+						</tr>
+						<tr>
+							<td>售后</td>
+							<td id="desc-service"></td>
+						</tr>
+						<tr>
+							<td>描述</td>
+							<td id="desc-description"></td>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!--模态弹出框-插件配置-->
+	<div class="modal fade" id="myModalSettings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">插件管理</h4>
+				</div>
+				<div class="modal-body">
+					<form id="modalSettings" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="title">插件名称</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="title" id="title" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="language">编程语言</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="language" id="language" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="disable">是否禁用</label>
+							<div class="col-md-7">
+								<label class="lyear-switch switch-solid switch-primary">
+									<input type="checkbox" name="disable" id="disable" value="true">
+									<input type="hidden" name="disable" id="disable" value="false">
+									<span></span>
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="admin">管理员权限</label>
+							<div class="col-md-7">
+								<label class="lyear-switch switch-solid switch-primary">
+									<input type="checkbox" name="admin" id="admin" value="true">
+									<input type="hidden" name="admin" id="admin" value="false">
+									<span></span>
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="rules">触发规则</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="rules" id="rules" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="cron">执行定时</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="cron" id="cron" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="priority">优先级</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="priority" id="priority" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="imtype_white">渠道白名单</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="imtype_white"
+									id="imtype_white" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="imtype_black">渠道黑名单</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="imtype_black"
+									id="imtype_black" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="userid_white">用户白名单</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="userid_white"
+									id="userid_white" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="userid_black">用户黑名单</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="userid_black"
+									id="userid_black" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="groupid_white">群组白名单</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="groupid_white"
+									id="groupid_white" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="groupid_black">群组黑名单</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="groupid_black"
+									id="groupid_black" />
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-primary" onclick="autSubmitModalForm()">点击保存</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal评价 -->
+	<div class="modal fade bs-example-modal-lg" id="myModalAppraise" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">×</span></button>
+					<h4 class="modal-title" id="myLargeModalLabel">评价</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table table-bordered">
+						<thead>
+							<th>评价人</th>
+							<th>内容</th>
+							<th>时间</th>
+							<th>星级</th>
+						</thead>
+						<tbody id="modalComments">
+
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal评价提交 -->
+	<div class="modal fade" id="myModalRating" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">评价</h4>
+				</div>
+				<div class="modal-body">
+					<form id="modalRating" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="title">名称</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="title" id="title" readonly />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="comment">评论</label>
+							<div class="col-md-7">
+								<textarea class="form-control input-sm" name="comment" id="comment"
+									rows="10"></textarea>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="rating">星级</label>
+							<div class="col-md-7">
+								<fieldset class="starability-basic">
+									<!-- <legend>First rating:</legend> -->
+									<input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0"
+										checked aria-label="No rating." />
+									<input type="radio" id="first-rate1" name="rating" value="1" />
+									<label for="first-rate1" title="Terrible">1 star</label>
+									<input type="radio" id="first-rate2" name="rating" value="2" />
+									<label for="first-rate2" title="Not good">2 stars</label>
+									<input type="radio" id="first-rate3" name="rating" value="3" />
+									<label for="first-rate3" title="Average">3 stars</label>
+									<input type="radio" id="first-rate4" name="rating" value="4" />
+									<label for="first-rate4" title="Very good">4 stars</label>
+									<input type="radio" id="first-rate5" name="rating" value="5" />
+									<label for="first-rate5" title="Amazing">5 stars</label>
+								</fieldset>
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-primary" onclick="submitModalRating()">点击保存</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- 插件参数 -->
+	<div class="modal fade" id="myModalParams" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">插件配置</h4>
+				</div>
+				<div class="modal-body">
+					<form id="modalParams" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+						<!-- <div class="form-group">
+							<label class="col-md-3 control-label" for="title">名称</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="title" id="title" readonly />
+							</div>
+						</div> -->
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-primary" onclick="submitModalParams()">点击保存</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Scripts -->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--消息提示-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<script type="text/javascript" src="js/lightyear.js"></script>
+	<!--对话框-->
+	<script type="text/javascript" src="js/jconfirm/jquery-confirm.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/aut-utils.js"></script>
+	<script type="text/javascript" src="js/cloud.js"></script>
+</body>
+
+</html>

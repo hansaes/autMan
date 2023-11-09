@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>系统参数 - autMan后台管理系统</title>
+	<link rel="icon" href="favicon.ico" type="image/ico">
+	<meta name="keywords" content="autMan,后台管理系统">
+	<meta name="description" content="autMan后台管理系统">
+	<meta name="author" content="autMan">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="css/style.min.css" rel="stylesheet">
+	<!--滑块插件-->
+	<link rel="stylesheet" href="js/ion-rangeslider/ion.rangeSlider.min.css">
+	<!--对话框-->
+	<link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<!--card-->
+				<div class="card">
+					<ul class="nav nav-tabs page-tabs">
+						<li class="active"> <a href="#!">基本</a> </li>
+						<li> <a href="aut_fanli_pages_jd.html">京东</a> </li>
+						<li> <a href="aut_fanli_pages_tb.html">淘宝</a> </li>
+						<li> <a href="aut_fanli_pages_pdd.html">拼多多</a> </li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active">
+							<div>
+								<input class="btn btn-primary" type="button" onclick="checkFanliParams()"
+									value="返利参数错误排查">
+							</div>
+							<!-- 创建一个普通的水平分割线 -->
+							<hr>
+							<form method="post" name="edit-form" class="edit-form">
+								<div class="form-group row">
+									<label class="col-lg-3">返佣金比例</label>
+									<div class="col-lg-9">
+										<input id="range">
+										<small class="form-text text-muted">0为不返，1为全返还</small>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!--end card-->
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--消息提示-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<script type="text/javascript" src="js/lightyear.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--滑块插件-->
+	<script src="js/ion-rangeslider/ion.rangeSlider.min.js"></script>
+	<!--对话框-->
+	<script type="text/javascript" src="js/jconfirm/jquery-confirm.min.js"></script>
+	<!--自定义-->
+	<!-- <script type="text/javascript" src="js/fill_input.js"></script> -->
+	<script>
+		$(function () {
+			// 初始化 ion-rangeslider 插件
+			var range = $("#range"),
+				instance;
+
+			$.get("/system/fanli-ratio", function (response) {
+				//alert("返回值是："+response)
+				var min = 0,
+					max = 1,
+					step = 0.01,
+					round = 2;
+				from = parseFloat(response.data).toFixed(round);
+
+				range.ionRangeSlider({
+					type: "single",
+					min: min,
+					max: max,
+					step: step,
+					from: from,
+					grid: true
+				});
+
+				instance = range.data("ionRangeSlider");
+			})
+
+			// 监听 ion-rangeslider 插件的 change 事件
+			range.on("change", function () {
+				var val = parseFloat($(this).val()).toFixed(2);
+				//alert("提交数据：" + val)
+
+				// 向后台发送 Ajax 请求
+				$.ajax({
+					url: "/system/params", // 后台地址
+					method: "POST", // 提交方式
+					data: { // 提交数据
+						"fanli-ratio": val
+					},
+					success: function (response) { // 成功响应后的操作
+						console.log("Data submitted successfully: " + response);
+					},
+					error: function (error) { // 响应错误后的操作
+						console.error("Error submitting data: " + error);
+					}
+				});
+			});
+		});
+
+		function checkFanliParams() {
+			$.ajax({
+				url: "/fanli/check_params",
+				type: "PUT",
+				contentType: "application/json",
+				success: function (result) {
+					$.alert(result.data.replace(/\n/g, "<br>"));
+					console.log(result);
+				},
+				error: function (xhr, status, error) {
+					console.log("AJAX PUT请求出错，错误信息：", error);
+				}
+			});
+		}
+	</script>
+</body>
+
+</html>

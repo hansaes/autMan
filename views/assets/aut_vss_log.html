@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>首页 - autMan后台管理系统</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <meta name="keywords" content="autMan,后台管理系统">
+    <meta name="description" content="autMan后台管理系统">
+    <meta name="author" content="autMan">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/materialdesignicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="js/bootstrap-multitabs/multitabs.min.css">
+    <link href="css/style.min.css" rel="stylesheet">
+    <!--对话框-->
+    <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+    <!--treeview-->
+    <link href="https://cdn.bootcdn.net/ajax/libs/jstree/3.3.15/themes/default/style.min.css" rel="stylesheet">
+    <!--codemirror-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/codemirror.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/codemirror.js"></script>
+
+    <style>
+        .CodeMirror {
+            border: 1px solid #eee;
+            height: auto !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lyear-layout-web">
+        <div class="lyear-layout-container">
+            <!--左侧导航-->
+            <aside class="lyear-layout-sidebar">
+
+                <!-- logo -->
+                <div id="logo" class="sidebar-header">
+                    <a><img src="images/logo-buckets-menu.png" title="js自定义插件目录" alt="js自定义插件目录" /></a>
+                </div>
+
+                <div class="lyear-layout-sidebar-scroll" style="margin-left: -40px;">
+                    <nav class="sidebar-main">
+                        <ul id="tree">
+                        </ul>
+                    </nav>
+                </div>
+
+            </aside>
+            <!--End 左侧导航-->
+
+            <!--头部信息-->
+            <header class="lyear-layout-header">
+                <nav class="navbar navbar-default">
+                    <div class="topbar">
+                        <div class="topbar-left">
+                            <div class="lyear-aside-toggler">
+                                <span class="lyear-toggler-bar"></span>
+                                <span class="lyear-toggler-bar"></span>
+                                <span class="lyear-toggler-bar"></span>
+                            </div>
+                            <a class="btn btn-danger m-r-5" href="#!" onclick="autDelJsContent()"><i
+                                    class="mdi mdi-window-close"></i> 删除</a>
+                            <!--隐藏的表单，用于存储当前的插件名-->
+                            <input class="form-control hidden" type="text" name="jsname" id="jsname" />
+                        </div>
+
+                        <!-- <div class="topbar-right">
+                            <a id="bucket_del_key" class="btn btn-purple m-r-5" href="#!"
+                                onclick="autUploadJsContent()"><i class="mdi mdi-arrow-up"></i> 上传aut云</a>
+                            <input class="form-control" type="file" id="file" name="file">
+                        </div> -->
+                    </div>
+                </nav>
+            </header>
+            <!--End 头部信息-->
+
+            <!--页面主要内容-->
+            <main class="lyear-layout-content">
+                <div class="card">
+                    <div><textarea id="code" value="text" style="min-height: 100px;"></textarea></div>
+                </div>
+            </main>
+            <!--End 页面主要内容-->
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-multitabs/multitabs.js"></script>
+    <script type="text/javascript" src="js/index.min.js"></script>
+    <!--对话框-->
+    <script type="text/javascript" src="js/jconfirm/jquery-confirm.min.js"></script>
+    <script type="text/javascript" src="js/main.min.js"></script>
+    <!--treeview-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jstree/3.3.15/jstree.min.js"></script>
+
+    <script>
+        $(function () {
+            //填充目录
+            fillMenu()
+
+            $('#tree').on('select_node.jstree', function (e, data) {
+                // 获取选定节点的名称和父节点名称
+                var nodeName = data.node.text;
+                var parentName = $('#tree').jstree(true).get_node(data.node.parent).text;
+                // 发送 ajax 请求至服务器
+                $.ajax({
+                    'url': `/log/${nodeName}?path=${parentName}`,
+                    'type': 'GET',
+                    'success': function (data) {
+                        // 在此处处理返回的数据
+                        console.log(data)
+                        editor.setValue(data)
+                    },
+                    'error': function (xhr, status, error) {
+                        console.log('Error:', error);
+                    },
+                });
+            });
+        });
+
+
+
+        //代码编辑框设置
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            //Java高亮显示
+            mode: "text/javascript",
+            //显示行号
+            lineNumbers: true,
+            //设置主题
+            theme: "default",
+            //绑定Vim
+            //keyMap: "vim",
+            //代码折叠
+            lineWrapping: true,
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+            //全屏模式
+            //fullScreen: true,
+
+            scrollbarStyle: null,
+            styleActiveLine: true,
+            //括号匹配
+            matchBrackets: true,
+            //智能提示 
+            extraKeys: { "Ctrl-Space": "autocomplete" }//ctrl-space唤起智能提示
+        });
+        //editor.setSize('auto', 100)
+
+        //填充js目录
+        function fillMenu(activeItem) {
+            $.ajax({
+                url: "/log/menu",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    console.log(JSON.stringify(data))
+                    $('#tree').jstree({
+                        'core': {
+                            'themes': {
+                                "icons": false, // 隐藏所有图标
+                                "dots": false,// 隐藏文件夹图标
+                            },
+                            'data': data,
+                        },
+
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

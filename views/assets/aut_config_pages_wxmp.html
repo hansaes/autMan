@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>系统参数 - autMan后台管理系统</title>
+	<link rel="icon" href="favicon.ico" type="image/ico">
+	<meta name="keywords" content="autMan,后台管理系统">
+	<meta name="description" content="autMan后台管理系统">
+	<meta name="author" content="autMan">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="css/style.min.css" rel="stylesheet">
+	<style>
+		.card-border-danger {
+			border: 1px solid #dc3545;
+			/* 设置边框样式 */
+			border-radius: 5px;
+			/* 可选：设置边框圆角 */
+			padding: 10px;
+			/* 可选：设置边框与Card内容之间的间距 */
+		}
+		.card-border-success {
+			border: 1px solid #28a745;
+			/* 设置边框样式 */
+			border-radius: 5px;
+			/* 可选：设置边框圆角 */
+			padding: 10px;
+			/* 可选：设置边框与Card内容之间的间距 */
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<!--card-->
+				<div class="card">
+					<ul class="nav nav-tabs page-tabs">
+						<li> <a href="aut_config_pages_system.html">基本</a> </li>
+						<li> <a href="aut_config_pages_update.html">更新</a> </li>
+						<li> <a href="aut_config_pages_aut.html">AUT云账号</a> </li>
+						<li> <a href="aut_config_pages_admins.html">管理员</a> </li>
+						<li> <a href="aut_config_pages_notify.html">通知</a> </li>
+						<li> <a href="aut_config_pages_qq.html">QQ框架</a> </li>
+						<li> <a href="aut_config_pages_qqbot.html">QQBOT</a> </li>
+						<li> <a href="aut_config_pages_wx.html">WX框架</a> </li>
+						<li> <a href="aut_config_pages_wxbot.html">WXBOT</a> </li>
+						<li> <a href="aut_config_pages_tg.html">TDLIB</a> </li>
+						<li> <a href="aut_config_pages_tb.html">TGBOT</a> </li>
+						<li class="active"> <a href="#!">公众号</a> </li>
+						<li> <a href="aut_config_pages_dd.html">钉钉BOT</a> </li>
+
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active">
+							<div class="row">
+								<!--未认证的公众号-->
+								<div class="col-sm-12 col-lg-6">
+									<div class="card card-border-danger">
+										<div class="card-header bg-danger">
+											<h4>订阅号</h4>
+											<ul class="card-actions">
+												<li>
+													<button type="button"><i class="mdi mdi-more"></i></button>
+												</li>
+											</ul>
+										</div>
+										<div class="card-body">
+											<form action="#!" method="post" name="edit-form" class="edit-form">
+												<div class="form-group">
+													<label for="wxmp-app_id">AppID</label>
+													<input class="form-control" type="text" name="wxmp-app_id"
+														id="wxmp-app_id" value="" placeholder="" />
+													<small class="help-block">非必需</small>
+												</div>
+												<div class="form-group">
+													<label for="wxmp-app_secret">AppSecret</label>
+													<input class="form-control" type="text" name="wxmp-app_secret"
+														id="wxmp-app_secret" value="" placeholder="" />
+													<small class="help-block">非必需</small>
+												</div>
+												<div class="form-group">
+													<label for="wxmp-token">token</label>
+													<input class="form-control" type="text" name="wxmp-token"
+														id="wxmp-token" value="" placeholder="" />
+													<small class="help-block">非必需</small>
+												</div>
+												<div class="form-group">
+													<label for="wxmp-encoding_aes_key">encoding_aes_key</label>
+													<input class="form-control" type="text" name="wxmp-encoding_aes_key"
+														id="wxmp-encoding_aes_key" value="" placeholder="" />
+													<small class="help-block">非必需</small>
+												</div>
+												<div class="form-group">
+													<label for="wxmp-subscribe_reply">订阅回复</label>
+													<input class="form-control" type="text" name="wxmp-subscribe_reply"
+														id="wxmp-subscribe_reply" value="" placeholder="感谢订阅！" />
+													<small class="help-block">非必需</small>
+												</div>
+												<div class="form-group">
+													<label for="wxmp-default_reply">无回复消息时的默认回复</label>
+													<input class="form-control" type="text" name="wxmp-default_reply"
+														id="wxmp-default_reply" value="" placeholder="无法回复该消息" />
+													<small class="help-block">非必需</small>
+												</div>
+												<div class="form-group">
+													<button class="btn btn-primary" type="button"
+														onclick="submitParams()">保存</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+								<!--已认证的公众号-->
+								<div class="col-sm-12 col-lg-6">
+									<div class="card card-border-success">
+										<div class="card-header bg-success">
+											<h4>服务号</h4>
+											<ul class="card-actions">
+												<li>
+													<button type="button"><i class="mdi mdi-more"></i></button>
+												</li>
+											</ul>
+										</div>
+										<div class="card-body">
+											<form action="#!" method="post" name="edit-form" class="edit-form">
+												<div class="form-group">
+													<label for="wxsv-app_id">AppID</label>
+													<input class="form-control" type="text" name="wxsv-app_id"
+														id="wxsv-app_id" value="" placeholder="" />
+													<small class="help-block">非必需</small>
+												</div>
+												<div class="form-group">
+													<label for="wxsv-app_secret">AppSecret</label>
+													<input class="form-control" type="text" name="wxsv-app_secret"
+														id="wxsv-app_secret" value="" placeholder="" />
+													<small class="help-block">非必需</small>
+												</div>
+												<div class="form-group">
+													<label for="wxsv-token">token</label>
+													<input class="form-control" type="text" name="wxsv-token"
+														id="wxsv-token" value="" placeholder="" />
+													<small class="help-block">非必需</small>
+												</div>
+												<div class="form-group">
+													<label for="wxsv-encoding_aes_key">encoding_aes_key</label>
+													<input class="form-control" type="text" name="wxsv-encoding_aes_key"
+														id="wxsv-encoding_aes_key" value="" placeholder="" />
+													<small class="help-block">非必需</small>
+												</div>
+												<div class="form-group">
+													<label for="wxsv-subscribe_reply">订阅回复</label>
+													<input class="form-control" type="text" name="wxsv-subscribe_reply"
+														id="wxsv-subscribe_reply" value="" placeholder="感谢订阅！" />
+													<small class="help-block">非必需</small>
+												</div>
+												<div class="form-group">
+													<label for="wxsv-default_reply">无回复消息时的默认回复</label>
+													<input class="form-control" type="text" name="wxsv-default_reply"
+														id="wxsv-default_reply" value="" placeholder="无法回复该消息" />
+													<small class="help-block">非必需</small>
+												</div>
+												<div class="form-group">
+													<button class="btn btn-primary" type="button"
+														onclick="submitParams()">保存</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!--end card-->
+			</div>
+
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--消息提示-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<script type="text/javascript" src="js/lightyear.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/fill_input.js"></script>
+</body>
+
+</html>

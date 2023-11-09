@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>系统参数 - autMan后台管理系统</title>
+	<link rel="icon" href="favicon.ico" type="image/ico">
+	<meta name="keywords" content="autMan,后台管理系统">
+	<meta name="description" content="autMan后台管理系统">
+	<meta name="author" content="autMan">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<!--card-->
+				<div class="card">
+					<ul class="nav nav-tabs page-tabs">
+						<li class="active"> <a href="#!">基本</a> </li>
+						<li> <a href="aut_users_other.html">其它</a> </li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active">
+
+							<form method="post" name="edit-form" class="edit-form">
+								<div class="form-group">
+									<label for="users-disable">禁用用户系统</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="users-disable" id="users-disable">
+										<span></span>
+									</label>
+									<small>重启生效</small>
+								</div>
+
+								<div class="form-group">
+									<label for="users-users_groups">魅力值采样群</label>
+									<input class="form-control" type="text" name="users-users_groups" id="users-users_groups"
+										value="" placeholder="" />
+									<small class="help-block">多个群之间用英文逗号隔开</small>
+								</div>
+
+								<div class="form-group">
+									<label for="users-rank">用户级别设置</label>
+									<input class="form-control" type="text" name="users-rank" id="users-rank"
+										value="" placeholder="入门, 青铜, 白银, 黄金, 铂金, 钻石, 骑士, 忍者, 大神, 玉帝, 神手" />
+									<small class="help-block">级别间用英文逗号隔开，按积分区分，积分0-9为入门，积分10-99为青铜，以引类推</small>
+								</div>
+
+								<hr>
+								<div class="form-group">
+									<label for="autMan-gomail_host">验证邮箱服务器地址</label>
+									<input class="form-control" type="text" name="autMan-gomail_host" id="autMan-gomail_host"
+										value="" placeholder="smtp.qq.com" />
+									<small class="help-block">建议QQ邮箱：smtp.qq.com</small>
+								</div>
+								<div class="form-group">
+									<label for="autMan-gomail_port">验证邮箱服务器端口</label>
+									<input class="form-control" type="text" name="autMan-gomail_port" id="autMan-gomail_port"
+										value="" placeholder="25" />
+									<small class="help-block">建议QQ邮箱：25</small>
+								</div>
+								<div class="form-group">
+									<label for="autMan-gomail_pwd">验证邮箱服务器授权码</label>
+									<input class="form-control" type="password" name="autMan-gomail_pwd" id="autMan-gomail_pwd"
+										value="" placeholder="" />
+									<small class="help-block"></small>
+								</div>
+								<div class="form-group">
+									<label for="autMan-gomail_user">邮箱主体</label>
+									<input class="form-control" type="text" name="autMan-gomail_user" id="autMan-gomail_user"
+										value="" placeholder="123@qq.com" />
+									<small class="help-block"></small>
+								</div>
+								
+								<div class="form-group">
+									<button class="btn btn-primary" type="button" onclick="submitParams()">保存</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!--end card-->
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--消息提示-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<script type="text/javascript" src="js/lightyear.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/fill_input.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>实时</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container-fluid p-t-15">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card m-b-0 p-b-0">
+          <div class="card-toolbar clearfix">
+            <!-- <a class="btn btn-success m-r-5" href="#!" id="save"><i class="mdi mdi-check"></i> 保存</a>
+            <a class="btn btn-info m-r-5" href="#!" id="fresh"><i class="mdi mdi-rotate-3d"></i> 刷新</a> -->
+            <!--下拉框-->
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">过滤</button>
+              </span>
+              <input id="keyword" type="text" class="form-control" placeholder="请输入关键词用以过滤...">
+            </div>
+          </div>
+
+          <!--内容区-->
+          <div class="card-body" style="overflow-y: scroll;" id="logs">
+          </div>
+          <!--end 内容区-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // 设置card-body的初始高度
+      $(".card-body").height($(window).height() - 2 * $(".card-toolbar").outerHeight() - 10);
+
+      // 监听窗口大小改变事件
+      $(window).on("resize", function () {
+        // 设置card-body的高度为窗口高度减去card-toolbar的高度
+        $(".card-body").height($(window).height() - 2 * $(".card-toolbar").outerHeight() - 10);
+      });
+
+      // 使滚动到最底部
+      function scrollChatWindow() {
+        var myDiv = $('#logs');
+        var scrollHeight = myDiv.prop('scrollHeight');
+        //var duration = 500; // 滚动动画的持续时间
+        //myDiv.animate({ scrollTop: scrollHeight });
+        myDiv.scrollTop(scrollHeight);
+      }
+
+      var socket = null;
+
+      //alert("登陆操作")
+      if (socket == null || socket.readyState != WebSocket.OPEN) {
+        //截取当前域名
+        href = window.location.href
+        //本地地址
+        localarr = href.split('/')[2]
+        console.log(`ws://${location.host}/logs`)
+        // 创建 WebSocket 连接
+        socket = new WebSocket(`ws://${location.host}/logs`);
+
+        // 监听 WebSocket 事件
+        socket.onopen = function () {
+          console.log("WebSocket连接已打开");
+          $("#logs").append(`WebSocket连接已打开`);
+        };
+
+        socket.onmessage = function (e) {
+          console.log("WebSocket收到消息：" + e.data);
+          //过滤关键词
+          let keyword = $('#keyword').val().trim()
+          //正则测试
+          let reg = new RegExp(keyword, 'i')
+          if (keyword && !reg.test(e.data)) {
+            return
+          }
+          let cnt = e.data.replace(/\r/g, "").replace(/\n/g, "<br />")
+          if (cnt) {
+            //区分颜色
+            if (cnt.indexOf("[ERROR]") != -1) {
+              cnt = `<div style="color:red">${cnt}</div>`
+            } else if (cnt.indexOf("[WARN]") != -1) {
+              cnt = `<div style="color:orange">${cnt}</div>`
+            } else if (cnt.indexOf("[INFO]") != -1) {
+              cnt = `<div style="color:green">${cnt}</div>`
+            } else if (cnt.indexOf("[DEBUG]") != -1) {
+              cnt = `<div style="color:blue">${cnt}</div>`
+            } else {
+              cnt = `<div style="color:black">${cnt}</div>`
+            }
+            $('#logs').append(`${cnt}`);
+            // 使聊天框滚动到最底部
+            scrollChatWindow();
+          }
+        };
+
+        socket.onclose = function () {
+          console.log("WebSocket连接已关闭");
+          $('#logs').append(`<div>连接已断开</div>`);
+          // 使聊天框滚动到最底部
+          scrollChatWindow();
+        };
+
+        socket.onerror = function () {
+          console.log("WebSocket连接发生错误");
+        };
+      } else {
+        socket.close();
+      }
+    });
+  </script>
+</body>
+
+</html>

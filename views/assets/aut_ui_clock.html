@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>首页 - autMan后台管理系统</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="autMan,后台管理系统">
+  <meta name="description" content="autMan后台管理系统">
+  <meta name="author" content="autMan">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="js/bootstrap-multitabs/multitabs.min.css">
+  <link href="css/style.min.css" rel="stylesheet">
+  <!--对话框-->
+  <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+  <style>
+    .table-container {
+      overflow-y: scroll;
+    }
+
+    .table thead th {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+      z-index: 1;
+    }
+
+    .truncate {
+      max-width: 100px;
+      /* 设置列的最大宽度 */
+      white-space: nowrap;
+      /* 禁止内容换行 */
+      overflow: hidden;
+      /* 隐藏溢出的内容 */
+      text-overflow: ellipsis;
+      /* 使用省略号表示被截断的内容 */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid p-t-15">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card m-b-0 p-b-0">
+          <div class="card-toolbar clearfix">
+            <form class="pull-right search-bar" method="get" action="#!" role="form">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <input type="hidden" name="search_field" id="search-field" value="title">
+                  <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    标题 <span class="caret"></span>
+                  </button>
+                  <!-- <ul class="dropdown-menu">
+                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="title">标题</a> </li>
+                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="cat_name">栏目</a> </li>
+                  </ul> -->
+                </div>
+                <input type="text" class="form-control" value="" name="searchInput" id="searchInput"
+                  placeholder="请输入名称">
+              </div>
+            </form>
+            <div class="toolbar-btn-action">
+              <a id="carry_add_rule" class="btn btn-primary m-r-5" href="#!" data-toggle="modal" data-target="#myModal"
+                onclick="autClearModalForm($('#modal'))"><i class="mdi mdi-plus"></i> 新增</a>
+              <!-- <a id="carry_enable_rules" class="btn btn-success m-r-5" href="#!"><i class="mdi mdi-check"></i> 启用</a>
+              <a id="carry_disable_rules" class="btn btn-warning m-r-5" href="#!"><i class="mdi mdi-block-helper"></i>
+                禁用</a> -->
+              <a id="carry_delete_rules" class="btn btn-danger m-r-5" href="#!" onclick="autDelRows()"><i
+                  class="mdi mdi-window-close"></i> 删除</a>
+              <a id="carry_run_rules" class="btn btn-info" href="#!" onclick="autRunRows()"><i
+                    class="mdi mdi-play"></i> 运行</a>
+            </div>
+          </div>
+          <div class="card-body">
+            <!--定时表格-->
+            <div class="table-container">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th width="5%">
+                      <label class="lyear-checkbox checkbox-primary">
+                        <input type="checkbox" id="check-all"><span></span>
+                      </label>
+                    </th>
+                    <th width="5%">序号</th>
+                    <th width="10%">定时Cron</th>
+                    <th width="15%">下次执行</th>
+                    <th width="30%">指令</th>
+                    <th width="5%">自处</th>
+                    <th width="10%">发送至</th>
+                    <th width="10%">备注</th>
+                    <th width="10%">操作</th>
+                  </tr>
+                </thead>
+                <tbody id="datasets">
+
+                </tbody>
+              </table>
+            </div>
+            <!--页码-->
+            <!-- <ul class="pagination">
+              <li class="disabled"><span>«</span></li>
+              <li class="active"><span>1</span></li>
+              <li><a href="#!">»</a></li>
+            </ul> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--模态弹出框-插件配置-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">标题</h4>
+        </div>
+        <div class="modal-body">
+          <form id="modal" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+            <div class="form-group hidden">
+              <label class="col-md-3 control-label" for="id">ID</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="number" name="id" id="id" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="cron">定时</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="cron" id="cron" />
+              </div>
+            </div>
+
+            <!-- <div class="form-group">
+              <label class="col-md-3 control-label" for="next_running_time">下次执行</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="next_running_time" id="next_running_time" />
+              </div>
+            </div> -->
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="cmd">指令或内容</label>
+              <div class="col-md-7">
+                <textarea rows="5" class="form-control input-sm" type="text" name="cmd" id="cmd"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="is_image_url">图片链接</label>
+              <div class="col-md-7">
+                <label class="lyear-switch switch-solid switch-primary">
+                  <input type="checkbox" name="is_image_url" id="is_image_url">
+                  <span></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="to_self">自处理</label>
+              <div class="col-md-7">
+                <label class="lyear-switch switch-solid switch-primary">
+                  <input type="checkbox" name="to_self" id="to_self" value="true">
+                  <span></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="disguise_imtype">伪装媒介</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="disguise_imtype" id="disguise_imtype" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="disguise_imtype">伪装群组</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="number" name="disguise_group" id="disguise_group" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="disguise_imtype">伪装个人</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="disguise_user" id="disguise_user" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="to_others">发送</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="to_others" id="to_others" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="memo">备注</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="memo" id="memo" />
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary" onclick="autSubmitModalForm()">点击保存</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--消息提示-->
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <script type="text/javascript" src="js/lightyear.js"></script>
+  <!--对话框-->
+  <script type="text/javascript" src="js/jconfirm/jquery-confirm.min.js"></script>
+  <!--自定义-->
+  <script type="text/javascript" src="js/aut-utils.js"></script>
+  <script type="text/javascript" src="js/croncmd.js"></script>
+</body>
+
+</html>

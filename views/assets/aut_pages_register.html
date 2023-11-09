@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>登录页面 - autMan后台管理系统</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="autMan,后台管理系统">
+  <meta name="description" content="autMan后台管理系统">
+  <meta name="author" content="autMan">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="css/style.min.css" rel="stylesheet">
+  <style>
+    .lyear-wrapper {
+      position: relative;
+    }
+
+    .lyear-login {
+      display: flex !important;
+      min-height: 100vh;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .lyear-login:after {
+      content: '';
+      min-height: inherit;
+      font-size: 0;
+    }
+
+    .login-center {
+      background: #fff;
+      min-width: 29.25rem;
+      padding: 2.14286em 3.57143em;
+      border-radius: 3px;
+      margin: 2.85714em;
+    }
+
+    .login-header {
+      margin-bottom: 1.5rem !important;
+    }
+
+    .login-center .has-feedback.feedback-left .form-control {
+      padding-left: 38px;
+      padding-right: 12px;
+    }
+
+    .login-center .has-feedback.feedback-left .form-control-feedback {
+      left: 0;
+      right: auto;
+      width: 38px;
+      height: 38px;
+      line-height: 38px;
+      z-index: 4;
+      color: #dcdcdc;
+    }
+
+    .login-center .has-feedback.feedback-left.row .form-control-feedback {
+      left: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="row lyear-wrapper" style="background-image: url(images/login-bg.jpg); background-size: cover;">
+    <div class="lyear-login">
+      <div class="login-center">
+        <div class="login-header text-center">
+          <a href="index.html"> <img alt="light year admin" src="images/logo-sidebar.png"> </a>
+        </div>
+        <hr>
+        <div class="login-header text-center">
+          <h5>首次使用请进行初始化，<label for="is_registed">已有账号登陆请勾选</label>
+              <input type="checkbox" id="is_registered" name="is_registed">
+          </h5>
+        </div>
+        <hr>
+        <form action="#!" method="post" class="guide-box" data-navigateable="true">
+          <ul class="nav-step step-dots">
+            <li class="nav-step-item active">
+              <span>用户名</span>
+              <a class="active" data-toggle="tab" href="#step-1"></a>
+            </li>
+
+            <li class="nav-step-item">
+              <span>邮箱</span>
+              <a data-toggle="tab" href="#step-2"></a>
+            </li>
+
+            <li class="nav-step-item">
+              <span>密码</span>
+              <a data-toggle="tab" href="#step-3"></a>
+            </li>
+
+            <li class="nav-step-item">
+              <span>确认</span>
+              <a data-toggle="tab" href="#step-4"></a>
+            </li>
+          </ul>
+          <!--对应内容-->
+          <div class="nav-step-content">
+            <div class="nav-step-pane hidden active" id="step-1">
+              <div class="form-group">
+                <label>注册web后台和aut云市场二合一账号</label>
+                <input class="form-control" type="text" name="username" id="username">
+                <small class="form-text text-danger" id="usernameError"></small>
+              </div>
+            </div>
+
+            <div class="nav-step-pane hidden" id="step-2">
+              <div class="form-group">
+                <label>设置邮箱（用于找回密码）</label>
+                <input class="form-control" type="email" name="email" id="email">
+              </div>
+            </div>
+
+            <div class="nav-step-pane hidden" id="step-3">
+              <div class="form-group">
+                <label>设置密码</label>
+                <input class="form-control" type="password" name="password1" id="password1">
+              </div>
+            </div>
+
+            <div class="nav-step-pane hidden" id="step-4">
+              <div class="form-group">
+                <label>再次输入密码</label>
+                <input class="form-control" type="password" name="password2" id="password2">
+              </div>
+            </div>
+
+            <!-- <div class="nav-step-pane hidden" id="step-4">
+              <div class="form-group">
+                <label>备注</label>
+                <input class="form-control" type="text">
+              </div>
+            </div> -->
+          </div>
+          <!--End 对应内容-->
+
+          <div class="nav-step-button">
+            <button class="btn btn-secondary disabled" data-wizard="prev" type="button">上一步</button>
+            <button class="btn btn-secondary" data-wizard="next" type="button">下一步</button>
+            <button class="btn btn-primary hidden" data-wizard="finish" type="button">完成</button>
+          </div>
+        </form>
+        <hr>
+        <footer class="col-sm-12 text-center">
+          <p class="m-b-0">Copyright © 2023 <a href="https://hdbjlizhe.github.io/fanli/">autMan</a>. All right reserved
+          </p>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!--消息提示-->
+  <script src="js/bootstrap-notify.min.js"></script>
+  <script type="text/javascript" src="js/lightyear.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--向导插件-->
+  <script type="text/javascript" src="js/jquery.bootstrap.wizard.min.js"></script>
+  <!--登陆函数-->
+  <script type="text/javascript" src="js/register.js"></script>
+</body>
+
+</html>

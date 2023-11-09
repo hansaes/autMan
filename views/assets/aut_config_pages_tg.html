@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>系统参数 - autMan后台管理系统</title>
+	<link rel="icon" href="favicon.ico" type="image/ico">
+	<meta name="keywords" content="autMan,后台管理系统">
+	<meta name="description" content="autMan后台管理系统">
+	<meta name="author" content="autMan">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+		<div class="row">
+			<div class="col-lg-12">
+				<!--card-->
+				<div class="card">
+					<ul class="nav nav-tabs page-tabs">
+						<li> <a href="aut_config_pages_system.html">基本</a> </li>
+						<li> <a href="aut_config_pages_update.html">更新</a> </li>
+						<li> <a href="aut_config_pages_aut.html">AUT云账号</a> </li>
+						<li> <a href="aut_config_pages_admins.html">管理员</a> </li>
+						<li> <a href="aut_config_pages_notify.html">通知</a> </li>
+						<li> <a href="aut_config_pages_qq.html">QQ框架</a> </li>
+						<li> <a href="aut_config_pages_qqbot.html">QQBOT</a> </li>
+						<li> <a href="aut_config_pages_wx.html">WX框架</a> </li>
+						<li> <a href="aut_config_pages_wxbot.html">WXBOT</a> </li>
+						<li class="active"> <a href="#!">TDLIB</a> </li>
+						<li> <a href="aut_config_pages_tb.html">TGBOT</a> </li>
+						<li> <a href="aut_config_pages_wxmp.html">公众号</a> </li>
+						<li> <a href="aut_config_pages_dd.html">钉钉BOT</a> </li>
+
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active">
+
+							<form action="#!" method="post" name="edit-form" class="edit-form">
+
+								<div class="form-group">
+									<label for="tg-auto_login">自动登录</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="tg-auto_login" id="tg-auto_login">
+										<span></span>
+									</label>
+								</div>
+								<div class="form-group">
+									<label for="tg-onself">监听自己：</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="tg-onself" id="wx-onself">
+										<span></span>
+									</label>
+								</div>
+								<div class="form-group">
+									<label for="tg-onselfbot">监听自己的tgbot：</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="tg-onselfbot" id="wx-onselfbot">
+										<span></span>
+									</label>
+								</div>
+								<div class="form-group">
+									<label for="tg-disable_private">禁用私聊</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="tg-disable_private" id="tg-disable_private">
+										<span></span>
+									</label>
+									<small class="help-block"></small>
+								</div>
+								<div class="form-group">
+									<label for="tg-disable_group">禁用群聊</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="tg-disable_group" id="tg-disable_group">
+										<span></span>
+									</label>
+									<small class="help-block"></small>
+								</div>
+								<div class="form-group">
+									<label for="tg-onGroups">消息接收群(建议留空)</label>
+									<input class="form-control" type="text" name="tg-onGroups" id="tg-onGroups" value=""
+										placeholder="" />
+									<small class="help-block">表示仅接收某些群的消息</small>
+								</div>
+								<div class="form-group">
+									<label for="tg-offGroups">消息屏蔽群(建议留空)</label>
+									<input class="form-control" type="text" name="tg-offGroups" id="tg-offGroups"
+										value="" placeholder="" />
+									<small class="help-block">表示屏蔽某些群的消息</small>
+								</div>
+								<div class="form-group">
+									<label for="tg-app_id">App ID</label>
+									<input class="form-control" type="text" name="tg-app_id" id="tg-app_id" value=""
+										placeholder="" />
+									<small class="help-block">非必需</small>
+								</div>
+								<div class="form-group">
+									<label for="tg-app_hash">App Hash</label>
+									<input class="form-control" type="text" name="tg-app_hash" id="tg-app_hash" value=""
+										placeholder="" />
+									<small class="help-block">非必需</small>
+								</div>
+								<div class="form-group">
+									<label for="tg-proxy_addr">禁用代理</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="tg-proxy_disable" id="tg-proxy_disable">
+										<span></span>
+									</label>
+									<input class="form-control" type="text" name="tg-proxy_addr" id="tg-proxy_addr"
+										value="" placeholder="" />
+									<small class="help-block">格式为socks5://user:pass@ip:port</small>
+								</div>
+								<div class="form-group">
+									<label for="tg-replyGroups">开放回复群</label>
+									<input class="form-control" type="text" name="tg-replyGroups" id="tg-replyGroups"
+										value="" placeholder="" />
+									<small class="help-block">默认仅开启私聊，想要回复群聊在这里设置，多个群用英文逗号隔开</small>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-primary" type="button" onclick="submitParams()">保存</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+				<!--end card-->
+			</div>
+
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--消息提示-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<script type="text/javascript" src="js/lightyear.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/fill_input.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>系统参数 - autMan后台管理系统</title>
+	<link rel="icon" href="favicon.ico" type="image/ico">
+	<meta name="keywords" content="autMan,后台管理系统">
+	<meta name="description" content="autMan后台管理系统">
+	<meta name="author" content="autMan">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<!--card-->
+				<div class="card">
+					<ul class="nav nav-tabs page-tabs">
+						<li> <a href="aut_config_pages_system.html">基本</a> </li>
+						<li> <a href="aut_config_pages_update.html">更新</a> </li>
+						<li> <a href="aut_config_pages_aut.html">AUT云账号</a> </li>
+						<li> <a href="aut_config_pages_admins.html">管理员</a> </li>
+						<li> <a href="aut_config_pages_notify.html">通知</a> </li>
+						<li class="active"> <a href="#!">QQ框架</a> </li>
+						<li> <a href="aut_config_pages_qqbot.html">QQBOT</a> </li>
+						<li> <a href="aut_config_pages_wx.html">WX框架</a> </li>
+						<li> <a href="aut_config_pages_wxbot.html">WXBOT</a> </li>
+						<li> <a href="aut_config_pages_tg.html">TDLIB</a> </li>
+						<li> <a href="aut_config_pages_tb.html">TGBOT</a> </li>
+						<li> <a href="aut_config_pages_wxmp.html">公众号</a> </li>
+						<li> <a href="aut_config_pages_dd.html">钉钉BOT</a> </li>
+
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active">
+
+							<form action="#!" method="post" name="edit-form" class="edit-form">
+								<div class="form-group">
+									<label for="qq-disable_private">禁用私聊</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="qq-disable_private"
+											id="qq-disable_private">
+										<span></span>
+									</label>
+									<small class="help-block"></small>
+								</div>
+								<div class="form-group">
+									<label for="qq-disable_group">禁用群聊</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="qq-disable_group" id="qq-disable_group">
+										<span></span>
+									</label>
+									<small class="help-block"></small>
+								</div>
+								<div class="form-group">
+									<label for="qq-default_bot">默认机器人QQ</label>
+									<input class="form-control" type="text" name="qq-default_bot" id="qq-default_bot"
+										value="" placeholder="" />
+
+									<small class="help-block">对接多个QQ时需设置默认</small>
+								</div>
+								<div class="form-group">
+									<label for="qq-onGroups">消息接收群(建议留空)</label>
+									<input class="form-control" type="text" name="qq-onGroups" id="qq-onGroups" value=""
+										placeholder="" />
+
+									<small class="help-block">表示仅接收某些群的消息</small>
+								</div>
+								<div class="form-group">
+									<label for="qq-offGroups">消息屏蔽群(建议留空)</label>
+									<input class="form-control" type="text" name="qq-offGroups" id="qq-offGroups"
+										value="" placeholder="" />
+									<small class="help-block">表示屏蔽某些群的消息</small>
+								</div>
+								<div class="form-group">
+									<label for="qq-auto_friend">自动同意好友：</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="qq-auto_friend" id="qq-auto_friend">
+										<span></span>
+									</label>
+								</div>
+								<div class="form-group">
+									<label for="qq-notifiers">QQ通知账号</label>
+									<input class="form-control" type="text" name="qq-notifiers" id="qq-notifiers"
+										value="" placeholder="" />
+									<small class="help-block"></small>
+								</div>
+								<div class="form-group">
+									<label for="qq-ban_one2one">禁止一对一推送：</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="qq-ban_one2one" id="qq-ban_one2one">
+										<span></span>
+									</label>
+								</div>
+								<div class="form-group">
+									<label for="qq-spy_on">间谍模式群</label>
+									<input class="form-control" type="text" name="qq-spy_on" id="qq-spy_on" value=""
+										placeholder="" />
+									<small class="help-block"></small>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-primary" type="button" onclick="submitParams()">保存</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+				<!--end card-->
+			</div>
+
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--消息提示-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<script type="text/javascript" src="js/lightyear.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/fill_input.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>首页 - autMan后台管理系统</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="autMan,后台管理系统">
+  <meta name="description" content="autMan后台管理系统">
+  <meta name="author" content="autMan">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="js/bootstrap-multitabs/multitabs.min.css">
+  <link href="css/style.min.css" rel="stylesheet">
+  <!--对话框-->
+  <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+</head>
+
+<body>
+  <div class="container-fluid p-t-15">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-toolbar clearfix">
+            <!--操作按钮菜单-->
+            <div class="toolbar-btn-action">
+              <a class="btn btn-primary m-r-5" href="#!" data-toggle="modal" data-target="#myModal"
+                onclick=""><i class="mdi mdi-plus"></i> 新增</a>
+              <a id="delete_rules" class="btn btn-info m-r-5" href="#!" onclick="autFillRows()"><i
+                  class="mdi mdi-rotate-3d"></i> 刷新</a>
+            </div>
+
+          </div>
+
+          <!--内容区-->
+          <div class="card-body">
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="linux-tab" data-toggle="tab" href="#linux" role="tab"
+                  aria-controls="linux" aria-selected="true">Linux</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="python3-tab" data-toggle="tab" href="#python3" role="tab"
+                  aria-controls="python3" aria-selected="false">Python3</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="nodejs-tab" data-toggle="tab" href="#nodejs" role="tab" aria-controls="nodejs"
+                  aria-selected="false">Nodejs</a>
+              </li>
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade" id="linux" role="tabpanel" aria-labelledby="linux-tab">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>
+                        <label class="lyear-checkbox checkbox-primary">
+                          <input type="checkbox" id="check-all"><span></span>
+                        </label>
+                      </th>
+                      <th>名称</th>
+                      <th>版本</th>
+                      <th>状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rows-linux">
+
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="tab-pane fade" id="python3" role="tabpanel" aria-labelledby="python3-tab">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>
+                        <label class="lyear-checkbox checkbox-primary">
+                          <input type="checkbox" id="check-all"><span></span>
+                        </label>
+                      </th>
+                      <th>名称</th>
+                      <th>版本</th>
+                      <th>状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rows-python3">
+
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="tab-pane fade" id="nodejs" role="tabpanel" aria-labelledby="nodejs-tab">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>
+                        <label class="lyear-checkbox checkbox-primary">
+                          <input type="checkbox" id="check-all"><span></span>
+                        </label>
+                      </th>
+                      <th>名称</th>
+                      <th>版本</th>
+                      <th>状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rows-nodejs">
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!--模态弹出框-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">标题</h4>
+        </div>
+        <div class="modal-body">
+          <form id="modal" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="name">名称</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="name" id="name" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="type">分类</label>
+              <div class="col-md-7">
+                <select class="form-control input-sm" name="type" id="type">
+                  <option value="0">Linux</option>
+                  <option value="1">Python3</option>
+                  <option value="2">Nodejs</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary" onclick="autSubmitModalForm()">点击保存</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!--日志模态弹出框-->
+  <div class="modal fade" id="logModal" tabindex="-1" role="dialog" aria-labelledby="logModalLabel">
+    <div class="modal-dialog" role="document" style="width: 80%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="logModalLabel">日志</h4>
+        </div>
+        <div class="modal-body">
+          <div class="table-container">
+            <table class="table table-bordered" id="log-table">
+              <!-- <thead>
+                <tr>
+                  <th>时间</th>
+                  <th>内容</th>
+                </tr>
+              </thead> -->
+              <tbody id="log-datasets">
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--消息提示-->
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <script type="text/javascript" src="js/lightyear.js"></script>
+  <!--对话框-->
+  <script type="text/javascript" src="js/jconfirm/jquery-confirm.min.js"></script>
+  <!--自定义-->
+  <script type="text/javascript" src="js/dependance.js"></script>
+  <script>
+
+  </script>
+
+</body>
+
+</html>

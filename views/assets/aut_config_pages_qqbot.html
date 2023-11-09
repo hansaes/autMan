@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>系统参数 - autMan后台管理系统</title>
+	<link rel="icon" href="favicon.ico" type="image/ico">
+	<meta name="keywords" content="autMan,后台管理系统">
+	<meta name="description" content="autMan后台管理系统">
+	<meta name="author" content="autMan">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<!--card-->
+				<div class="card">
+					<ul class="nav nav-tabs page-tabs">
+						<li> <a href="aut_config_pages_system.html">基本</a> </li>
+						<li> <a href="aut_config_pages_update.html">更新</a> </li>
+						<li> <a href="aut_config_pages_aut.html">AUT云账号</a> </li>
+						<li> <a href="aut_config_pages_admins.html">管理员</a> </li>
+						<li> <a href="aut_config_pages_notify.html">通知</a> </li>
+						<li> <a href="aut_config_pages_qq.html">QQ框架</a> </li>
+						<li class="active"> <a href="#!">QQBOT</a> </li>
+						<li> <a href="aut_config_pages_wx.html">WX框架</a> </li>
+						<li> <a href="aut_config_pages_wxbot.html">WXBOT</a> </li>
+						<li> <a href="aut_config_pages_tg.html">TDLIB</a> </li>
+						<li> <a href="aut_config_pages_tb.html">TGBOT</a> </li>
+						<li> <a href="aut_config_pages_wxmp.html">公众号</a> </li>
+						<li> <a href="aut_config_pages_dd.html">钉钉BOT</a> </li>
+
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active">
+
+							<form action="#!" method="post" name="edit-form" class="edit-form">
+								<div class="form-group">
+									<label for="qb-disable">禁用</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="qb-disable" id="qb-disable">
+										<span></span>
+									</label>
+								</div>
+								<div class="form-group">
+									<label for="qb-isSandBox">沙箱环境：</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="qb-isSandBox" id="qb-isSandBox">
+										<span></span>
+									</label>
+								</div>
+								<div class="form-group">
+									<label for="qb-disable_private">禁用私聊</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="qb-disable_private" id="qb-disable_private">
+										<span></span>
+									</label>
+									<small class="help-block"></small>
+								</div>
+								<div class="form-group">
+									<label for="qb-disable_group">禁用群聊</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="qb-disable_group" id="qb-disable_group">
+										<span></span>
+									</label>
+									<small class="help-block"></small>
+								</div>
+								<div class="form-group">
+									<label for="qb-appID">appID</label>
+									<input class="form-control" type="text" name="qb-appID" id="qb-appID"
+										value="" placeholder="" />
+									<small class="help-block"></small>
+								</div>
+								<div class="form-group">
+									<label for="qb-accessToken">accessToken</label>
+									<input class="form-control" type="text" name="qb-accessToken" id="qb-accessToken" value=""
+										placeholder="" />
+									<small class="help-block"></small>
+								</div>
+								<div class="form-group">
+									<label for="qb-masters">管理员</label>
+									<input class="form-control" type="text" name="qb-masters" id="qb-masters" value=""
+										placeholder="" />
+									<small class="help-block"></small>
+								</div>
+								<hr>
+								<div class="form-group">
+									<label for="qb-enable_autman_short">使用autman短链</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="qb-enable_autman_short" id="qb-enable_autman_short">
+										<span></span>
+									</label>
+									<small class="help-block">使用autman短链前，须将https://s.autman.cn/s加入到QQ开放平台的备案url中</small>
+								</div>
+								<div class="form-group">
+									<label for="qb-jumpurl">非备案跳转链接</label>
+									<input class="form-control" type="text" name="qb-jumpurl" id="qb-jumpurl" value=""
+										placeholder="https://s.autman.cn/jump?url=" />
+									<small class="help-block"></small>
+								</div>
+								<div class="form-group">
+									<label for="qb-registered_urls">备案链接</label>
+									<textarea class="form-control" rows="5" type="text" name="qb-registered_urls" id="qb-registered_urls"></textarea>
+									<small class="help-block">在QQ开放平台备过案的链接，一行一个</small>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-primary" type="button" onclick="submitParams()">保存</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+				<!--end card-->
+			</div>
+
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--消息提示-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<script type="text/javascript" src="js/lightyear.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/fill_input.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>首页 - autMan后台管理系统</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="autMan,后台管理系统">
+  <meta name="description" content="autMan后台管理系统">
+  <meta name="author" content="autMan">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="js/bootstrap-multitabs/multitabs.min.css">
+  <link href="css/style.min.css" rel="stylesheet">
+  <!--对话框-->
+  <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+</head>
+
+<body>
+  <div class="container-fluid p-t-15">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-toolbar clearfix">
+
+            <!--搜索框-->
+            <form class="pull-right search-bar">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <input type="hidden" name="search_field" id="search-field" value="title">
+                  <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    全搜索 <span class="caret"></span>
+                  </button>
+                  <!-- <ul class="dropdown-menu">
+                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="title">标题</a> </li>
+                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="cat_name">栏目</a> </li>
+                  </ul> -->
+                </div>
+                <input type="text" class="form-control" value="" id="searchInput" name="searchInput"
+                  placeholder="请输入关键词">
+              </div>
+            </form>
+
+            <!--操作按钮菜单-->
+            <div class="toolbar-btn-action">
+              <a id="carry_add_rule" class="btn btn-primary m-r-5" href="#!" data-toggle="modal" data-target="#myModal"
+                onclick="autClearModalForm()"><i class="mdi mdi-plus"></i> 新增</a>
+              <a id="carry_enable_rules" class="btn btn-success m-r-5" href="#!" onclick="autEnableCarryRules()"><i
+                  class="mdi mdi-check"></i> 启用</a>
+              <a id="carry_disable_rules" class="btn btn-warning m-r-5" href="#!" onclick="autDisableCarryRules()"><i
+                  class="mdi mdi-block-helper"></i>
+                禁用</a>
+              <!-- <a id="carry_export_rules" class="btn btn-info m-r-5" href="#!" onclick="autExportCarryRules()"><i
+                  class="mdi mdi-import"></i>
+                导入</a>
+              <a id="carry_import_rules" class="btn btn-dark m-r-5" href="#!" onclick="autImportCarryRules()"><i
+                  class="mdi mdi-export"></i> 导出</a> -->
+              <a id="carry_delete_rules" class="btn btn-danger" href="#!" onclick="autDelCarryRules()"><i
+                  class="mdi mdi-window-close"></i> 删除</a>
+            </div>
+
+          </div>
+
+          <!--内容区-->
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="myTable">
+                <thead>
+                  <tr>
+                    <th>
+                      <label class="lyear-checkbox checkbox-primary">
+                        <input type="checkbox" id="check-all"><span></span>
+                      </label>
+                    </th>
+                    <th>ID</th>
+                    <th>名称</th>
+                    <th>开关</th>
+                    <th>源</th>
+                    <th>流</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="datasets">
+
+                </tbody>
+              </table>
+            </div>
+
+            <!--页码区-->
+            <ul class="pagination">
+              <li class="disabled"><span>«</span></li>
+              <li class="active"><span>1</span></li>
+              <li class="disabled"><span>»</span></li>
+            </ul>
+            <!--
+            <ul class="pagination">
+              <li class="disabled"><span>«</span></li>
+              <li class="active"><span>1</span></li>
+              <li><a href="#1">2</a></li>
+              <li><a href="#1">3</a></li>
+              <li><a href="#1">4</a></li>
+              <li><a href="#1">5</a></li>
+              <li><a href="#1">6</a></li>
+              <li><a href="#1">7</a></li>
+              <li><a href="#1">8</a></li>
+              <li class="disabled"><span>...</span></li>
+              <li><a href="#!">14452</a></li>
+              <li><a href="#!">14453</a></li>
+              <li><a href="#!">»</a></li>
+            </ul>
+          -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!--模态弹出框-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">标题</h4>
+          </div>
+          <div class="modal-body">
+            <form id="carry_modal" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+              <div class="form-group hidden">
+                <label class="col-md-3 control-label" for="id">ID</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm aut-int" type="number" name="id" id="id"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="name">名称</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm aut-string" type="text" name="name" id="name"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="on">开关</label>
+                <div class="col-md-2">
+                  <label class="lyear-switch switch-solid switch-primary">
+                    <input type="checkbox" name="on" id="on" value="true">
+                    <span></span>
+                  </label>
+                </div>
+                <label class="col-md-3 control-label" for="with_tail">来源尾巴</label>
+                <div class="col-md-2">
+                  <label class="lyear-switch switch-solid switch-primary">
+                    <input type="checkbox" name="with_tail" id="with_tail" value="true">
+                    <span></span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="carry_from">原始群</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm aut-string" type="text" name="carry_from" id="carry_from" value=""
+                    placeholder="123,456,789" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="carry_from_ones">原始人</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm aut-string" type="text" name="carry_from_ones" id="carry_from_ones" value=""
+                    placeholder="123,456,789" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="carry_to">目的群</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm aut-string" type="text" name="carry_to" id="carry_to" value=""
+                    placeholder="qqgroup:123,wxgroup:456,tggroup:789" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="del_repeat">是否去重</label>
+                <div class="col-md-2">
+                  <label class="lyear-switch switch-solid switch-primary">
+                    <input type="checkbox" name="del_repeat" id="del_repeat" value="true">
+                    <span></span>
+                  </label>
+                </div>
+                <label class="col-md-3 control-label" for="carry_convert">是否转链</label>
+                <div class="col-md-2">
+                  <label class="lyear-switch switch-solid switch-primary">
+                    <input type="checkbox" name="carry_convert" id="carry_convert" value="true">
+                    <span></span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="white_list">白名单</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm aut-string" type="text" name="white_list"
+                    id="white_list" value="" placeholder="你好,我好,他好" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="black_list">黑名单</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm aut-string" type="text" name="black_list"
+                    id="black_list" value="" placeholder="你好,我好,他好" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="reg_chose">筛选</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm aut-string" type="text" name="reg_chose" id="reg_chose" value=""
+                    placeholder="正则筛选" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="cuts">剔除</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm aut-strings" type="text" name="cuts" id="cuts" value=""
+                    placeholder="ab,cd，支持正则" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="replace">替换</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm aut-json" type="text" name="replace" id="replace" value=""
+                    placeholder='{"ab":"cd","ef":"gh"}，json格式，支持正则'/>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="autSubmitModalForm()">点击保存</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--消息提示-->
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <script type="text/javascript" src="js/lightyear.js"></script>
+  <!--对话框-->
+  <script type="text/javascript" src="js/jconfirm/jquery-confirm.min.js"></script>
+  <!--自定义-->
+  <script type="text/javascript" src="js/aut-utils.js"></script>
+  <script type="text/javascript" src="js/carry.js"></script>
+  <!--表格拖拽-->
+  <!-- <script type="text/javascript" src="js/jquery-ui.min.js"></script> -->
+</body>
+
+</html>

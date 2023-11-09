@@ -1,7 +1,7 @@
 <?php
 //本地服务请求函数，返回请求结果
 function fetchLocalURL($path, $timeout) {
-    $url="http://localhost:8080/otto".$path;
+    $url="http://localhost:9999/otto".$path;
     echo $url."\n";
     // 本地环境
     $ch = curl_init();

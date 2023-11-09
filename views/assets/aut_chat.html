@@ -1,0 +1,203 @@
+<html>
+
+<head>
+  <title>Chat Window</title>
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+
+  <link href="css/style.min.css" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="css/font.awesome.all.min.css">
+  <link rel="stylesheet" href="js/bootstrap-multitabs/multitabs.min.css">
+  <link rel="stylesheet" href="css/style.min.css">
+  <style>
+    .login-box {
+      background-color: #fff;
+      border-radius: 5px;
+      border: 1px solid #33cabb;
+      text-align: center;
+    }
+
+    .login-header {
+      background-color: #33cabb;
+      color: #fff;
+      font-weight: bold;
+      padding: 10px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      border-bottom: 1px solid #33cabb;
+    }
+
+    .chat-box {
+      height: 700px;
+      background-color: #fff;
+      overflow-y: hidden;
+      border-radius: 5px;
+      border: 1px solid #33cabb;
+    }
+
+    .chat-header {
+      background-color: #33cabb;
+      color: #fff;
+      font-weight: bold;
+      padding: 10px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      border-bottom: 1px solid #33cabb;
+      text-align: center;
+    }
+
+    .chat-body {
+      height: 600px;
+      overflow-y: scroll;
+      padding: 10px;
+    }
+
+    .chat-input {
+      background-color: #f1f1f1;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      padding: 10px;
+      margin-top: 0px;
+    }
+    .item {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .left {
+      flex-direction: row;
+    }
+
+    .right {
+      flex-direction: row-reverse;
+    }
+
+    .right .message {
+      margin-right: 10px;
+      background: #33cabb;
+      color: #fff
+    }
+
+    .left .message {
+      margin-left: 10px;
+    }
+
+    .header-img {
+      width: 42px;
+      height: 42px;
+      border-radius: 100px;
+    }
+
+    .message {
+      max-width: 80%;
+      border-radius: 10px;
+      display: flex;
+      background: #efefef;
+      min-height: 25px;
+      padding: 9px 10px;
+      align-items: center;
+      color: #222121;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid p-t-15">
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <div class="chat-box">
+          <div class="chat-header">
+            <span style="float: left;"><a class="text-danger" href="#!" data-toggle="modal"
+                data-target="#myModalLogin">登陆</a></span>
+            对话窗口
+            <span style="float: right;"><a class="text-danger" href="#!" data-toggle="modal"
+                data-target="#myModalRegister">注册</a></span>
+          </div>
+
+          <div class="card-body chat-body" id="mychatbody">
+            <!-- more messages here -->
+          </div>
+
+          <div class="card-footer chat-input">
+            <div class="input-group">
+              <input type="text" class="form-control" id="msg" placeholder="请输入指令...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" id="send">发送</button>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- 登陆弹出框-->
+      <div class="modal fade" id="myModalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="login-header">
+              登陆
+            </div>
+            <div class="card-body">
+              <div class="form-group has-feedback feedback-left">
+                <input type="text" placeholder="请输入登陆名" class="form-control" name="username" id="username" />
+                <span class="mdi mdi-account form-control-feedback" aria-hidden="true"></span>
+              </div>
+              <div class="form-group has-feedback feedback-left">
+                <input type="password" placeholder="请输入密码" class="form-control" id="password" name="password" />
+                <span class="mdi mdi-lock form-control-feedback" aria-hidden="true"></span>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" id="login">立即连接</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--end 登陆弹出框-->
+
+      <!--注册弹出框-->
+      <div class="modal fade" id="myModalRegister" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="login-header">
+              注册
+            </div>
+            <div class="card-body">
+              <div class="form-group has-feedback feedback-left">
+                <input type="text" placeholder="请输入QQ号" class="form-control" name="qq_user" id="qq_user" />
+                <span class="mdi mdi-account form-control-feedback" aria-hidden="true"></span>
+              </div>
+              <div class="form-group has-feedback feedback-left">
+                <input type="password" placeholder="请输入密码" class="form-control" id="qq_pwd" name="qq_pwd" />
+                <span class="mdi mdi-lock form-control-feedback" aria-hidden="true"></span>
+              </div>
+              <div class="form-group has-feedback feedback-left">
+                <input type="text" placeholder="请输入验证码" class="form-control" id="qq_code" name="qq_code" />
+                <span class="mdi mdi-lock form-control-feedback" aria-hidden="true"></span>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" id="sendcode" onclick="sendcode()">发送QQ邮箱验证</button>
+                <button class="float-right btn btn-primary" id="register" onclick="register()">立即注册</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--end 注册弹出框-->
+
+    </div>
+  </div>
+
+  <!-- jQuery library -->
+  <script src="js/jquery.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="js/bootstrap.min.js"></script>
+
+  <!--自定义-->
+  <script type="text/javascript" src="js/chat.js"></script>
+</body>
+
+</html>

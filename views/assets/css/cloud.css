@@ -1,0 +1,79 @@
+/* 遮罩层的css实现absolute; */
+#dropback {
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom: 0;
+    background: #444;
+    z-index: 1000;
+    opacity: 0.9;
+    display: none;
+}
+/* 弹窗的css实现 */
+#task{
+    width: 300px;
+    height: fixed;
+    position: fixed;
+    border:1px solid #E5E5E5;
+    display: none;
+    z-index: 100;
+    color:#666;
+    border-radius: 4px;
+    z-index: 1020;
+    background: #fff;
+    font-size: 10pt;
+}
+/* 弹窗的css实现 */
+#task2 {
+    width: fixed;
+    height: fixed;
+    position: fixed;
+    border:1px solid #E5E5E5;
+    display: none;
+    z-index: 100;
+    color:#666;
+    border-radius: 4px;
+    z-index: 1020;
+    background: #fff;
+    font-size: 10pt;
+}
+#vess {
+    width: 300px;
+    height: 330px;
+    position: absolute;
+    border:1px solid #E5E5E5;
+    display: none;
+    z-index: 100;
+    color:#666;
+    border-radius: 4px;
+    z-index: 1020;
+    background: #fff;
+    font-size: 10pt;
+}
+/* 弹窗上关闭X号按钮的实现 */
+.close {
+    position: relative;
+    float:right;
+    top:3px;
+    right:5px;
+    padding:5px;
+    cursor: pointer;
+}
+/*
+table{
+    font-size: 8pt;
+  }
+*/
+#plugins ul li {
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+td {
+    word-break: break-all;
+    word-wrap: break-word;
+}

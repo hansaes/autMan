@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>系统参数 - autMan后台管理系统</title>
+	<link rel="icon" href="favicon.ico" type="image/ico">
+	<meta name="keywords" content="autMan,后台管理系统">
+	<meta name="description" content="autMan后台管理系统">
+	<meta name="author" content="autMan">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="css/style.min.css" rel="stylesheet">
+	<!--滑块插件-->
+	<link rel="stylesheet" href="js/ion-rangeslider/ion.rangeSlider.min.css">
+	<!--对话框-->
+	<link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+
+		<div class="row">
+			<div class="col-lg-6">
+				<!--card-->
+				<div class="card">
+					<div class="card-body">
+
+						<form method="post" name="edit-form" class="edit-form">
+							<h3>饿了么</h3>
+							<hr>
+							<div class="form-group">
+								<label for="fanli-enable_ele">开关</label>
+								<label class="lyear-switch switch-solid switch-primary">
+									<input type="checkbox" checked="" name="fanli-enable_ele" id="fanli-enable_ele">
+									<span></span>
+								</label>
+							</div>
+							<div class="form-group">
+								<label for="fanli-ele_cron">定时（重启生效）</label>
+								<input class="form-control" type="text" name="fanli-ele_cron" id="fanli-ele_cron"
+									value="" placeholder="" />
+								<small class="help-block">cron表达式</small>
+							</div>
+							<div class="form-group">
+								<label for="fanli-ele_activity_id">活动ID</label>
+								<input class="form-control" type="text" name="fanli-ele_activity_id"
+									id="fanli-ele_activity_id" value="" placeholder="" />
+								<small class="help-block"> 饿了么相关活动id
+									<br>活动ID：10144，饿了么天天领红包，最高抢66元大额红包，预估佣金收益6%。
+									<br>活动ID：10107，吃喝玩乐 尽享优惠，本地生活福利大放送，预估佣金收益8%。
+									<br>活动ID：10174，浏览店铺做任务，抢无门槛红包，预估佣金收益6%。
+									<br>活动ID：10247，零售会场（新），超低价爆品来袭，预估佣金收益4%。
+									<br>活动ID：10405，城市品牌日，女神节活动，预估佣金收益4%。</small>
+							</div>
+							<div class="form-group">
+								<label for="fanli-ele_pic">附图</label>
+								<label class="lyear-switch switch-solid switch-primary">
+									<input type="checkbox" checked="" name="fanli-ele_pic" id="fanli-ele_pic">
+									<span></span>
+								</label>
+							</div>
+							<div class="form-group">
+								<label for="fanli-ele_to_groups">目标群</label>
+								<input class="form-control" type="text" name="fanli-ele_to_groups"
+									id="fanli-ele_to_groups" value="" placeholder="" />
+								<small class="help-block">qqgroup:123,wxgroup:456,tbgroup:789</small>
+							</div>
+							<div class="form-group">
+								<button class="btn btn-primary" type="button" onclick="submitParams()">保存</button>
+							</div>
+						</form>
+
+					</div>
+
+				</div>
+			</div>
+
+			<div class="col-lg-6">
+				<!--card-->
+				<div class="card">
+					<div class="card-body">
+
+						<form method="post" name="edit-form" class="edit-form">
+							<h3>美团</h3>
+							<hr>
+							<div class="form-group">
+								<label for="fanli-enable_meituan">开关</label>
+								<label class="lyear-switch switch-solid switch-primary">
+									<input type="checkbox" checked="" name="fanli-enable_meituan" id="fanli-enable_meituan">
+									<span></span>
+								</label>
+							</div>
+							<div class="form-group">
+								<label for="fanli-meituan_cron">定时（重启生效）</label>
+								<input class="form-control" type="text" name="fanli-meituan_cron" id="fanli-meituan_cron"
+									value="" placeholder="" />
+								<small class="help-block">cron表达式</small>
+							</div>
+							<div class="form-group">
+								<label for="fanli-meituan_act_id">活动ID</label>
+								<input class="form-control" type="text" name="fanli-meituan_act_id"
+									id="fanli-meituan_act_id" value="" placeholder="" />
+								<small class="help-block">参见：<a href="http://www.zhetaoke.com/one/api3.aspx">http://www.zhetaoke.com/one/api3.aspx</a>美团转链API</small>
+							</div>
+							<div class="form-group">
+								<label for="fanli-meituan_link_type">链接类型</label>
+								<input class="form-control" type="text" name="fanli-meituan_link_type"
+									id="fanli-meituan_link_type" value="" placeholder="" />
+								<small class="help-block">参见：<a href="http://www.zhetaoke.com/one/api3.aspx">http://www.zhetaoke.com/one/api3.aspx</a>美团转链API</small>
+							</div>
+							<div class="form-group">
+								<label for="fanli-meituan_pic">附图</label>
+								<label class="lyear-switch switch-solid switch-primary">
+									<input type="checkbox" checked="" name="fanli-meituan_pic" id="fanli-meituan_pic">
+									<span></span>
+								</label>
+							</div>
+							<div class="form-group">
+								<label for="fanli-meituan_mini_code">图的样式</label>
+								<input class="form-control" type="text" name="fanli-meituan_mini_code"
+									id="fanli-meituan_mini_code" value="" placeholder="" />
+								<small class="help-block">1：小程序二维码，2：长链接二维码推广大图，3：小程序二维码推广大图</small>
+							</div>
+							<div class="form-group">
+								<label for="fanli-meituan_to_groups">目标群</label>
+								<input class="form-control" type="text" name="fanli-meituan_to_groups"
+									id="fanli-meituan_to_groups" value="" placeholder="" />
+								<small class="help-block">qqgroup:123,wxgroup:456,tbgroup:789</small>
+							</div>
+							<div class="form-group">
+								<button class="btn btn-primary" type="button" onclick="submitParams()">保存</button>
+							</div>
+						</form>
+
+					</div>
+
+				</div>
+			</div>
+			<!--end card-->
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--消息提示-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<script type="text/javascript" src="js/lightyear.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--滑块插件-->
+	<script src="js/ion-rangeslider/ion.rangeSlider.min.js"></script>
+	<!--对话框-->
+	<script type="text/javascript" src="js/jconfirm/jquery-confirm.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/fill_input.js"></script>
+</body>
+
+</html>

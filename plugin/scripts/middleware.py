@@ -4,7 +4,7 @@ import sys
 # 本地服务的请求
 def get_local_service_response(path,params):
     print("网络请求")
-    url = "http://localhost:8080/otto"+path
+    url = "http://localhost:9999/otto"+path
     response = requests.get(url, params)
     print(response.text)
     return response

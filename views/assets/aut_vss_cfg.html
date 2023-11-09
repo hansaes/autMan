@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>首页 - autMan后台管理系统</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="autMan,后台管理系统">
+  <meta name="description" content="autMan后台管理系统">
+  <meta name="author" content="autMan">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="js/bootstrap-multitabs/multitabs.min.css">
+  <link href="css/style.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <!--对话框-->
+  <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+  <!--autman-->
+  <link rel="stylesheet" href="css/autman.css">
+
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/codemirror.css">
+  <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/codemirror.js"></script>
+
+  <!--引用的文件用于支持对应语言的语法高亮。-->
+  <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/mode/shell/shell.min.js"></script>
+
+  <style>
+    .CodeMirror {
+      height: 100%;
+      border: 1px solid #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid p-t-15">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card m-b-0 p-b-0">
+          <div class="card-toolbar clearfix">
+
+            <a class="btn btn-success m-r-5" href="#!" id="save"><i class="mdi mdi-check"></i> 保存</a>
+            <a class="btn btn-info m-r-5" href="#!" id="fresh"><i class="mdi mdi-rotate-3d"></i> 刷新</a>
+
+            <!--下拉框-->
+            <form class="pull-right search-bar">
+              <div class="input-group">
+                <select class="form-control" id="configs_files" name="configs_files" size="1">
+                  <option value="config.sh">config.sh</option>
+                </select>
+              </div>
+            </form>
+
+          </div>
+
+          <!--内容区-->
+          <div class="card-body">
+            <textarea id="code" value="text" style="min-height: 100px;"></textarea>
+          </div>
+          <!--end 内容区-->
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--消息提示-->
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <script type="text/javascript" src="js/lightyear.js"></script>
+  <!--对话框-->
+  <script type="text/javascript" src="js/jconfirm/jquery-confirm.min.js"></script>
+  <!--鼠标拖拽-->
+  <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      timestamp = new Date().getTime();
+      //设置选中的目录项
+      $.get("/configs?t=" + timestamp, function (reponse) {
+        data = reponse.data;
+        //清理选择框configs_files
+        $("#configs_files").empty();
+        //添加选项
+        for (var i = 0; i < data.length; i++) {
+          $("#configs_files").append("<option value='" + data[i].name + "'>" + data[i].name + "</option>");
+          if (data[i].name == "config.sh") {
+            editor.setValue(data[i].value)
+          }
+        }
+      });
+
+      //绑定configs_files选择框的change事件
+      $("#configs_files").change(function () {
+        timestamp = new Date().getTime();
+        var configs_files = $("#configs_files").val();
+        $.get("/configs/" + configs_files + "?t=" + timestamp, function (reponse) {
+          console.log(reponse);
+          data = reponse.data;
+          editor.setValue(data)
+        });
+      });
+
+      // 绑定保存按钮
+      $("#save").click(function () {
+        autSaveContent()
+      });
+
+      // 绑定刷新按钮
+      $("#fresh").click(function () {
+        timestamp = new Date().getTime();
+        var configs_files = $("#configs_files").val();
+        $.get(`/configs/${configs_files}?t=${timestamp}`, function (reponse) {
+          console.log(reponse);
+          data = reponse.data;
+          editor.setValue(data)
+          //提示
+          lightyear.notify('刷新成功', 'success', 1000);
+        });
+      });
+    })
+
+    //代码编辑框设置
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+      //Java高亮显示
+      mode: "text/x-sh",
+      //显示行号
+      lineNumbers: true,
+      //设置主题
+      theme: "default",
+      //代码折叠
+      lineWrapping: true,
+      foldGutter: true,
+      gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+      //全屏模式
+      //fullScreen: true,
+      scrollbarStyle: null,
+      styleActiveLine: true,
+      //括号匹配
+      matchBrackets: true,
+      //智能提示 
+      extraKeys: {
+        "Ctrl-Space": "autocomplete", //ctrl-space唤起智能提示
+        "Ctrl-Q": function (cm) { //Ctrl-Q注释
+          cm.toggleComment();
+        },
+        "Ctrl-/": "undo", //撤销
+        "Ctrl-Z": "redo", //重做
+        "Ctrl-F": "find", //查找
+        "Ctrl-G": "findNext", //查找下一个
+        "Shift-Ctrl-G": "findPrev", //查找上一个
+        "Shift-Ctrl-F": "replace", //替换
+        "Shift-Ctrl-R": "replaceAll", //全部替换
+        "Ctrl-S": function (cm) { //Ctrl-S保存
+          autSaveContent()
+        },
+      },
+    });
+
+    function autSaveContent() {
+      var configs_files = $("#configs_files").val();
+      var content = editor.getValue();
+      timestamp = new Date().getTime();
+      $.ajax({
+        url: "/configs/save?t=" + timestamp,
+        type: "POST",
+        data: JSON.stringify({
+          name: configs_files,
+          content: content
+        }),
+        contentType: "application/json",
+        success: function (reponse) {
+          if (reponse.code == 200) {
+            lightyear.notify('保存成功', 'success', 1000);
+          } else {
+            lightyear.notify('保存失败', 'danger', 1000);
+          }
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

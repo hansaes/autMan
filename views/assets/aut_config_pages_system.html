@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>系统参数 - autMan后台管理系统</title>
+	<link rel="icon" href="favicon.ico" type="image/ico">
+	<meta name="keywords" content="autMan,后台管理系统">
+	<meta name="description" content="autMan后台管理系统">
+	<meta name="author" content="autMan">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<!--card-->
+				<div class="card">
+					<ul class="nav nav-tabs page-tabs">
+						<li class="active"> <a href="#!">基本</a> </li>
+						<li> <a href="aut_config_pages_update.html">更新</a> </li>
+						<li> <a href="aut_config_pages_aut.html">AUT云账号</a> </li>
+						<li> <a href="aut_config_pages_admins.html">管理员</a> </li>
+						<li> <a href="aut_config_pages_notify.html">通知</a> </li>
+						<li> <a href="aut_config_pages_qq.html">QQ框架</a> </li>
+						<li> <a href="aut_config_pages_qqbot.html">QQBOT</a> </li>
+						<li> <a href="aut_config_pages_wx.html">WX框架</a> </li>
+						<li> <a href="aut_config_pages_wxbot.html">WXBOT</a> </li>
+						<li> <a href="aut_config_pages_tg.html">TDLIB</a> </li>
+						<li> <a href="aut_config_pages_tb.html">TGBOT</a> </li>
+						<li> <a href="aut_config_pages_wxmp.html">公众号</a> </li>
+						<li> <a href="aut_config_pages_dd.html">钉钉BOT</a> </li>
+
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active">
+
+							<form method="post" name="edit-form" class="edit-form">
+								<div class="form-group">
+									<label for="autMan-port">autMan服务端口</label>
+									<input class="form-control" type="text" id="autMan-port" name="autMan-port"
+										value="8080" placeholder="请输入autMan运行端口">
+									<small class="help-block">自定义autMan服务端口，重启生效，默认为8080</small>
+								</div>
+								<!-- <div class="form-group">
+									<label for="autMan-web_port">webchat端口</label>
+									<input type="text" class="form-control" name="autMan-web_port" id="autMan-web_port"
+										value="8282" />
+									<small class="help-block">自定义webchat服务端口，重启生效，默认为8282</small>
+								</div> -->
+
+								<div class="form-group">
+									<label for="fanli-host_name">域名或公网地址</label>
+									<input class="form-control" type="text" id="fanli-host_name" name="fanli-host_name"
+										value="" placeholder="">
+									<small class="help-block">格式：http://www.autman.cn:9999</small>
+								</div>
+
+								<hr>
+
+								<div class="form-group">
+									<label for="autMan-botchat_recall_enable">撤回机器人消息</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="autMan-botchat_recall_enable"
+											id="autMan-botchat_recall_enable">
+										<span></span>
+									</label>
+								</div>
+								<div class="form-group">
+									<label for="autMan-botchat_recall_imtypes">渠道全撤回</label>
+									<input class="form-control" type="text" id="autMan-botchat_recall_imtypes"
+										name="autMan-botchat_recall_imtypes" value="" placeholder="">
+									<small class="help-block">如填写：qq,qb,tb时，会撤回所有qq、频道和tgbot下的机器人对话</small>
+								</div>
+								<div class="form-group">
+									<label for="autMan-botchat_recall_groups">启用撤回用户或群组</label>
+									<input class="form-control" type="text" id="autMan-botchat_recall_groups"
+										name="autMan-botchat_recall_groups" value="" placeholder="">
+									<small class="help-block">渠道全撤回不填写时，可单独指定全撤回的群组，如：12345,678990</small>
+								</div>
+								<div class="form-group">
+									<label for="autMan-botchat_recall_duration">延时撤回时间(秒)</label>
+									<input class="form-control" type="text" id="autMan-botchat_recall_duration"
+										name="autMan-botchat_recall_duration" value="" placeholder="">
+									<small
+										class="help-block">不填写时，默认延时5秒钟撤回，注意有的渠道有撤回的时间限制，比如wx，官方限制在2分钟内撤回，这里要填写小于120这个值，否则无法撤回</small>
+								</div>
+
+								<hr>
+
+								<div class="form-group">
+									<label for="autMan-userchat_recall_enable">撤回用户发言</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="autMan-userchat_recall_enable"
+											id="autMan-userchat_recall_enable">
+										<span></span>
+									</label>
+								</div>
+								<div class="form-group">
+									<label for="autMan-userchat_recall_imtypes">渠道全撤回</label>
+									<input class="form-control" type="text" id="autMan-userchat_recall_imtypes"
+										name="autMan-userchat_recall_imtypes" value="" placeholder="">
+									<small class="help-block">如填写：qq,qb,tb时，会撤回所有qq,qb和tb下的用户发言</small>
+								</div>
+								<div class="form-group">
+									<label for="autMan-userchat_recall_groups">启用撤回用户或群组</label>
+									<input class="form-control" type="text" id="autMan-userchat_recall_groups"
+										name="autMan-userchat_recall_groups" value="" placeholder="">
+									<small class="help-block">渠道全撤回不填写时，可单独指定全撤回的群组，如：12345,678990</small>
+								</div>
+								<div class="form-group">
+									<label for="autMan-userchat_recall_duration">延时撤回时间(秒)</label>
+									<input class="form-control" type="text" id="autMan-userchat_recall_duration"
+										name="autMan-userchat_recall_duration" value="" placeholder="">
+									<small class="help-block">不填写时，默认延时5秒钟撤回，注部分渠道不支持撤回操作，如wx</small>
+								</div>
+
+								<hr>
+
+								<div class="form-group">
+									<label for="autMan-recall">敏感词前撤回</label>
+									<textarea class="form-control" id="autMan-recall" rows="5" name="autMan-recall"
+										placeholder="请输入敏感词"></textarea>
+									<small class="help-block">敏感词之间用&连接，后续autMan不处理带敏感词的消息</small>
+								</div>
+								<div class="form-group">
+									<label for="autMan-recall_by">敏感词后撤回</label>
+									<textarea class="form-control" id="autMan-recall_by" rows="5"
+										name="autMan-recall_by" placeholder="请输入敏感词"></textarea>
+									<small class="help-block">敏感词之间用&连接，后续autMan会处理带敏感词的消息</small>
+								</div>
+								<div class="form-group">
+									<label for="autMan-backup_interval">数据自动备份</label>
+									<input class="form-control" type="text" id="autMan-backup_interval"
+										name="autMan-backup_interval" value="" placeholder="请输入数据自动备份间隔">
+									<small class="help-block">不填或填0为不启用，单位为小时</small>
+								</div>
+
+								<div class="form-group">
+									<label for="fanli-appreciate">打赏</label>
+									<input class="form-control" type="text" id="fanli-appreciate"
+										name="fanli-appreciate" value="" placeholder="请输入图片网址">
+									<small class="help-block">http://xxx</small>
+								</div>
+
+								<div class="form-group">
+									<label for="autMan-icp">ICP备案号</label>
+									<input class="form-control" type="text" id="autMan-icp" name="autMan-icp" value=""
+										placeholder="ICP备案号">
+									<small class="help-block">显示在登陆页</small>
+								</div>
+
+								<div class="form-group">
+									<label for="autMan-certFile">TLS/SSL证书路径</label>
+									<input class="form-control" type="text" id="autMan-certFile" name="autMan-certFile"
+										value="" placeholder="path/to/cert.pem">
+									<small class="help-block">支持pem、der格式的证书，相对路径或绝对路径</small>
+								</div>
+
+								<div class="form-group">
+									<label for="autMan-keyFile">TLS/SSL Key路径</label>
+									<input class="form-control" type="text" id="autMan-keyFile" name="autMan-keyFile"
+										value="" placeholder="path/to/key.pem">
+									<small class="help-block">支持pem、der格式，相对路径或绝对路径</small>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-primary" type="button" onclick="submitParams()">保存</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!--end card-->
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--消息提示-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<script type="text/javascript" src="js/lightyear.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/fill_input.js"></script>
+</body>
+
+</html>

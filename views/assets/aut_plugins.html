@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>首页 - autMan后台管理系统</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <meta name="keywords" content="autMan,后台管理系统">
+    <meta name="description" content="autMan后台管理系统">
+    <meta name="author" content="autMan">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/materialdesignicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="js/bootstrap-multitabs/multitabs.min.css">
+    <link href="css/style.min.css" rel="stylesheet">
+    <!--对话框-->
+    <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/codemirror.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/codemirror.js"></script>
+
+    <!--引用的文件用于支持对应语言的语法高亮。-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/mode/javascript/javascript.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/mode/shell/shell.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/mode/go/go.min.js"></script>
+
+    <!--引入css文件，用以支持主题-->
+    <!-- <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/theme/eclipse.css">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/theme/seti.css">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/theme/dracula.css"> -->
+
+    <!--引入js，绑定Vim-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/dialog/dialog.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/keymap/vim.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/search/searchcursor.js"></script>
+
+    <!--代码高亮-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/selection/active-line.js"></script>
+
+    <!--代码提示-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.js"></script>
+
+    <!--支持代码折叠-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/fold/foldgutter.css" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/fold/foldcode.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/fold/foldgutter.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/fold/brace-fold.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/fold/comment-fold.js"></script>
+
+    <!--全屏模式
+    <link rel="stylesheet" href="codemirror-5.65.9/addon/display/fullscreen.css">
+    <script src="codemirror-5.65.9/addon/display/fullscreen.js"></script>
+    -->
+
+    <!--括号匹配-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/edit/matchbrackets.js"></script>
+
+    <!--自动补全-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/hint/anyword-hint.js"></script>
+    <style>
+        .CodeMirror {
+            border: 1px solid #eee;
+            height: auto !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lyear-layout-web">
+        <div class="lyear-layout-container">
+            <!--左侧导航-->
+            <aside class="lyear-layout-sidebar">
+                <div class="sidebar-header">
+                    <div class="topbar">
+                        <ul class="topbar-right">
+                            <!--golang-->
+                            <li>
+                                <i title="golang" class="mdi mdi-18px m-r-5 m-l-5 mdi-language-go"></i></span>
+                            </li>
+                            <!-- shell -->
+                            <li>
+                                <i title="shell" class="mdi mdi-18px m-r-5 m-l-5 mdi-code-greater-than-or-equal"></i>
+                            </li>
+                            <!-- php -->
+                            <li>
+                                <i title="php" class="mdi mdi-18px m-r-5 m-l-5 mdi-language-php"></i>
+                            </li>
+                            <!-- python -->
+                            <li>
+                                <i title="python" class="mdi mdi-18px m-r-5 m-l-5 mdi-language-python"></i>
+                            </li>
+                            <!--nodejs-->
+                            <li>
+                                <i title="typescript" class="mdi mdi-18px m-r-5 m-l-5 mdi-language-typescript"></i>
+                            </li>
+                            <!--nodejs-->
+                            <li>
+                                <i title="nodejs" class="mdi mdi-18px m-r-5 m-l-5 mdi-nodejs"></i>
+                            </li>
+                            <!--es5-->
+                            <li class="bg-primary">
+                                <i title="es5" class="mdi mdi-18px m-r-5 m-l-5 mdi-language-javascript bg-primary"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="lyear-layout-sidebar-scroll">
+                    <nav class="sidebar-main">
+                        <ul class="nav nav-drawer" id="menu">
+                            <li class="nav-item"><a href="#!"><span>无插件</span></a> </li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+            <!--End 左侧导航-->
+
+            <!--头部信息-->
+            <header class="lyear-layout-header">
+                <nav class="navbar navbar-default">
+                    <div class="topbar">
+                        <div class="topbar-left">
+                            <div class="lyear-aside-toggler">
+                                <span class="lyear-toggler-bar"></span>
+                                <span class="lyear-toggler-bar"></span>
+                                <span class="lyear-toggler-bar"></span>
+                            </div>
+                            <a class="btn btn-primary m-r-5" href="#!" data-toggle="modal" data-target="#myModal"><i
+                                    class="mdi mdi-plus"></i> 新建</a>
+
+                            <a class="btn btn-success m-r-5" href="#!" onclick="autSaveJsContent()"><i
+                                    class="mdi mdi-check"></i> 保存</a>
+
+                            <a class="btn btn-danger m-r-5" href="#!" onclick="autDelJsContent()"><i
+                                    class="mdi mdi-window-close"></i> 删除</a>
+                            <!--隐藏的表单，用于存储当前的插件名-->
+                            <input class="form-control" type="text" name="jsname" id="jsname" />
+                        </div>
+
+                        <div class="topbar-right">
+                            <a id="bucket_del_key" class="btn btn-danger m-r-5" href="#!"
+                                onclick="autOffShelfJsContent()"><i class="mdi mdi-arrow-down"></i> 下架aut云</a>
+                            <a id="bucket_del_key" class="btn btn-purple m-r-5" href="#!"
+                                onclick="autUploadJsContent()"><i class="mdi mdi-arrow-up"></i> 上传aut云</a>
+                            <!-- <input class="form-control" type="file" id="file" name="file" readonly> -->
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <!--End 头部信息-->
+
+            <!--页面主要内容-->
+            <main class="lyear-layout-content">
+                <div class="card">
+                    <div><textarea id="code" value="text" style="min-height: 100px;"></textarea></div>
+                </div>
+            </main>
+            <!--End 页面主要内容-->
+        </div>
+    </div>
+
+    <!--模态弹出框-插件新建-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">标题</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form id="modal" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="title">名称</label>
+                            <div class="col-md-7">
+                                <input class="form-control input-sm" type="text" name="title" id="title" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="class">分类</label>
+                            <div class="col-md-7">
+                                <select class="form-control input-sm" name="class" id="class">
+                                    <option value="">请选择分类</option>
+                                    <option value="工具类">工具类</option>
+                                    <option value="查询类">查询类</option>
+                                    <option value="娱乐类">娱乐类</option>
+                                    <option value="餐饮类">餐饮类</option>
+                                    <option value="影音类">影音类</option>
+                                    <option value="生活类">生活类</option>
+                                    <option value="图片类">图片类</option>
+                                    <option value="游戏类">游戏类</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="platform">适用平台</label>
+                            <div class="col-md-7">
+                                <select class="form-control input-sm" type="text" name="platform" id="platform"
+                                    multiple>
+                                    <option value="qq">qq</option>
+                                    <option value="wx">wx</option>
+                                    <option value="tb">tgbot</option>
+                                    <option value="tg">tdlib</option>
+                                    <option value="web">wechat</option>
+                                    <option value="wxmp">公众号</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="price">定价</label>
+                            <div class="col-md-7">
+                                <input class="form-control input-sm" type="type" name="price" id="price">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="service">售后联系方式</label>
+                            <div class="col-md-7">
+                                <input class="form-control input-sm" type="type" name="service" id="service">
+                                </select>
+                            </div>
+                        </div>
+                        <hr class="bg-primary">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="disable">是否禁用</label>
+                            <div class="col-md-7">
+                                <label class="lyear-switch switch-solid switch-primary">
+                                    <input type="checkbox" name="disable" id="disable" value="true">
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="admin">管理员权限</label>
+                            <div class="col-md-7">
+                                <label class="lyear-switch switch-solid switch-primary">
+                                    <input type="checkbox" name="admin" id="admin" value="true">
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="rules">触发规则</label>
+                            <div class="col-md-7">
+                                <input class="form-control input-sm" type="text" name="rules" id="rules" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="cron">执行定时</label>
+                            <div class="col-md-7">
+                                <input class="form-control input-sm" type="text" name="cron" id="cron" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="priority">优先级</label>
+                            <div class="col-md-7">
+                                <input class="form-control input-sm" type="text" name="priority" id="priority" />
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" onclick="autSubmitModalForm()">点击保存</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-multitabs/multitabs.js"></script>
+    <script type="text/javascript" src="js/index.min.js"></script>
+    <!--对话框-->
+    <script src="js/jconfirm/jquery-confirm.min.js"></script>
+    <script type="text/javascript" src="js/main.min.js"></script>
+    <!--hex编码库-->
+    <script type="text/javascript" src="js/hexcode.js"></script>
+    <script>
+        $(document).ready(function () {
+            //设置选中的目录项
+            fillJsMenu("es5")
+            //设置编辑框的框和内容
+            setEditorContent("es5", txt)
+        })
+
+        //代码编辑框设置
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            //Java高亮显示
+            mode: "text/javascript",
+            //显示行号
+            lineNumbers: true,
+            //设置主题
+            theme: "default",
+            //代码折叠
+            lineWrapping: true,
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+            //全屏模式
+            //fullScreen: true,
+            scrollbarStyle: null,
+            styleActiveLine: true,
+            //括号匹配
+            matchBrackets: true,
+            //智能提示 
+            extraKeys: {
+                "Ctrl-Space": "autocomplete", //ctrl-space唤起智能提示
+                "Ctrl-Q": function (cm) { //Ctrl-Q注释
+                    cm.toggleComment();
+                },
+                "Ctrl-Z": "undo", //撤销
+                "Ctrl-Y": "redo", //重做
+                "Ctrl-F": "find", //查找
+                "Ctrl-G": "findNext", //查找下一个
+                "Shift-Ctrl-G": "findPrev", //查找上一个
+                "Shift-Ctrl-F": "replace", //替换
+                "Shift-Ctrl-R": "replaceAll", //全部替换
+                "Ctrl-S": function (cm) { //Ctrl-S保存
+                    autSaveJsContent()
+                },
+                "Ctrl-Enter": function (cm) { //Ctrl-Enter运行
+                    autUploadJsContent()
+                },
+
+            },
+            //绑定Vim，启用Vim模式
+            //keyMap: "vim",
+        });
+
+        //根据不同的编程语言设置编辑框的模式和内容
+        function setEditorContent(language, content) {
+            switch (language) {
+                case "python":
+                    editor.setOption("mode", "text/x-python")
+                    //将//替换为#
+                    content = content.replace(/\/\//g, "#")
+                    break;
+                case "nodejs":
+                    editor.setOption("mode", "text/javascript")
+                    break;
+                case "typescript":
+                    editor.setOption("mode", "text/typescript")
+                    break;
+                case "es5":
+                    editor.setOption("mode", "text/javascript")
+                    break;
+                case "shell":
+                    //将//替换为#
+                    editor.setOption("mode", "text/x-sh")
+                    content = content.replace(/\/\//g, "#")
+                    break;
+                case "php":
+                    editor.setOption("mode", "text/x-php")
+                    break;
+                case "golang":
+                    editor.setOption("mode", "text/x-go")
+                    break;
+            }
+            editor.setValue(content)
+        }
+
+        //选择编程语言事件
+        $(".mdi-18px").click(function () {
+            //获取title
+            language = $(this).attr("title")
+            console.log(language)
+            //将当前元素的父元素的所有兄弟结点的选中状态取消
+            $(".mdi-18px").removeClass('bg-primary')
+            $(this).parent().siblings().removeClass('bg-primary')
+            //设置当前的选中状态
+            $(this).addClass('bg-primary')
+            $(this).parent().addClass('bg-primary')
+            //填充目录
+            fillJsMenu(language)
+            //language小写
+            setEditorContent(language, txt)
+        })
+
+        //填充插件目录,language为语言，activeItem为选中的项
+        function fillJsMenu(language, activeItem) {
+            $.get("/js/menu?language=" + language, function (response) {
+                console.log(response)
+                var obj
+                if (response.code == 200 && response.data) {
+                    obj = response.data
+                } else {
+                    obj = JSON.parse('[{"name":"无插件","disable":true}]')
+                }
+                html = ""
+                for (var i = 0; i < obj.length; i++) {
+                    if (obj[i].disable) {
+                        disable = `<i class="mdi mdi-close-circle-outline" style="color:red" onclick="toggle(this,'${language}','${obj[i].name}')"></i>`
+                    } else {
+                        disable = `<i class="mdi mdi-check-circle-outline" style="color:green" onclick="toggle(this,'${language}','${obj[i].name}')"></i>`
+                    }
+
+                    html += `<li class="nav-item" id="li_${encodeToHex(obj[i].name)}">
+                                <a href="javascript:void(0);">
+                                    ${disable}
+                                    <span onclick="getJsContent('${language}','${obj[i].name}')">${Substr(obj[i].name, 0, 16)}</span>
+                                </a>
+                            </li>`
+                }
+
+                //目录填充
+                console.log(html)
+                $("#menu").html(html)
+                if (activeItem) {//将某项设置为选中状态
+                    $(`#li_${encodeToHex(activeItem)}`).addClass('active bg-primary')
+                }
+            });
+        }
+
+        //某个插件目录的选中状态
+        function autSetSelectedMenuItem(name) {
+            // 移除其他所有兄弟元素的 active 类
+            if (name) {
+                $("#li_" + encodeToHex(name)).siblings().removeClass('active bg-primary');
+                // 为当前元素添加 active 类
+                $("#li_" + encodeToHex(name)).addClass('active bg-primary');
+            } else {
+                //取消所有的选中
+                $(".nav-item").removeClass('active bg-primary')
+            }
+        }
+
+        //获取js内容
+        function getJsContent(language, name) {
+            //设置选中的目录项
+            autSetSelectedMenuItem(name)
+            //alert("点击作用")
+            $.get("/js/content?language=" + language + "&name=" + name, function (response) {
+                //alert(data)
+                $("#jsname").val(name)
+                editor.setValue(response.data)
+            });
+        }
+
+        //负责插件的启用和禁用
+        function toggle(element, language, name) {
+            $.get("/js/toggle?language=" + language + "&name=" + name, function (response) {
+                console.log(response)
+                if (response.code == 200) {
+                    if (response.data.disable) {
+                        $(element).removeClass('mdi mdi-check-circle-outline')
+                        $(element).addClass('mdi mdi-close-circle-outline')
+                        $(element).css('color', 'red')
+                    } else {
+                        $(element).removeClass('mdi mdi-close-circle-outline')
+                        $(element).addClass('mdi mdi-check-circle-outline')
+                        $(element).css('color', 'green')
+                    }
+                    //如果当前显示的是该js文件，则刷新
+                    if ($("#jsname").val() === name) {
+                        editor.setValue(response.data.content)
+                    }
+                }
+            });
+        }
+
+        //新建Js文件
+        function autSubmitModalForm() {
+            //获取当前选中的语言
+            language = $(".mdi-18px.bg-primary").attr("title")
+            //新建脚本的表单
+            const formData = $("#modal").serializeArray();
+            let results = "";
+            $.each(formData, function (index, element) {
+                if (element.name === "title") {
+                    $("#jsname").val(element.value);
+                }
+                if (element.value) {
+                    results += comment[language] + `[${element.name}: ${element.value}]` + "\n";
+                }
+            });
+            editor.setValue(results)
+            $("#myModal").modal("hide")
+            //取消选中的行
+            autSetSelectedMenuItem()
+        }
+
+        //注释行的符号
+        comment = {
+            python: "#",
+            nodejs: "//",
+            typescript: "//",
+            es5: "//",
+            shell: "#",
+            golang: "//",
+        }
+
+        //这是es5的模板
+        txt = `//==========================市场元数据=========================================
+//[open_source: true]是否开源
+//[version: 1.0.0]版本号
+//[class: 图片类]从工具类、查询类、娱乐类、餐饮类、影音类、生活类、图片类、游戏类等中选择，也可自定义
+//[platform: qq,qb,wx,tb,tg,web,wxmp]适用的平台 qq/qb/wx/tb/tg/wxmp/web之间选择，中间用英文逗号隔开
+//[public: true] 是否发布？值为true或false，不设置则上传aut云时会自动设置为true，false时上传后不显示在市场中，但是搜索能搜索到，方便开发者测试
+//[price: 0.01] 上架价格
+//[service: 售后联系方式]写上售后联系方式，方便用户联系咨询
+//[description: 关于插件的描述] 使用方法尽量写具体
+//==========================事件元数据======================================
+//[event: 事件] 匹配事件，多个事件时向下依次写多个
+//==========================路由微服务======================================
+//[router: /path]微服务路由,前面要加上/
+//[method: get]微服务方法，可选get/post/put/delete
+//==========================功能元数据======================================
+//[rule: 规则] 匹配规则，多个规则时向下依次写多个
+//[cron: */1 * * * *] cron定时，支持5位域和6位域
+//[admin: true] 是否为管理员指令
+//[disable: false] 禁用开关，true表示禁用，false表示可用
+//[priority: 0] 优先级，数字越大表示优先级越高
+//[server: xxx]
+//[bypass: true或者false]是否通过旁路并行处理，多用于全拦截的规则如\[rule: ?\]
+//[imType:qq,wx] 白名单,只在qq,wx生效
+//[imType+:qq,wx] 同上,不写+号默认为白名单模式
+//[imType-:qq] 黑名单qq,除了qq生效
+//[userId+:id1,id2] 用户id同样支持黑白名单模式
+//[groupId+:id1,id2] 群id同样支持黑白名单模式
+//==========================配参数据（最下面）===============================
+//[param: {"required":true,"key":"bucket.key","bool":true,"placeholder":"xxx","name":"xxx","desc":"xxx"}]
+//[param: {"required":false,"key":"bucket.key","bool":false,"placeholder":"xxx","name":"xxx","desc":"xxx"}]
+//[param: {"spliter":true}]
+//[param: {"required":true,"key":"bucket.key","bool":false,"placeholder":"xxx","name":"xxx","desc":"xxx"}]
+sendText("测试")`
+
+        //真正的保存过程
+        function saveJs(language, name) {
+            content = editor.getValue()
+            if (!content) {
+                $.alert("插件内容为空")
+                return
+            } else {
+                //alert("保存文件")
+                jsname = encodeURIComponent(name)
+                //alert(name)
+                content = encodeURIComponent(content)
+                //alert(content)
+                $.post(`/js/content?language=${language}&name=${jsname}&content=${content}`, function (response) {
+                    //alert(data)
+                    if (response.code == 200) {
+                        //刷新目录
+                        fillJsMenu(language, name)
+                        //设置选中的目录项
+                        $.alert("保存成功")
+                    } else {
+                        $.alert("保存失败")
+                    }
+                });
+            }
+        }
+
+        //保存js文件
+        function autSaveJsContent() {
+            //通过类为palette bg-primary的元素的title属性来判断当前选中的语言
+            language = $(".mdi-18px.bg-primary").attr("title")
+            //文件名
+            jsname = $("#jsname").val()
+            //控制台方便调试
+            console.log("保存文件" + language + " " + jsname)
+            if (!jsname) {//如果没有文件名
+                $.confirm({
+                    title: '提示',
+                    content: '' +
+                        '<form action="" class="formName">' +
+                        '<div class="form-group">' +
+                        '<label>请输入插件名</label>' +
+                        '<input type="text" placeholder="" class="name form-control" required />' +
+                        '</div>' +
+                        '</form>',
+                    buttons: {
+                        formSubmit: {
+                            text: '提交',
+                            btnClass: 'btn-blue',
+                            action: function () {
+                                var name = this.$content.find('.name').val();
+                                if (!name) {
+                                    $.alert('请您输入插件名');
+                                    return false;
+                                }
+                                jsname = name;
+                                $("#jsname").val(jsname)
+                                saveJs(language, jsname)
+                            }
+                        },
+                        cancel: {
+                            text: '取消'
+                        },
+                    },
+                    onContentReady: function () {
+                        var jc = this;
+                        this.$content.find('form').on('submit', function (e) {
+                            e.preventDefault();
+                            jc.$$formSubmit.trigger('click');
+                        });
+                    }
+                });
+            } else {
+                saveJs(language, jsname)
+            }
+        }
+
+        //删除js文件
+        function autDelJsContent() {
+            //文件名
+            name = $("#jsname").val()
+            //获取当前选中的语言
+            language = $(".mdi-18px.bg-primary").attr("title")
+
+            if (name) {
+                $.alert({
+                    title: '提示框',
+                    content: '确定删除？',
+                    buttons: {
+                        confirm: {
+                            text: '确认',
+                            btnClass: 'btn-primary',
+                            action: function () {
+                                $.ajax({
+                                    url: '/js/content?language=' + language + '&name=' + encodeURIComponent(name),
+                                    type: 'DELETE',
+                                    success: function (response) {
+                                        if (response.code == 200) {
+                                            $.alert("删除成功")
+                                            fillJsMenu(language)
+                                        } else {
+                                            $.alert("删除失败:" + response.message)
+                                        }
+                                    }
+                                })
+                            }
+                        },
+                        cancel: {
+                            text: '取消',
+                            action: function () {
+                                //$.alert('你点击了取消!');
+                            }
+                        }
+                    }
+                });
+            } else {
+                $.alert("请在插件目录点选要删除的插件")
+            }
+        }
+
+        //上传js文件到aut云
+        function autUploadJsContent() {
+            //编程语言，查找class为mdi-18px bg-primary的元素title属性
+            language = $(".mdi-18px.bg-primary").attr("title")
+            //文件名
+            title = $("#jsname").val()
+            //显示
+            console.log("上传文件" + language + " " + title)
+
+            if (title && language) {
+                content = editor.getValue()
+                if (content) {
+                    //检查content中是否有service头注
+                    if (/\[service:[^\n]+\]/.test(content) || /\*[ ]?@service[ ][^\n]+/.test(content)) {
+                        $.ajax({
+                            url: '/js/upload',
+                            type: 'POST',
+                            data: {
+                                "language": language,
+                                "title": encodeURIComponent(title),
+                                "content": content,
+                            },
+                            success: function (response) {
+                                if (response.code == 200) {
+                                    $.alert("上传成功，如果你不是aut云的白名单作者，请务必给群主（qq:282617666）留个言或向群主申请加入白名单，因为有不少用户误上传导致垃圾文件较多，群主审核不及时")
+                                } else {
+                                    $.alert("上传失败：" + response.message)
+                                }
+                            }
+                        })
+                    } else {
+                        $.alert("请在头注中添加service售后联系方式")
+                        return
+                    }
+                } else {
+                    $.alert("插件内容不能为空")
+                }
+            } else {
+                $.alert("未选择上传插件")
+            }
+        }
+
+        //下架aut云的插件
+        function autOffShelfJsContent() {
+            //编程语言，查找class为mdi-18px bg-primary的元素title属性
+            language = $(".mdi-18px.bg-primary").attr("title")
+            //文件名
+            title = $("#jsname").val()
+            //显示
+            console.log("下架文件" + language + " " + title)
+            if (title && language) {
+                $.alert("请将插件的头注public设置为false，然后保存，再点击上传按钮即可下架，下架的插件在市场上不可见，但仍可在云市场上搜索到，方便开发者安装调试")
+            } else {
+                $.alert("未选择下架插件")
+            }
+        }
+
+        //获取js插件的标注头
+        function getJsHeader(cnt) {
+            //alert(cnt)
+            var maxLine = 0
+            var rlt = new Array()
+            var lines = cnt.split("\n")
+            var reg = /^\/\/[^\S\n\r\t]?\[.+\]/;
+            for (var i = 0; i < lines.length; i++) {
+                if (reg.test(lines[i])) {
+                    maxLine = i
+                    rlt.push(lines[i])
+                } else {
+                    break
+                }
+            }
+            return rlt.join("\n")
+        }
+
+        function Substr(str, start, n) { // eslint-disable-line
+            if (str.replace(/[u4e00-u9fa5]/g, '**').length <= n) {
+                return str;
+            }
+            let len = 0;
+            let tmpStr = '';
+            for (let i = start; i < str.length; i++) { // 遍历字符串
+                if (/[u4e00-u9fa5]/.test(str[i])) { // 中文 长度为两字节
+                    len += 1;
+                } else {
+                    len += 2;
+                }
+                if (len > n) {
+                    break;
+                } else {
+                    tmpStr += str[i];
+                }
+            }
+            return tmpStr + "...";
+        }
+    </script>
+</body>
+
+</html>

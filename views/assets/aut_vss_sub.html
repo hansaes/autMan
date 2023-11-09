@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>首页 - autMan后台管理系统</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="autMan,后台管理系统">
+  <meta name="description" content="autMan后台管理系统">
+  <meta name="author" content="autMan">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="js/bootstrap-multitabs/multitabs.min.css">
+  <link href="css/style.min.css" rel="stylesheet">
+  <!--对话框-->
+  <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+</head>
+
+<body>
+  <div class="container-fluid p-t-15">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-toolbar clearfix">
+
+            <!--搜索框-->
+            <form class="pull-right search-bar">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <input type="hidden" name="search_field" id="search-field" value="title">
+                  <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    全搜索 <span class="caret"></span>
+                  </button>
+                  <!-- <ul class="dropdown-menu">
+                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="title">标题</a> </li>
+                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="cat_name">栏目</a> </li>
+                  </ul> -->
+                </div>
+                <input type="text" class="form-control" value="" id="searchInput" name="searchInput"
+                  placeholder="请输入关键词">
+              </div>
+            </form>
+
+            <!--操作按钮菜单-->
+            <div class="toolbar-btn-action">
+              <a id="add_rule" class="btn btn-primary m-r-5" href="#!" data-toggle="modal" data-target="#myModal"
+                onclick="autClearModalForm()"><i class="mdi mdi-plus"></i> 新增</a>
+              <a id="enable_rules" class="btn btn-success m-r-5" href="#!" onclick="autEnableRows()"><i
+                  class="mdi mdi-check"></i> 启用</a>
+              <a id="disable_rules" class="btn btn-warning m-r-5" href="#!" onclick="autDisableRows()"><i
+                  class="mdi mdi-block-helper"></i>
+                禁用</a>
+              <a id="delete_rules" class="btn btn-danger m-r-5" href="#!" onclick="autDelRows()"><i
+                  class="mdi mdi-window-close"></i> 删除</a>
+              <a id="delete_rules" class="btn btn-info m-r-5" href="#!"
+                onclick="autFillRows('',function(){lightyear.notify('刷新成功', 'success', 1000);})"><i
+                  class="mdi mdi-rotate-3d"></i> 刷新</a>
+            </div>
+
+          </div>
+
+          <!--内容区-->
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="drag-table">
+                <thead>
+                  <tr>
+                    <th>
+                      <label class="lyear-checkbox checkbox-primary">
+                        <input type="checkbox" id="check-all"><span></span>
+                      </label>
+                    </th>
+                    <th>序号</th>
+                    <th>名称</th>
+                    <th>链接</th>
+                    <th>分支</th>
+                    <th>定时</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="datasets">
+
+                </tbody>
+              </table>
+            </div>
+
+            <!--页码区-->
+            <ul class="pagination">
+              <li class="disabled"><span>«</span></li>
+              <li class="active"><span>1</span></li>
+              <li class="disabled"><span>»</span></li>
+            </ul>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--模态弹出框-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">订阅</h4>
+          </div>
+          <div class="modal-body">
+            <form id="modal" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="id">ID</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm" type="number" name="id" id="id" readonly />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="name">名称</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm" type="text" name="name" id="name" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="type">类型</label>
+                <div class="col-md-7">
+                  <label class="lyear-radio radio-inline radio-primary">
+                    <input type="radio" name="type" value="public-repo"><span>公开仓库</span>
+                  </label>
+                  <label class="lyear-radio radio-inline radio-primary">
+                    <input type="radio" name="type" value="private-repo"><span>私有仓库</span>
+                  </label>
+                  <label class="lyear-radio radio-inline radio-primary">
+                    <input type="radio" name="type" value="file"><span>单文件</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="url">链接</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm" type="text" name="url" id="url" value="" placeholder="" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="branch">分支</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm" type="text" name="branch" id="branch" value="" placeholder="" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="pull_option">拉取方式</label>
+                <div class="col-md-7">
+                  <label class="lyear-radio radio-inline radio-primary">
+                    <input type="radio" name="pull_option" value="ssh-key"><span>私钥</span>
+                  </label>
+                  <label class="lyear-radio radio-inline radio-primary">
+                    <input type="radio" name="pull_option" value="user-pwd"><span>用户名密码/Token</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="pull_type.private_key">私钥</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm" type="text" name="pull_type.private_key" id="pull_type.private_key" value=""
+                    placeholder="" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="pull_type.username">github用户名</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm" type="text" name="pull_type.username" id="pull_type.username" value=""
+                    placeholder="" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="pull_type.password">github密码</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm" type="text" name="pull_type.password" id="pull_type.password" value=""
+                    placeholder="" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="schedule_type">定时类型</label>
+                <div class="col-md-7">
+                  <label class="lyear-radio radio-inline radio-primary">
+                    <input type="radio" name="schedule_type" value="crontab"><span>cron表达式</span>
+                  </label>
+                  <label class="lyear-radio radio-inline radio-primary">
+                    <input type="radio" name="schedule_type" value="interval"><span>时间间隔</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="schedule">cron定时</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm" type="text" name="schedule" id="schedule" value=""
+                    placeholder="" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="interval">间隔</label>
+                <div class="col-md-7">
+                  <div class="input-group">
+
+                    <span class="input-group-addon">每</span>
+                    <input type="number" class="form-control" id="interval_schedule.value" name="interval_schedule.value">
+                    <div class="input-group-btn">
+                      <button id="interval_unit" type="button" class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">时 ▼</button>
+                      <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="#!" onclick="$('#interval_unit').text($(this).text()+' ▼')">天</a></li>
+                        <li><a href="#!" onclick="$('#interval_unit').text($(this).text()+' ▼')">时</a></li>
+                        <li><a href="#!" onclick="$('#interval_unit').text($(this).text()+' ▼')">分</a></li>
+                        <li><a href="#!" onclick="$('#interval_unit').text($(this).text()+' ▼')">秒</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="whitelist">白名单</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm" type="text" name="whitelist" id="whitelist" value=""
+                    placeholder="" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="blacklist">黑名单</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm" type="text" name="blacklist" id="blacklist" value=""
+                    placeholder="" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="dependences">依赖文件</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm" type="text" name="dependences" id="dependences" value=""
+                    placeholder="" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="extensions">文件后缀</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm" type="text" name="extensions" id="extensions" value=""
+                    placeholder="" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="proxy">代理</label>
+                <div class="col-md-7">
+                  <input class="form-control input-sm" type="text" name="proxy" id="proxy" value="" placeholder="" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="proxy">自动添加任务</label>
+                <div class="col-md-2">
+                  <label class="lyear-switch switch-solid switch-primary">
+                    <input type="checkbox" checked="" id="autoAddCron" name="autoAddCron">
+                    <span></span>
+                  </label>
+                </div>
+                <label class="col-md-3 control-label" for="proxy">自动删除任务</label>
+                <div class="col-md-2">
+                  <label class="lyear-switch switch-solid switch-primary">
+                    <input type="checkbox" checked="" id="autoDelCron" name="autoDelCron">
+                    <span></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="autSubmitModalForm()">点击保存</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!--日志模态弹出框-->
+    <div class="modal fade" id="logModal" tabindex="-1" role="dialog" aria-labelledby="logModalLabel">
+      <div class="modal-dialog" role="document" style="width: 80%;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="logModalLabel">日志</h4>
+          </div>
+          <div class="modal-body">
+            <div class="table-container">
+              <table class="table table-bordered" id="log-table">
+                <!-- <thead>
+                  <tr>
+                    <th>时间</th>
+                    <th>内容</th>
+                  </tr>
+                </thead> -->
+                <tbody id="log-datasets">
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--消息提示-->
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <script type="text/javascript" src="js/lightyear.js"></script>
+  <!--对话框-->
+  <script type="text/javascript" src="js/jconfirm/jquery-confirm.min.js"></script>
+  <!--自定义-->
+  <script type="text/javascript" src="js/sub.js"></script>
+
+</body>
+
+</html>

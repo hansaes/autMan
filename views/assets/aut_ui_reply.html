@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>首页 - autMan后台管理系统</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="autMan,后台管理系统">
+  <meta name="description" content="autMan后台管理系统">
+  <meta name="author" content="autMan">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="js/bootstrap-multitabs/multitabs.min.css">
+  <link href="css/style.min.css" rel="stylesheet">
+  <!--对话框-->
+  <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+  <!--autman-->
+  <link rel="stylesheet" href="css/autman.css">
+
+<body>
+  <div class="container-fluid p-t-15">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-toolbar clearfix">
+            <form class="pull-right search-bar" method="get" action="#!" role="form">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <input type="hidden" name="search_field" id="search-field" value="title">
+                  <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    标题 <span class="caret"></span>
+                  </button>
+                  <!-- <ul class="dropdown-menu">
+                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="title">标题</a> </li>
+                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="cat_name">栏目</a> </li>
+                  </ul> -->
+                </div>
+                <input type="text" class="form-control" value="" id="searchInput" name="searchInput"
+                  placeholder="请输入关键词">
+              </div>
+            </form>
+            <div class="toolbar-btn-action">
+              <a id="carry_add_rule" class="btn btn-primary m-r-5" href="#!" data-toggle="modal" data-target="#myModal"
+                onclick="autClearModalForm($('#myModal'))"><i class="mdi mdi-plus"></i> 新增</a>
+              <!-- <a id="carry_enable_rules" class="btn btn-success m-r-5" href="#!" onclick="autEnableReplies()"><i
+                  class="mdi mdi-check"></i> 启用</a>
+              <a id="carry_disable_rules" class="btn btn-warning m-r-5" href="#!" onclick="autDisableReplies()"><i
+                  class="mdi mdi-block-helper"></i>
+                禁用</a> -->
+              <a id="carry_delete_rules" class="btn btn-danger" href="#!" onclick="autDelBucketKeys()"><i
+                  class="mdi mdi-window-close"></i> 删除</a>
+            </div>
+          </div>
+          <div class="card-body">
+
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th width="5%">
+                      <label class="lyear-checkbox checkbox-primary">
+                        <input type="checkbox" id="check-all"><span></span>
+                      </label>
+                    </th>
+                    <th width="5%">ID</th>
+                    <th width="20%">关键词</th>
+                    <th width="10%">限定媒介</th>
+                    <th width="10%">限定群组</th>
+                    <th width="40%">回复内容</th>
+                    <th width="10%">操作</th>
+                  </tr>
+                </thead>
+                <tbody id="datasets">
+
+                </tbody>
+              </table>
+            </div>
+            <ul class="pagination">
+              <li class="disabled"><span>«</span></li>
+              <li class="active"><span>1</span></li>
+              <li class="disabled"><span>»</span></li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--模态弹出框-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">知识库</h4>
+        </div>
+        <div class="modal-body">
+          <form id="reply_modal" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+            <div class="form-group hidden">
+              <label class="col-md-3 control-label" for="id">ID</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="number" name="id" id="id" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="rules">关键词</label>
+              <div class="col-md-7">
+                <textarea class="form-control input-sm" rows="3" name="rules" id="rules"></textarea>
+                <small class="help-block">多个关键词时，一行一个</small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="exact">精确匹配</label>
+              <div class="col-md-7">
+                <label class="lyear-switch switch-solid switch-primary">
+                  <input type="checkbox" name="exact" id="exact">
+                  <span></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="imtypes">限定媒介</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="imtypes" id="imtypes" />
+                <small class="help-block">不限定不用填，qq、qb、wx、wb、tg、tb、wxmp、wxsv中选择，英文逗号隔开</small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="groups">限定群组</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="groups" id="groups" />
+                <small class="help-block">填写群ID，英文逗号隔开,不限定不用填</small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="image_url">图片链接</label>
+              <div class="col-md-7">
+                <label class="lyear-switch switch-solid switch-primary">
+                  <input type="checkbox" name="image_url" id="image_url">
+                  <span></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="voice_url">音频链接</label>
+              <div class="col-md-7">
+                <label class="lyear-switch switch-solid switch-primary">
+                  <input type="checkbox" name="voice_url" id="voice_url">
+                  <span></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="video_url">视频链接</label>
+              <div class="col-md-7">
+                <label class="lyear-switch switch-solid switch-primary">
+                  <input type="checkbox" name="video_url" id="video_url">
+                  <span></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="value">回复内容</label>
+              <div class="col-md-7">
+                <textarea class="form-control input-sm" type="text" name="value" id="value" rows="10"></textarea>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary" onclick="autSubmitModalForm()">点击保存</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--消息提示-->
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <script type="text/javascript" src="js/lightyear.js"></script>
+  <!--对话框-->
+  <script type="text/javascript" src="js/jconfirm/jquery-confirm.min.js"></script>
+  <!--自定义-->
+  <script type="text/javascript" src="js/aut-utils.js"></script>
+  <script type="text/javascript" src="js/reply.js"></script>
+
+</body>
+
+</html>

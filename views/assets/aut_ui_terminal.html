@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Web Terminal</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/xterm.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="text-center">Web Terminal</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div id="terminal"></div>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-12">
+        
+          <div class="input-group">
+            <input type="text" class="form-control" id="inputBox" name="command" autofocus="autofocus">
+           
+          </div>
+      
+      </div>
+    </div> -->
+  </div>
+  <script src="js/jquery.min.js"></script>
+  <!--<script src="js/bootstrap.min.js"></script> -->
+  <script src="js/xterm.min.js"></script>
+  <script>
+    const term = new window.Terminal();
+    term.open(document.getElementById('terminal'));
+    term.focus();
+    //alert(location.host)
+    const url = `ws://${location.host}/term`;
+
+    const socket = new WebSocket(url);
+    socket.binaryType = 'arraybuffer';
+    //携带cookie
+    const cookies = document.cookie;
+    if (cookies !== '') {
+      const headers = { 'Cookie': cookies };
+      socket.headers = headers;
+    }
+
+    socket.onopen = function (event) {
+      term.onData(function (data) {
+        socket.send(new TextEncoder().encode(data))
+      });
+    };
+
+    socket.onmessage = function (event) {
+      term.write(new TextDecoder().decode(event.data));
+    };
+
+    socket.onclose = function (event) {
+      term.writeln("Connection closed.")
+    };
+  </script>
+</body>
+
+</html>

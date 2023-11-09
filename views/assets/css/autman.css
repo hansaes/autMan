@@ -1,0 +1,10 @@
+.truncate {
+    max-width: 100px;
+    /* 设置列的最大宽度 */
+    white-space: nowrap;
+    /* 禁止内容换行 */
+    overflow: hidden;
+    /* 隐藏溢出的内容 */
+    text-overflow: ellipsis;
+    /* 使用省略号表示被截断的内容 */
+}
