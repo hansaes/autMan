@@ -16,7 +16,6 @@ on:
 
   workflow_dispatch:
 
-
 env:
   DOCKERHUB_REPO: hansaes/autman
 
