@@ -11,8 +11,8 @@ on:
     types: [published]
   workflow_dispatch:
 
-# env:
-#   DOCKERHUB_REPO: o1si/miui-auto-tasks
+env:
+  DOCKERHUB_REPO: hansa/autMan
 
 jobs:
   build:
