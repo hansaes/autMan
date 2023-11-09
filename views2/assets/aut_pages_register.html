@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="keywords" content="autMan,后台管理系统">
+  <meta name="description" content="后台管理系统">
+  <title>autMan后台管理系统模板</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.min.css">
+  <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+  <style>
+    .lyear-wrapper {
+      position: relative;
+    }
+
+    .lyear-login {
+      display: flex !important;
+      min-height: 100vh;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .lyear-login:after {
+      content: '';
+      min-height: inherit;
+      font-size: 0;
+    }
+
+    .login-center {
+      background: #fff;
+      /*半透明*/
+      opacity: 0.9;
+      min-width: 29.25rem;
+      padding: 2.14286em 3.57143em;
+      border-radius: 10px;
+      margin: 2.85714em;
+    }
+
+    .login-header {
+      margin-bottom: 1.5rem !important;
+    }
+
+    .login-center .has-feedback.feedback-left .form-control {
+      padding-left: 38px;
+      padding-right: 12px;
+    }
+
+    .login-center .has-feedback.feedback-left .form-control-feedback {
+      left: 0;
+      right: auto;
+      width: 38px;
+      height: 38px;
+      line-height: 38px;
+      z-index: 4;
+      color: #dcdcdc;
+    }
+
+    .login-center .has-feedback.feedback-left.row .form-control-feedback {
+      left: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="row lyear-wrapper" style="background-image: url(images/login-bg.jpg); background-size: cover;">
+    <div class="lyear-login">
+      <div class="login-center">
+        <div class="login-header text-center">
+          <a href="index.html"> <img alt="light year admin" src="images/logo-sidebar.png"> </a>
+        </div>
+        <hr>
+        <div class="login-header text-center">
+          <h6>首次使用请进行初始化，<label for="is_registed">已有账号登陆请勾选</label>
+            <input type="checkbox" id="is_registered" name="is_registed">
+          </h6>
+        </div>
+        <form action="#!" class="lyear-guide-box" data-navigateable="true">
+          <ul class="nav nav-step">
+            <li class="nav-item">
+              <span>用户名</span>
+              <a class="nav-link active" data-toggle="tab" href="#step-1"></a>
+            </li>
+
+            <li class="nav-item">
+              <span>邮箱</span>
+              <a class="nav-link" data-toggle="tab" href="#step-2"></a>
+            </li>
+
+            <li class="nav-item">
+              <span>密码</span>
+              <a class="nav-link" data-toggle="tab" href="#step-3"></a>
+            </li>
+
+            <li class="nav-item">
+              <span>确认</span>
+              <a class="nav-link" data-toggle="tab" href="#step-4"></a>
+            </li>
+          </ul>
+          <!--对应内容-->
+          <div class="nav-step-content">
+            <div class="nav-step-pane d-none active" id="step-1" data-provide="validation">
+              <div class="form-group">
+                <label>注册后台登陆和aut云市场二合一账号</label>
+                <input class="form-control" type="text" name="username" id="username">
+                <small class="form-text text-danger" id="usernameError"></small>
+              </div>
+            </div>
+
+            <div class="nav-step-pane d-none" id="step-2" data-provide="validation">
+              <div class="form-group">
+                <label>设置邮箱（用于找回密码）</label>
+                <input class="form-control" type="email" name="email" id="email">
+              </div>
+            </div>
+
+            <div class="nav-step-pane d-none" id="step-3" data-provide="validation">
+              <div class="form-group">
+                <label>设置密码</label>
+                <input class="form-control" type="password" name="password1" id="password1">
+              </div>
+            </div>
+
+            <div class="nav-step-pane d-none" id="step-4" data-provide="validation">
+              <div class="form-group">
+                <label>再次输入密码</label>
+                <input class="form-control" type="password" name="password2" id="password2">
+              </div>
+            </div>
+
+            <!-- <div class="nav-step-pane d-none" id="step-4">
+              <div class="form-group">
+                <label>备注</label>
+                <input class="form-control" type="text">
+              </div>
+            </div> -->
+          </div>
+          <!--End 对应内容-->
+          <div class="d-flex justify-content-between mt-2">
+            <button class="btn btn-secondary disabled" data-wizard="prev" type="button">上一步</button>
+            <button class="btn btn-secondary" data-wizard="next" type="button">下一步</button>
+            <button class="btn btn-primary d-none" data-wizard="finish">完成</button>
+          </div>
+        </form>
+        <hr>
+        <footer class="col-sm-12 text-center">
+          <p class="m-b-0">Copyright © 2023 <a href="https://hdbjlizhe.github.io/fanli/">autMan</a>. All right reserved
+          </p>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--通知-->
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <!--加载-->
+  <script type="text/javascript" src="js/lyear-loading.js"></script>
+  <!--向导插件-->
+  <script type="text/javascript" src="js/jquery.bootstrap.wizard.min.js"></script>
+  <!--登陆函数-->
+  <script type="text/javascript" src="js/register.js"></script>
+</body>
+
+</html>

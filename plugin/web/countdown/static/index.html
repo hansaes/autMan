@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>倒计时</title>
+    <style>
+        #title{
+            margin: auto;
+            width: 1000px;
+            height: 100px;
+            line-height: 100px;
+            background-color: #fff;
+            color: skyblue;
+            font-size: 50px;
+            text-align: center;
+        }
+        #countdown{
+            margin: auto;
+            width: 1000px;
+            height: 200px;
+            line-height: 100px;
+            background-color: #fff;
+            color: skyblue;
+            font-size: 100px;
+            text-align: center;
+            padding-top: 75px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
+</head>
+
+<body>
+    <div id="title">下班倒计时</div>
+    <div id="countdown"></div>
+    <script>
+        $(document).ready(function () {
+            // 获取当前日期和时间
+            var now = new Date();
+
+            // 设置下班时间为每天的 18:00:00
+            var closingTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 18, 0, 0);
+
+            // 如果当前时间已经过了下班时间，则将下班时间设置为明天的 18:00:00
+            if (now > closingTime) {
+                closingTime.setDate(closingTime.getDate() + 1);
+            }
+
+            // 初始化倒计时插件
+            $("#countdown").countdown(closingTime, function (event) {
+                $(this).text(
+                    event.strftime('%H:%M:%S') // 显示剩余的小时、分钟和秒数
+                );
+            });
+        });
+    </script>
+</body>
+
+</html>

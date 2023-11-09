@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="keywords" content="autMan,后台管理系统">
+  <meta name="description" content="autMan后台管理系统。">
+  <title>autMan后台管理系统</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.min.css">
+  <link href="css/xterm.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <header class="card-header">
+            <div class="card-title">终端</div>
+          </header>
+          <div class="card-body">
+            <div id="terminal"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/lyear-loading.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <script src="js/xterm.min.js"></script>
+  <script>
+    const term = new window.Terminal();
+    term.open(document.getElementById('terminal'));
+    term.focus();
+    //alert(location.host)
+    const url = `ws://${location.host}/term`;
+
+    const socket = new WebSocket(url);
+    socket.binaryType = 'arraybuffer';
+    //携带cookie
+    const cookies = document.cookie;
+    if (cookies !== '') {
+      const headers = { 'Cookie': cookies };
+      socket.headers = headers;
+    }
+
+    socket.onopen = function (event) {
+      term.onData(function (data) {
+        socket.send(new TextEncoder().encode(data))
+      });
+    };
+
+    socket.onmessage = function (event) {
+      term.write(new TextDecoder().decode(event.data));
+    };
+
+    socket.onclose = function (event) {
+      term.writeln("Connection closed.")
+    };
+  </script>
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html>

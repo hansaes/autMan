@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+	<meta name="keywords" content="autMan,后台模板,后台管理系统">
+	<meta name="description" content="后台管理系统的HTML模板。">
+	<title>网站配置 - autMan后台管理系统模板</title>
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<!--tags插件css-->
+	<link rel="stylesheet" type="text/css" href="js/jquery-tagsinput/jquery.tagsinput.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.min.css">
+	<link rel="stylesheet" type="text/css" href="css/animate.min.css">
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<!--card-->
+				<div class="card">
+					<div class="card-body">
+						<ul class="nav nav-tabs">
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_system.html">基本</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_update.html">更新</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_aut.html">AUT云账号</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_admins.html">管理员</a> </li>
+							<li class="active"> <a class="nav-link active" href="#!">通知</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_qq.html">QQ框架</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_qqbot.html">QQBOT</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_wx.html">WX框架</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_wxbot.html">WXBOT</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_tg.html">TDLIB</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_tb.html">TGBOT</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_wxmp.html">公众号</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_dd.html">钉钉</a> </li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active">
+
+								<form>
+									<div class="mb-3">
+										<label for="push-serverchan_pushkey">Server酱pushkey</label>
+										<input type="text" class="form-control rounded"
+											name="push-serverchan_pushkey" id="push-serverchan_pushkey" value=""
+											placeholder="" />
+										<small class="text-warning">填写 SCHKEY 值或 SendKey 值，文档：<a
+												href="https://sct.ftqq.com">https://sct.ftqq.com</a></small>
+									</div>
+									<hr class="mt-5 mb-5">
+
+									<div class="mb-3">
+										<label for="push-bark_key">Bark key</label>
+										<input type="text" class="form-control rounded"
+											name="push-bark_key" id="push-bark_key" value="" placeholder="" />
+										<small class="text-warning">填写app提供的设备码，例如：https://api.day.app/123
+											那么此处的设备码就是123</small>
+									</div>
+									<hr class="mt-5 mb-5">
+									<div class="mb-3">
+										<label for="push-dingding_webhook">钉钉webhook</label>
+										<input type="text" class="form-control rounded"
+											name="push-dingding_webhook" id="push-dingding_webhook" value=""
+											placeholder="" />
+										<small class="text-warning"></small>
+									</div>
+									<div class="mb-3">
+										<label for="push-dingding_secret">钉钉secret</label>
+										<input type="text" class="form-control rounded"
+											name="push-dingding_secret" id="push-dingding_secret" value=""
+											placeholder="" />
+										<small class="text-warning">填写token后面的内容，只需
+											https://oapi.dingtalk.com/robot/send?access_token=XXX 等于=符号后面的XXX即可。官方文档：<a
+												href="https://developers.dingtalk.com/document/app/custom-robot-access">https://developers.dingtalk.com/document/app/custom-robot-access</a></small>
+									</div>
+									<hr class="mt-5 mb-5">
+									<div class="mb-3">
+										<label for="push-qywx_webhook">企信机器人webhook</label>
+										<input type="text" class="form-control rounded"
+											name="push-qywx_webhook" id="push-qywx_webhook" value="" placeholder="" />
+										<small class="text-warning">填写密钥，企业微信推送webhook 后面的 key，官方文档：<a
+												href="https://work.weixin.qq.com/api/doc/90000/90136/91770">https://work.weixin.qq.com/api/doc/90000/90136/91770</a></small>
+									</div>
+									<hr class="mt-5 mb-5">
+									<div class="mb-3">
+										<label for="push-qywx_app_corpid">企信应用企业ID</label>
+										<input type="text" class="form-control rounded"
+											name="push-qywx_app_corpid" id="push-qywx_app_corpid" value=""
+											placeholder="" />
+									</div>
+									<div class="mb-3">
+										<label for="push-qywx_app_secret">企信应用Secret</label>
+										<input type="text" class="form-control rounded"
+											name="push-qywx_app_secret" id="push-qywx_app_secret" value=""
+											placeholder="" />
+									</div>
+									<div class="mb-3">
+										<label for="push-qywx_app_agentid">企信应用AgentID</label>
+										<input type="text" class="form-control rounded"
+											name="push-qywx_app_agentid" id="push-qywx_app_agentid" value=""
+											placeholder="" />
+										<small class="text-warning">参考文档：<a
+												href="http://note.youdao.com/s/HMiudGkb">http://note.youdao.com/s/HMiudGkb</a></small>
+									</div>
+									<hr class="mt-5 mb-5">
+									<div class="mb-3">
+										<label for="push-igot_key">iGot key</label>
+										<input type="text" class="form-control rounded"
+											name="push-igot_key" id="push-igot_key" value="" placeholder="" />
+										<small class="text-warning">参考文档：<a
+												href="https://wahao.github.io/Bark-MP-helper">https://wahao.github.io/Bark-MP-helper</a></small>
+									</div>
+									<hr class="mt-5 mb-5">
+									<div class="mb-3">
+										<label for="push-pushplus_token">PushPlus token</label>
+										<input type="text" class="form-control rounded"
+											name="push-pushplus_token" id="push-pushplus_token" value=""
+											placeholder="" />
+										<small class="text-warning">官方网站：<a
+												href="http://www.pushplus.plus">http://www.pushplus.plus</a></small>
+									</div>
+									<hr class="mt-5 mb-5">
+									<div class="mb-3">
+										<label for="push-gotify_url">Gotify URL</label>
+										<input type="text" class="form-control rounded"
+											name="push-gotify_url" id="push-gotify_url" value="" placeholder="" />
+										<small class="text-warning">填写gotify地址,如https://push.example.de:8080</small>
+									</div>
+									<div class="mb-3">
+										<label for="push-gotify_token">Gotify token</label>
+										<input type="text" class="form-control rounded"
+											name="push-gotify_token" id="push-gotify_token" value="" placeholder="" />
+										<small class="text-warning">填写gotify的消息应用token</small>
+									</div>
+									<div class="mb-3">
+										<label for="push-gotify_priority">Gotify priority</label>
+										<input type="text" class="form-control rounded"
+											name="push-gotify_priority" id="push-gotify_priority" value=""
+											placeholder="" />
+										<small class="text-warning">填写推送消息优先级,默认为0</small>
+									</div>
+									<hr class="mt-5 mb-5">
+									<div class="mb-3">
+										<label for="push-pushdeer_url">PushDeer URL</label>
+										<input type="text" class="form-control rounded"
+											name="push-pushdeer_url" id="push-pushdeer_url" value="" placeholder="" />
+									</div>
+									<div class="mb-3">
+										<label for="push-pushdeer_key">PushDeer key</label>
+										<input type="text" class="form-control rounded"
+											name="push-pushdeer_key" id="push-pushdeer_key" value="" placeholder="" />
+										<small class="text-warning">PushDeer</small>
+									</div>
+									<div class="mb-3">
+										<button class="btn btn-primary rounded" type="button"
+											onclick="submitParams()">保存</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--end card-->
+			</div>
+
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/popper.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<!--tags插件-->
+	<script type="text/javascript" src="js/jquery-tagsinput/jquery.tagsinput.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--加载-->
+	<script type="text/javascript" src="js/lyear-loading.js"></script>
+	<!--通知-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/fill_input.js"></script>
+</body>
+
+</html>

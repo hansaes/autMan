@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>首页 - autMan后台管理系统</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="autMan,后台管理系统">
+  <meta name="description" content="autMan后台管理系统">
+  <meta name="author" content="autMan">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="js/bootstrap-multitabs/multitabs.min.css">
+  <link href="css/style.min.css" rel="stylesheet">
+  <!--对话框-->
+  <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+</head>
+
+<body>
+  <div class="container-fluid p-t-15">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-toolbar clearfix">
+
+            <!--搜索框-->
+            <form class="pull-right search-bar">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <input type="hidden" name="search_field" id="search-field" value="title">
+                  <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    全搜索 <span class="caret"></span>
+                  </button>
+                  <!-- <ul class="dropdown-menu">
+                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="title">标题</a> </li>
+                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="cat_name">栏目</a> </li>
+                  </ul> -->
+                </div>
+                <input type="text" class="form-control" value="" id="searchInput" name="searchInput"
+                  placeholder="请输入关键词">
+              </div>
+            </form>
+
+            <!--操作按钮菜单-->
+            <div class="toolbar-btn-action">
+              <a id="add_rule" class="btn btn-primary m-r-5" href="#!" data-toggle="modal" data-target="#myModal"
+                onclick="autClearModalForm()"><i class="mdi mdi-plus"></i> 新增</a>
+              <a id="enable_rules" class="btn btn-success m-r-5" href="#!" onclick="autEnableRows()"><i
+                  class="mdi mdi-check"></i> 启用</a>
+              <a id="disable_rules" class="btn btn-warning m-r-5" href="#!" onclick="autDisableRows()"><i
+                  class="mdi mdi-block-helper"></i>
+                禁用</a>
+              <a id="delete_rules" class="btn btn-danger" href="#!" onclick="autDelRows()"><i
+                  class="mdi mdi-window-close"></i> 删除</a>
+            </div>
+
+          </div>
+
+          <!--内容区-->
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <div class="form-group">
+                    <th>
+                      <label class="lyear-checkbox checkbox-primary">
+                        <input type="checkbox" id="check-all"><span></span>
+                      </label>
+                    </th>
+                    <th>ID</th>
+                    <th>名称</th>
+                    <th>开关</th>
+                    <th>品类</th>
+                    <!-- <th>题头</th>
+                    <th>推广</th> -->
+                    <th>时间段</th>
+                    <th>间隔</th>
+                    <th>商品数</th>
+                    <th>目标</th>
+                  </div>
+                </thead>
+                <tbody id="datasets">
+
+                </tbody>
+              </table>
+            </div>
+
+            <!--页码区-->
+            <ul class="pagination">
+              <li class="disabled"><span>«</span></li>
+              <li class="active"><span>1</span></li>
+              <li class="disabled"><span>»</span></li>
+            </ul>
+            <!--end 页码区-->
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!--模态弹出框-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">标题</h4>
+        </div>
+        <div class="modal-body">
+          <form id="modal" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+            <div class="form-group hidden">
+              <label class="col-md-3 control-label" for="">ID</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" id="id" name="id" value="-1">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="name">名称</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" id="name" name="name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="on">线报开关</label>
+              <div class="col-md-7">
+                <label class="lyear-switch switch-solid switch-primary">
+                  <input class="form-control input-sm" type="checkbox" name="on" id="on" value="true">
+                  <span></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="pic">附商品图</label>
+              <div class="col-md-7">
+                <label class="lyear-switch switch-solid switch-primary">
+                  <input class="form-control input-sm" type="checkbox" name="pic" id="pic" value="true">
+                  <span></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="">线报品类</label>
+              <div class="col-md-7">
+                <select class="form-control input-sm" id="elite_id" name="elite_id">
+                  <option value="0">选择品类</option>
+                  <option value="1">好券商品</option>
+                  <option value="2">精选卖场</option>
+                  <option value="10">9.9包邮</option>
+                  <option value="15">京东配送</option>
+                  <option value="22">实时热销榜</option>
+                  <option value="23">为你推荐</option>
+                  <option value="24">数码家电</option>
+                  <option value="25">超市</option>
+                  <option value="26">母婴玩具</option>
+                  <option value="27">家具日用</option>
+                  <option value="28">美妆穿搭</option>
+                  <option value="30">图书文具</option>
+                  <option value="31">今日必推</option>
+                  <option value="32">京东好物</option>
+                  <option value="33">京东秒杀</option>
+                  <option value="34">拼购商品</option>
+                  <option value="40">高收益榜</option>
+                  <option value="41">自营热卖榜</option>
+                  <option value="108">秒杀进行中</option>
+                  <option value="109">新品首发</option>
+                  <option value="110">自营</option>
+                  <option value="112">京东爆品</option>
+                  <option value="125">首购商品</option>
+                  <option value="129">高佣榜单</option>
+                  <option value="130">视频商品</option>
+                  <option value="153">历史最低价商品榜</option>
+                  <option value="210">极速版商品</option>
+                  <option value="238">新人价商品</option>
+                  <option value="247">京喜9.9</option>
+                  <option value="249">京喜秒杀</option>
+                  <option value="315">秒杀未开始</option>
+                  <option value="340">时尚趋势品</option>
+                  <option value="341">3C新品</option>
+                  <option value="342">智能新品</option>
+                  <option value="343">3C长尾商品</option>
+                  <option value="345">时尚新品</option>
+                  <option value="346">时尚爆品</option>
+                  <option value="426">京喜自营</option>
+                  <option value="1001">选品库</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="">前置广告</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="ad" id="ad" value="" placeholder="前置广告" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="">显示题头</label>
+              <div class="col-md-7">
+                <label class="lyear-switch switch-solid switch-primary">
+                  <input class="form-control input-sm" type="checkbox" name="title" id="title" value="true">
+                  <span></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="">推送时间段</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="time_quantum" id="time_quantum" value="" placeholder="09:00-20:00" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="">推送间隔(分)</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="interval" id="interval" value="" placeholder="10" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="">商品数量</label>
+              <div class="col-md-7">
+                <label class="lyear-radio radio-inline radio-primary">
+                  <input type="radio" name="page_size" value="1"><span>1</span>
+                </label>
+                <label class="lyear-radio radio-inline radio-primary">
+                  <input type="radio" name="page_size" value="2"><span>2</span>
+                </label>
+                <label class="lyear-radio radio-inline radio-primary">
+                  <input type="radio" name="page_size" value="3"><span>3</span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="">推送群</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="to" id="to" value=""
+                  placeholder="qqgroup:123,wxgroup:123" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary" onclick="autSubmitModalForm()">点击保存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--消息提示-->
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <script type="text/javascript" src="js/lightyear.js"></script>
+  <!--对话框-->
+  <script type="text/javascript" src="js/jconfirm/jquery-confirm.min.js"></script>
+  <!--自定义-->
+  <script type="text/javascript" src="js/aut-utils.js"></script>
+  <script type="text/javascript" src="js/xianbao.js"></script>
+</body>
+
+</html>

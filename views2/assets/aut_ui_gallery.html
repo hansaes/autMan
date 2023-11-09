@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+	<meta name="keywords" content="autMan,后台模板,后台管理系统">
+	<meta name="description" content="后台管理系统。">
+	<title>autMan后台管理系统</title>
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<!--对话框插件css-->
+	<link rel="stylesheet" type="text/css" href="js/jquery-confirm/jquery-confirm.min.css">
+	<!--tags插件css-->
+	<link type="text/css" rel="stylesheet" href="js/jquery-tagsinput/jquery.tagsinput.min.css">
+	<!--上传插件css-->
+	<link type="text/css" rel="stylesheet" href="js/webuploader/webuploader.css">
+	<!--灯箱效果插件css-->
+	<link type="text/css" rel="stylesheet" href="js/magnific-popup/magnific-popup.min.css">
+	<link rel="stylesheet" type="text/css" href="css/animate.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.min.css">
+</head>
+
+<body>
+	<div class="container-fluid">
+
+		<div class="row">
+
+			<div class="col-lg-12">
+				<div class="card">
+					<header class="card-header">
+						<div class="card-title">图床图库</div>
+					</header>
+					<div class="card-body">
+
+						<form action="#!" method="post" class="row">
+							<div class="mb-3 col-md-12 position-relative">
+								<div class="js-upload-images">
+									<div id="picker_more_pics">上传多张图片</div>
+									<input type="hidden" name="more_pics" data-multiple="true" data-size="2097152"
+										data-ext='gif,jpg,jpeg,bmp,png' id="more_pics" value="">
+									<ul id="file_list_more_pics" class="list-inline row lyear-uploads-pic mb-0">
+										<li class="col-6 col-sm-3 col-md-2 list-images-item">
+											<figure>
+												<img src="images/gallery/1.jpg" />
+												<figcaption>
+													<a class="btn btn-round btn-primary btn-link-pic"
+														href="images/gallery/1.jpg"><i class="mdi mdi-eye"></i></a>
+													<a class="btn btn-round btn-success btn-cplink-pic" data-id="1"><i
+															class="mdi mdi-file-link" data-id="1"></i></a>
+													<a class="btn btn-round btn-danger btn-remove-pic" data-id="1"><i
+															class="mdi mdi-delete"></i></a>
+												</figcaption>
+											</figure>
+										</li>
+										<li class="col-6 col-sm-3 col-md-2 list-images-item">
+											<figure>
+												<img src="images/gallery/g-1.jpg" />
+												<figcaption>
+													<a class="btn btn-round btn-primary btn-link-pic"
+														href="images/gallery/g-1.jpg"><i class="mdi mdi-eye"></i></a>
+													<a class="btn btn-round btn-success btn-cplink-pic" href="#!"><i
+															class="mdi mdi-file-link"></i></a>
+													<a class="btn btn-round btn-danger btn-remove-pic" data-id="2"><i
+															class="mdi mdi-delete"></i></a>
+												</figcaption>
+											</figure>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/popper.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<!--confirm-->
+	<script type="text/javascript" src="js/jquery-confirm/jquery-confirm.min.js"></script>
+	<!--tags插件-->
+	<script type="text/javascript" src="js/jquery-tagsinput/jquery.tagsinput.min.js"></script>
+	<!--上传插件-->
+	<script type="text/javascript" src="js/webuploader/webuploader.js"></script>
+	<!--灯箱效果插件-->
+	<script type="text/javascript" src="js/magnific-popup/magnific-popup.min.js"></script>
+	<!--通知消息插件-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			//填充页面数据
+			function autFillImages() {
+				$.get("/gallery", function (response) {
+					var html = "";
+					for (var i = 0; i < response.data.length; i++) {
+						imgName = response.data[i].split("images/gallery/")[1]
+						//console.log(imgName)
+						html += `<li class="col-6 col-sm-3 col-md-2 list-images-item" id="${imgName}">
+									<figure>
+										<img src="images/gallery/${imgName}" />
+										<figcaption>
+											<a class="btn btn-round btn-primary btn-link-pic"
+												href="images/gallery/${imgName}"><i class="mdi mdi-eye"></i></a>
+											<a class="btn btn-round btn-success btn-cplink-pic" data-id="${imgName}" title="${response.data[i]}"><i
+													class="mdi mdi-file-link"></i></a>
+											<a class="btn btn-round btn-danger btn-remove-pic" data-id="${imgName}"><i
+													class="mdi mdi-delete"></i></a>
+										</figcaption>
+									</figure>
+								</li>`
+					}
+					$("#file_list_more_pics").html(html);
+					return
+				});
+			}
+
+			// 图片上传(单张图片，多张图片)
+			$('.js-upload-image,.js-upload-images').each(function () {
+				var $input_file = $(this).find('input'),
+					$input_file_name = $input_file.attr('name'),
+					$multiple = $input_file.data('multiple'),  // 是否选择多个文件
+					$ext = $input_file.data('ext'),       // 支持的文件后缀，示例以图片为例
+					$size = $input_file.data('size');      // 支持最大的文件大小
+
+				var $file_list = $('#file_list_' + $input_file_name);
+				var ratio = window.devicePixelRatio || 1;
+				var thumbnailWidth = 165 * ratio;
+				var thumbnailHeight = 110 * ratio;
+
+				var uploader = WebUploader.create({
+					// 选完文件后，是否自动上传。
+					auto: true,
+					duplicate: true,
+					resize: false,
+					// swf文件路径
+					swf: 'js/webuploader/Uploader.swf',
+					// 文件接收服务端
+					server: '/gallery',
+					// 选择文件的按钮。可选。
+					// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+					pick: {
+						id: '#picker_' + $input_file_name,
+						multiple: $multiple
+					},
+					fileSingleSizeLimit: $size,
+					// 只允许选择图片文件。
+					accept: {
+						title: 'Images',
+						extensions: $ext,
+						mimeTypes: 'image/*'
+					}
+				});
+
+				// 当有文件添加进来的时候
+				uploader.on('fileQueued', function (file) {
+
+					var $li = $('<li class="col-6 col-sm-3 col-md-2 list-images-item" id="' + file.id + '">' +
+						'  <figure>' +
+						'    <img>' +
+						'    <figcaption>' +
+						'      <a class="btn btn-round btn-primary btn-link-pic" href="#!"><i class="mdi mdi-eye"></i></a>' +
+						'      <a class="btn btn-round btn-success btn-cplink-pic" href="#!"><i class="mdi mdi-file-link"></i></a>' +
+						'      <a class="btn btn-round btn-danger btn-remove-pic" href="#!"><i class="mdi mdi-delete"></i></a>' +
+						'    </figcaption>' +
+						'  </figure>' +
+						'</li>'),
+						$img = $li.find('img');
+
+					if ($multiple) {
+						$file_list.append($li);//将图片添加到列表
+					} else {
+						$file_list.html($li);//将图片添加到列表
+						$input_file.val('');//清空input值
+					}
+					// 创建缩略图
+					// 如果为非图片文件，可以不用调用此方法。
+					// thumbnailWidth x thumbnailHeight 为 100 x 100
+					uploader.makeThumb(file, function (error, src) {
+						if (error) {
+							$img.replaceWith('<span>不能预览</span>');
+							return;
+						}
+						$img.attr('src', src);
+					}, thumbnailWidth, thumbnailHeight);
+					$('<div class="progress progress-sm"><div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div></div>').appendTo($li);
+				});
+
+				// 文件上传过程中创建进度条实时显示。
+				uploader.on('uploadProgress', function (file, percentage) {
+					var $percent = $('#' + file.id).find('.progress-bar');
+					$percent.css('width', percentage * 100 + '%');
+				});
+
+				// 文件上传成功，给item添加成功class, 用样式标记上传成功。
+				uploader.on('uploadSuccess', function (file, response) {
+					var $li = $('#' + file.id);
+					console.log(response);
+					imgName = response.data.split("images/gallery/")[1]
+					if (response.code == 200) {
+						if ($multiple) {
+							if ($input_file.val()) {
+								$input_file.val($input_file.val() + ',' + imgName);
+							} else {
+								$input_file.val(imgName);
+							}
+							$li.find('.btn-remove-pic').attr("title", response.data)
+							$li.find('.btn-remove-pic').attr('data-id', imgName);
+							$li.find('.btn-cplink-pic').attr('data-id', imgName);
+						} else {
+							$input_file.val(imgName);
+						}
+					}
+					$('<div class="bg-info success"></div>').text(response.info).appendTo($li);
+					$li.find('a.btn-link-pic').attr('href', `images/gallery/${imgName}`);
+				});
+
+				// 文件上传失败，显示上传出错。
+				uploader.on('uploadError', function (file) {
+					var $li = $('#' + file.id);
+					$('<div class="bg-danger error">上传失败</div>').appendTo($li);
+				});
+
+				// 错误处理
+				uploader.on('error', function (type) {
+					switch (type) {
+						case 'Q_TYPE_DENIED':
+							//alert('图片类型不正确，只允许上传后缀名为：' + $ext + '，请重新上传！');
+							showNotify('图片类型不正确，只允许上传后缀名为：' + $ext + '，请重新上传！', 'danger', 1500);
+							break;
+						case 'F_EXCEED_SIZE':
+							//alert('图片不得超过' + ($size / 1024) + 'kb，请重新上传！');
+							showNotify('图片不得超过' + ($size / 1024) + 'kb，请重新上传！', 'danger', 1500);
+							break;
+					}
+				});
+
+				// 完成上传完了，成功或者失败，先删除进度条。
+				uploader.on('uploadComplete', function (file) {
+					setTimeout(function () {
+						$('#' + file.id).find('.progress').remove();
+					}, 500);
+				});
+
+				// 将图片链接复制到剪切板
+				$file_list.delegate('.btn-cplink-pic', 'click', function () {
+					var id = $(this).data('id');
+					var input = document.createElement('input');
+					input.setAttribute('readonly', 'readonly');
+					input.setAttribute('value', $(this).attr('title'));
+					document.body.appendChild(input);
+					input.select();
+					if (document.execCommand('copy')) {
+						document.execCommand('copy');
+						showNotify('链接复制成功', 'success', 1500, 'mdi mdi-emoticon-happy', 'top', 'center');
+					}
+					document.body.removeChild(input);
+				});
+
+				// 删除操作
+				$file_list.delegate('.btn-remove-pic', 'click', function () {
+					thisList = $(this)
+					$.confirm({
+						title: '提示框',
+						content: '确定删除？',
+						buttons: {
+							confirm: {
+								text: '确认',
+								btnClass: 'btn-primary',
+								action: function () {
+									if ($multiple) {// 多图
+										var id = thisList.data('id'),
+											ids = $input_file.val().split(',');
+										console.log(id);
+										if (id) {
+											// 删除数据库中的图片
+											$.ajax({
+												url: "/gallery",
+												type: "DELETE",
+												data: JSON.stringify([id]),
+												contentType: "application/json",
+												success: function (response) {
+													for (var i = 0; i < ids.length; i++) {
+														if (ids[i] == id) {
+															ids.splice(i, 1);
+															break;
+														}
+													}
+													$input_file.val(ids.join(','));
+													thisList.closest('.list-images-item').remove();
+												}
+											})
+										}
+									} else {// 单图
+										$input_file.val('');
+										thisList.closest('.list-images-item').remove();
+									}
+								}
+							},
+							cancel: {
+								text: '取消',
+								action: function () {
+									//$.alert('你点击了取消!');
+								}
+							}
+						}
+					});
+				});
+
+				// 接入图片查看插件
+				$(this).magnificPopup({
+					delegate: 'a.btn-link-pic',
+					type: 'image',
+					gallery: {
+						enabled: true
+					}
+				});
+			});
+
+			// 图片展示
+			jQuery('.js-gallery').each(function () {
+				jQuery(this).magnificPopup({
+					delegate: 'a.img-link',
+					type: 'image',
+					gallery: {
+						enabled: true
+					}
+				});
+			});
+
+			//填充图片
+			autFillImages()
+		});
+	</script>
+</body>
+
+</html>

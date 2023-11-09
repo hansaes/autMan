@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="keywords" content="autMan,后台,管理系统">
+  <meta name="description" content="autMan后台管理系统。">
+  <title>autMan后台管理系统</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <!--对话框插件css-->
+  <link rel="stylesheet" type="text/css" href="js/jquery-confirm/jquery-confirm.min.css">
+  <!--表格插件css-->
+  <link rel="stylesheet" href="js/bootstrap-table/bootstrap-table.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.min.css">
+</head>
+
+<body>
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <div id="toolbar" class="toolbar-btn-action">
+              <button id="btn_add" type="button" class="btn btn-primary rounded me-1"
+                onclick="autClearModalForm($('#myModal'))">
+                <span class="mdi mdi-plus" aria-hidden="true"></span>新增
+              </button>
+              <button id="btn_delete" type="button" class="btn btn-danger rounded me-1"
+                onclick="autDelRows($('table').bootstrapTable('getSelections'),'/users',autFormatData)">
+                <span class="mdi mdi-window-close" aria-hidden="true"></span>删除
+              </button>
+            </div>
+            <table id="table"></table>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!--模态弹出框-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="myModalLabel">用户信息</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="modal" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="id">ID<i class="text-danger">*</i></label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="id" id="id" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="name">昵称</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="name" id="name" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="pwd">密码<i class="text-danger">*</i></label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="password" name="pwd" id="pwd" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="email">邮箱<i class="text-danger"> *</i></label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="email" name="email" id="email" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="qq">QQ</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="qq" id="qq" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="qb">QQ频道ID</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="qb" id="qb" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="wx">wxid</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="wx" id="wx" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="wb">wxbot</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="wb" id="wb" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="tg">tdlib</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="tg" id="tg" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="wxmp">订阅号ID</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="wxmp" id="wxmp" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="wxsv">服务号ID</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="wxsv" id="wxsv" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="alipay">支付宝</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="alipay" id="alipay" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="point">积分</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="number" name="point" id="point" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="coin">金币</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="number" name="coin" id="coin" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="charm">魅力</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="number" name="charm" id="charm" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="prize">抽奖</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="number" name="prize" id="prize" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="code">保留码</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="code" id="code" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="url">保留url</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="url" id="url" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="signdate">上次签到</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="signdate" id="signdate" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="date">上次修改</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="date" id="date" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="regdate">注册日期</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="regdate" id="regdate" />
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="other">备注</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="other" id="other" />
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-bs-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary"
+                onclick="autSubmitModalForm($('#myModal'),autFormJsonData,'/users')">点击保存</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--通知-->
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <!--表格插件js-->
+  <script src="js/bootstrap-table/bootstrap-table.js"></script>
+  <script src="js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+  <!--对话框插件js-->
+  <script type="text/javascript" src="js/jquery-confirm/jquery-confirm.min.js"></script>
+  <!--自定义-->
+  <script type="text/javascript" src="js/aut-table.js"></script>
+  <script>
+    const columns = [{
+      field: 'example',
+      checkbox: true,
+      // 列的宽度
+      width: 5,
+      // 宽度单位
+      widthUnit: 'rem'
+    }, {
+      title: '序号',
+      align: 'center',
+      halign: 'center',
+      formatter: function (value, row, index) {
+        return index + 1
+      }
+    }, {
+      field: 'id',
+      title: 'ID',
+      align: 'center',
+    }, {
+      field: 'pwd',
+      title: '密码',
+      align: 'center',
+    }, {
+      field: 'name',
+      title: '昵称',
+      align: 'center',
+      cellStyle: function (value, row, index) {
+        return {
+          css: {
+            "min-width": "100px",
+            "white-space": "nowrap",
+            "text-overflow": "ellipsis",
+            "overflow": "hidden",
+            "max-width": "60px"
+          }
+        }
+      },
+      formatter: function (value, row, index) {
+        var span = document.createElement('span');
+        span.setAttribute('title', value);
+        span.innerHTML = value;
+        return span.outerHTML;
+      },
+    }, {
+      field: 'email',
+      title: '邮箱',
+      align: 'center',
+      cellStyle: function (value, row, index) {
+        return {
+          css: {
+            "min-width": "100px",
+            "white-space": "nowrap",
+            "text-overflow": "ellipsis",
+            "overflow": "hidden",
+            "max-width": "60px"
+          }
+        }
+      },
+      formatter: function (value, row, index) {
+        var span = document.createElement('span');
+        span.setAttribute('title', value);
+        span.innerHTML = value;
+        return span.outerHTML;
+      },
+    }, {
+      field: 'qq',
+      visible: false,
+      title: 'QQ',
+      align: 'center',
+    }, {
+      field: 'qb',
+      visible: false,
+      title: 'QQ频道',
+      align: 'center',
+    }, {
+      field: 'wx',
+      visible: false,
+      title: '微信',
+      align: 'center',
+    }, {
+      field: 'wb',
+      visible: false,
+      title: '微信bot',
+      align: 'center',
+    }, {
+      field: 'tg',
+      visible: false,
+      title: 'TDLIB',
+      align: 'center',
+    }, {
+      field: 'wxmp',
+      visible: false,
+      title: '订阅号',
+      align: 'center',
+    }, {
+      field: 'wxsv',
+      visible: false,
+      title: '服务号',
+      align: 'center',
+    }, {
+      field: 'regdate',
+      title: '注册日期',
+      align: 'center',
+      formatter: function (value, row, index) {
+        // 解析字符串
+        const dateObj = new Date(value);
+        // 获取日期字符串
+        const dateStr = dateObj.toLocaleDateString();
+        // 获取时间字符串
+        const timeStr = dateObj.toLocaleTimeString();
+        // 拼接日期和时间
+        const result = `${dateStr} ${timeStr}`;
+        return result;
+      }
+    }, {
+      field: 'alipay',
+      visible: false,
+      title: '支付宝',
+      align: 'center',
+    }, {
+      field: 'code',
+      visible: false,
+      title: '授权码',
+      align: 'center',
+    }, {
+      field: 'point',
+      visible: false,
+      title: '积分',
+      align: 'center',
+    }, {
+      field: 'signdate',
+      visible: false,
+      title: '签到日期',
+      align: 'center',
+    }, {
+      field: 'coin',
+      visible: false,
+      title: '金币',
+      align: 'center',
+    }, {
+      field: 'charm',
+      visible: false,
+      title: '魅力值',
+      align: 'center',
+    }, {
+      field: 'prize',
+      visible: false,
+      title: '奖励',
+      align: 'center',
+    }, {
+      field: 'url',
+      visible: false,
+      title: '个人网址',
+      align: 'center',
+    }, {
+      field: 'date',
+      visible: false,
+      title: '修改日期',
+      align: 'center',
+    }, {
+      field: 'memo',
+      visible: false,
+      title: '备忘',
+      align: 'center',
+    }, {
+      field: 'other',
+      visible: false,
+      title: '备注',
+      align: 'center',
+    }, {
+      field: 'operate',
+      visible: true,
+      align: 'center',
+      title: '操作',
+      formatter: btnGroup,  // 自定义方法
+      events: {
+        'click .edit-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autEditRow(row, '/users', $('#myModal'));
+        },
+        'click .del-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autDelRows([row], '/users', autFormatData);
+        }
+      }
+    }];
+
+    //操作列的按钮
+    function btnGroup() {
+      let html =
+        '<a href="#!" class="btn btn-sm btn-link edit-btn" title="编辑" data-bs-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>' +
+        '<a href="#!" class="btn btn-sm btn-link del-btn" title="删除" data-bs-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>';
+      return html;
+    }
+
+    //表单json数据类型整理
+    function autFormJsonData(formData) {
+    }
+
+    function autFormatData() {
+
+    }
+
+    //初始化表格
+    autFillTable("", "/users", autFormatData, columns)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="keywords" content="autMan,后台,后台管理系统">
+    <meta name="description" content="后台管理系统。">
+
+    <title>首页 - autMan后台管理系统</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-multitabs/multitabs.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.min.css">
+    <!--对话框插件css-->
+    <link rel="stylesheet" type="text/css" href="js/jquery-confirm/jquery-confirm.min.css">
+    <!--ztree-->
+    <link rel="stylesheet" type="text/css" href="js/zTree_v3/css/materialDesignStyle/materialdesign.css">
+    <!--codemirror-->
+    <link rel="stylesheet" href="js/codemirror/6.65.7/codemirror.css">
+    <script src="js/codemirror/6.65.7/codemirror.js"></script>
+
+    <!--引用的文件用于支持对应语言的语法高亮。-->
+    <script src="js/codemirror/6.65.7/mode/javascript/javascript.js"></script>
+    <script src="js/codemirror/6.65.7/mode/python/python.min.js"></script>
+    <script src="js/codemirror/6.65.7/mode/shell/shell.min.js"></script>
+    <script src="js/codemirror/6.65.7/mode/go/go.min.js"></script>
+
+    <!--引入css文件，用以支持主题-->
+    <!-- <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/theme/eclipse.css">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/theme/seti.css">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/theme/dracula.css"> -->
+
+    <!--引入js，绑定Vim-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/dialog/dialog.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/keymap/vim.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/search/searchcursor.js"></script>
+
+    <!--代码高亮-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/selection/active-line.js"></script>
+
+    <!--代码提示-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.js"></script>
+
+    <!--支持代码折叠-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/fold/foldgutter.css" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/fold/foldcode.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/fold/foldgutter.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/fold/brace-fold.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/fold/comment-fold.js"></script>
+
+    <!--全屏模式
+    <link rel="stylesheet" href="codemirror-5.65.9/addon/display/fullscreen.css">
+    <script src="codemirror-5.65.9/addon/display/fullscreen.js"></script>
+    -->
+
+    <!--括号匹配-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/edit/matchbrackets.js"></script>
+
+    <!--自动补全-->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/codemirror/6.65.7/addon/hint/anyword-hint.js"></script>
+    <style>
+        .CodeMirror {
+            border: 1px solid #eee;
+            height: auto !important;
+        }
+
+        /* .ztree li a>span:not(.button) {
+            max-width: 120px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .ztree li span.button.add {
+            vertical-align: top;
+        } */
+    </style>
+</head>
+
+<body class="lyear-index">
+    <div class="lyear-layout-web">
+        <div class="lyear-layout-container">
+            <!--左侧导航-->
+            <aside class="lyear-layout-sidebar">
+                <!-- logo -->
+                <div id="logo" class="sidebar-header">
+                    <div class="input-group p-3">
+                        <input type="text" class="form-control" placeholder="搜索">
+                    </div>
+                </div>
+
+                <div class="lyear-layout-sidebar-info lyear-scroll">
+                    <!--目录-->
+                    <nav class="sidebar-main p-2">
+                        <ul id="treeDemo" class="ztree"></ul>
+                    </nav>
+                </div>
+            </aside>
+            <!--End 左侧导航-->
+
+            <!--头部信息-->
+            <header class="lyear-layout-header">
+
+                <nav class="navbar">
+
+                    <div class="navbar-left">
+                        <div class="lyear-aside-toggler">
+                            <span class="lyear-toggler-bar"></span>
+                            <span class="lyear-toggler-bar"></span>
+                            <span class="lyear-toggler-bar"></span>
+                        </div>
+                    </div>
+                    <div class="navbar-left d-flex align-items-center"><a name="jsname" id="jsname"></a></div>
+
+                    <ul class="navbar-right d-flex align-items-center">
+                        <!-- <div class="btn-group btn-group-sm me-2" role="group"> -->
+                        <a class="btn btn-primary rounded me-2" href="#!" data-bs-toggle="modal"
+                            data-bs-target="#myModal"><i class="mdi mdi-plus"></i> 新建</a>
+                        <a class="btn btn-success rounded me-2" href="#!" onclick="autSaveJsContent()"><i
+                                class="mdi mdi-check"></i> 保存</a>
+                        <a class="btn btn-danger rounded me-2" href="#!" onclick="autDelJsContent()"><i
+                                class="mdi mdi-window-close"></i> 删除</a>
+                        <a class="btn btn-teal rounded me-2" href="#!" onclick="autRunJsContent()"><i
+                                class="mdi mdi-play"></i> 测试</a>
+                        <!-- </div> -->
+
+                    </ul>
+                </nav>
+            </header>
+            <!--End 头部信息-->
+
+            <!--页面主要内容-->
+            <main class="lyear-layout-content">
+                <div class="card">
+                    <div><textarea id="code" value="text" style="min-height: 100px;"></textarea>
+                    </div>
+                </div>
+            </main>
+            <!--End 页面主要内容-->
+        </div>
+
+        <!--新建脚本的model-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="myModalLabel">新建脚本</h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+                            <div class="mb-3 row align-items-center">
+                                <label class="col-md-3 control-label" for="script_folder">文件夹</label>
+                                <div class="col-md-7">
+                                    <select class="form-select rounded" name="script_folder" id="script_folder">
+                                        <option value="">请选择文件夹</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row align-items-center">
+                                <label class="col-md-3 control-label" for="script_name">文件名<span class="text-danger">
+                                        *</span></label>
+                                <div class="col-md-7">
+                                    <input class="form-control rounded" type="type" name="script_name" id="script_name">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary"
+                                    onclick="autSubmitModalForm()">点击保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End 新建脚本的Model-->
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-multitabs/multitabs.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.min.js"></script>
+    <script type="text/javascript" src="js/index.min.js"></script>
+    <!--对话框插件js-->
+    <script type="text/javascript" src="js/jquery-confirm/jquery-confirm.min.js"></script>
+    <!--ztree-->
+    <script type="text/javascript" src="js/zTree_v3/js/jquery.ztree.all.min.js"></script>
+    <!--hex编码库-->
+    <script type="text/javascript" src="js/hexcode.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            // function addDiyDom(treeId, treeNode) {
+            //     var spaceWidth = 5;
+            //     var switchObj = $("#" + treeNode.tId + "_switch"),
+            //         icoObj = $("#" + treeNode.tId + "_ico");
+            //     switchObj.remove();
+            //     icoObj.before(switchObj);
+
+            //     if (treeNode.level > 1) {
+            //         var spaceStr = "<span style='display: inline-block;width:" + (spaceWidth * treeNode.level) + "px'></span>";
+            //         switchObj.before(spaceStr);
+            //     }
+            //     var spantxt = $("#" + treeNode.tId + "_span").html();
+            //     if (spantxt.length > 17) {
+            //         spantxt = spantxt.substring(0, 17) + "...";
+            //         $("#" + treeNode.tId + "_span").html(spantxt);
+            //     }
+            // }
+
+            function addDiyDom(treeId, treeNode) {
+                var ztreeWidth = $(".sidebar-main").css("width");
+                ztreeWidth = parseInt(ztreeWidth) * 0.75;
+                console.log(ztreeWidth)
+
+                //默认ztree字体大小为12px，可以显示字节数（10代表ztree的padding，18代表图标宽度，每一级节点缩进16px）
+                var num = parseInt((ztreeWidth - 10 - 18 * (treeNode.level + 1) - 16) / 12 * 2);
+                //判断 节点 字节数
+                var spantxt = $("#" + treeNode.tId + "_span").html();
+                if (spantxt) {
+                    var txtLength = GetLength(spantxt);
+                }
+                //如果 节点数据长度大于允许长度，即将超出时
+                var cutNum, cutLength = 0;
+                if (txtLength > num) {
+                    for (var i = 0; i < spantxt.length; i++) {
+                        var charCode = spantxt.charCodeAt(i);
+                        if (charCode >= 0 && charCode <= 128) {
+                            cutLength += 1;
+                        } else {
+                            cutLength += 2;
+                        }
+                        if (cutLength >= num - 2) {
+                            cutNum = i;//找到刚符合 允许长度 的字符串的位置
+                            break;
+                        }
+                    }
+                    spantxt = spantxt.substring(0, cutNum) + "...";
+                    $("#" + treeNode.tId + "_span").html(spantxt);
+                }
+                //判断 包含汉字和英文的字符串的长度判断方法，判断字节数
+                function GetLength(str) {
+                    var realLength = 0;
+                    for (var i = 0; i < str.length; i++) {
+                        var charCode = str.charCodeAt(i);
+                        if (charCode >= 0 && charCode <= 128)
+                            realLength += 1;
+                        else
+                            realLength += 2;
+                    }
+                    return realLength;
+                }
+            }
+
+            var setting = {
+                view: {
+                    addHoverDom: false,
+                    removeHoverDom: false,
+                    selectedMulti: false,//设置是否能够同时选中多个节点
+                    //showIcon: false,是否显示图标
+                    addDiyDom: addDiyDom
+                },
+                check: {
+                    enable: false
+                },
+                data: {
+                    simpleData: {
+                        enable: false //设置是否启用简单数据格式（zTree支持标准数据格式跟简单数据格式）
+                    }
+                },
+                edit: {
+                    enable: false
+                },
+                callback: {//回调函数
+                    onClick: function (event, treeId, treeNode) {
+                        // 处理节点点击事件  
+                        console.log("节点被点击：", treeNode);
+                        // 获取选定节点的名称和父节点名称
+                        var nodeName = treeNode.name;
+                        // 路径
+                        var parentName
+                        var parent = treeNode.getParentNode();
+                        while (parent) {
+                            if (parentName) {
+                                parentName = parent.name + "/" + parentName
+                            } else {
+                                parentName = parent.name
+                            }
+                            parent = parent.getParentNode();
+                        }
+                        console.log(nodeName, parentName)
+
+                        // 设置当前编辑的插件路径及文件名
+                        if (parentName) {
+                            $('#jsname').html(parentName + "/" + nodeName)
+                        } else {
+                            $('#jsname').html(nodeName)
+                        }
+
+                        if (!treeNode.is_directory) {
+                            // 加载脚本内容
+                            $.ajax({
+                                'url': `/scripts/${nodeName}?path=${parentName}`,
+                                'type': 'GET',
+                                'success': function (data) {
+                                    // 在此处处理返回的数据
+                                    console.log(data)
+                                    if (data.code = 200) {
+                                        editor.setValue(data.data)
+                                    }
+                                },
+                                'error': function (xhr, status, error) {
+                                    // 关闭加载动画
+                                    console.log('Error:', error);
+                                },
+                            });
+                        }
+                    }
+                }
+            };
+
+            // 初始化zTree
+            $.ajax({
+                url: "/scripts/files",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    zNodes = data;
+                    $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+                }
+            });
+
+            // myModal弹出事件
+            $('#myModal').on('show.bs.modal', function (e) {
+                //上传脚本时，其中有个选项为文件夹，需要填充文件夹选项
+                fillFolderNameOptions()
+            })
+        })
+
+        //代码编辑框设置
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            //Java高亮显示
+            mode: "text/javascript",
+            //显示行号
+            lineNumbers: true,
+            //设置主题
+            theme: "default",
+            //绑定Vim
+            //keyMap: "vim",
+            //代码折叠
+            lineWrapping: true,
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+            //全屏模式
+            //fullScreen: true,
+
+            scrollbarStyle: null,
+            styleActiveLine: true,
+            //括号匹配
+            matchBrackets: true,
+            //智能提示 
+            //智能提示 
+            extraKeys: {
+                "Ctrl-Space": "autocomplete", //ctrl-space唤起智能提示
+                "Ctrl-Q": function (cm) { //Ctrl-Q注释
+                    cm.toggleComment();
+                },
+                "Ctrl-Z": "undo", //撤销
+                "Ctrl-Y": "redo", //重做
+                "Ctrl-F": "find", //查找
+                "Ctrl-G": "findNext", //查找下一个
+                "Shift-Ctrl-G": "findPrev", //查找上一个
+                "Shift-Ctrl-F": "replace", //替换
+                "Shift-Ctrl-R": "replaceAll", //全部替换
+                "Ctrl-S": function (cm) { //Ctrl-S保存
+                    autSaveJsContent()
+                },
+                "Ctrl-Enter": function (cm) { //Ctrl-Enter运行
+                    autUploadJsContent()
+                },
+
+            },
+        });
+        //editor.setSize('auto', 100)
+
+
+        //填充文件夹选项
+        function fillFolderNameOptions() {
+            $.ajax({
+                url: "/scripts/files",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    $('#script_folder').empty()
+                    $('#script_folder').append('<option value="">请选择文件夹</option>')
+                    $.each(data, function (index, element) {
+                        if (element.is_directory) {
+                            $('#script_folder').append(`<option value="${element.name}">${element.name}</option>`)
+                        }
+                    })
+                }
+            });
+        }
+
+        //新建脚本文件-用于新建按钮
+        function autSubmitModalForm() {
+            const formData = $("#modal").serializeArray();
+            let results = "";
+            $.each(formData, function (index, element) {
+                if (element.value) {
+                    results += `//[${element.name}: ${element.value}]` + "\n";
+                }
+            });
+            editor.setValue(results)
+            // 设置文件名
+            $('#jsname').html(`${$("#script_folder").val()}/${$("#script_name").val()}`)
+            $("#myModal").modal("hide");
+        }
+
+        //真正的保存过程
+        function saveJs(name) {
+            //脚本内容
+            content = editor.getValue()
+            if (!content) {
+                $.alert("插件内容为空")
+                return
+            } else {
+                //以最后一个/为分隔符，分割出路径和文件名
+                path = name.substring(0, name.lastIndexOf("/"))
+                filename = name.substring(name.lastIndexOf("/") + 1)
+                console.log(path, filename)
+                //保存
+                $.ajax({
+                    type: "POST",
+                    url: `/scripts?t=${new Date().getTime()}`,
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        "filename": filename,
+                        "path": path,
+                        "content": content,
+                    }),
+                    success: function (data, status) {
+                        console.log(data)
+                        if (data.code == 200) {
+                            //updateMenu()
+                            //提示保存成功
+                            $.alert("保存成功")
+                        } else {
+                            $.alert("保存失败")
+                        }
+                    }
+                });
+            }
+        }
+
+        //保存js文件-用于保存按钮
+        function autSaveJsContent() {
+            //获取文件名
+            jsname = $("#jsname").html()
+            if (!jsname) {//如果没有文件名
+                $.confirm({
+                    title: '提示',
+                    content: '' +
+                        '<form action="" class="formName">' +
+                        '<div class="mb-3 row align-items-center">' +
+                        '<label>请输入插件名</label>' +
+                        '<input type="text" placeholder="" class="name form-control" required />' +
+                        '</div>' +
+                        '</form>',
+                    buttons: {
+                        formSubmit: {
+                            text: '提交',
+                            btnClass: 'btn-blue',
+                            action: function () {
+                                var name = this.$content.find('.name').val();
+                                if (!name) {
+                                    $.alert('请您输入插件名');
+                                    return false;
+                                }
+                                jsname = name;
+                                $("#jsname").html(jsname)
+                                saveJs(jsname)
+                            }
+                        },
+                        cancel: {
+                            text: '取消'
+                        },
+                    },
+                    onContentReady: function () {
+                        var jc = this;
+                        this.$content.find('form').on('submit', function (e) {
+                            e.preventDefault();
+                            jc.$$formSubmit.trigger('click');
+                        });
+                    }
+                });
+            } else {
+                saveJs(jsname)
+            }
+        }
+
+        //删除脚本文件-用于删除按钮
+        function autDelJsContent() {
+            name = $("#jsname").html()
+            if (name) {
+                $.alert({
+                    title: '提示框',
+                    content: `确定删除${name}？`,
+                    buttons: {
+                        confirm: {
+                            text: '确认',
+                            btnClass: 'btn-primary',
+                            action: function () {
+                                //name以最后一个/分割为路径和文件名
+                                path = name.substring(0, name.lastIndexOf("/"))
+                                filename = name.substring(name.lastIndexOf("/") + 1)
+                                console.log(path, filename)
+                                $.ajax({
+                                    url: `/scripts?t=${new Date().getTime()}`,
+                                    type: 'DELETE',
+                                    contentType: "application/json",
+                                    data: JSON.stringify({
+                                        "filename": filename,
+                                        "path": path,
+                                    }),
+                                    success: function (result) {
+                                        if (result.code == 200) {
+                                            // 清空编辑器
+                                            editor.setValue("")
+                                            // 清空文件名
+                                            $('#jsname').html("")
+                                            // 提示删除成功
+                                            $.alert("删除成功")
+                                        } else {
+                                            $.alert("删除失败:" + result)
+                                        }
+                                    },
+                                    error: function (xhr, status, error) {
+                                        console.log('Error:', error);
+                                    },
+                                })
+                            }
+                        },
+                        cancel: {
+                            text: '取消',
+                            action: function () {
+                                //$.alert('你点击了取消!');
+                            }
+                        }
+                    }
+                });
+            } else {
+                $.alert("请在插件目录点选要删除的插件")
+            }
+        }
+
+        //检查是否为脚本文件并上传
+        function checkFile(e) {
+            console.log(e.value)
+            //判断e不为空
+            if (!e || !e.value) return false;
+            //判断是否为脚本文件
+            var patn = /\.js$|\.py$|\.sh$|\.so$|\.php$/i;
+            if (!patn.test(e.value)) {
+                $.alert("您选择的似乎不是脚本文件。");
+                e.value = "";
+                return false;
+            }
+            //上传
+            $.confirm({
+                title: '提示',
+                content: '' +
+                    '<form action="" class="formName">' +
+                    '<div class="mb-3 row align-items-center">' +
+                    '<label>请选择文件夹</label>' +
+                    '<select class="form-control rounded script-upload-folder">' +
+                    $("#script_folder").html() +
+                    '</select>' +
+                    '</div>' +
+                    '</form>',
+                buttons: {
+                    formSubmit: {
+                        text: '提交',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            var path = this.$content.find('.script-upload-folder').val();
+                            if (!path) {
+                                $.alert('未选择上传文件夹');
+                                return false;
+                            } else {
+                                var formData = new FormData();
+                                formData.append("file", $("#file")[0].files[0]);
+                                formData.append("path", path);
+                                $.ajax(
+                                    {
+                                        url: "/scripts/upload",
+                                        type: "POST",
+                                        data: formData,
+                                        processData: false,
+                                        contentType: false,
+                                        success: function (response) {
+                                            //清空文件选择框
+                                            $("#file").val("")
+
+                                            if (response.code != 200) {
+                                                $.alert("上传失败:" + response.msg);
+                                            }
+                                            //updateMenu();
+                                            $.alert("上传成功");
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                    },
+                    cancel: {
+                        text: '取消'
+                    },
+                },
+                onContentReady: function () {
+                    var jc = this;
+                    this.$content.find('form').on('submit', function (e) {
+                        e.preventDefault();
+                        jc.$$formSubmit.trigger('click');
+                    });
+                }
+            });
+
+        }
+    </script>
+</body>
+
+</html>

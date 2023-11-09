@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <style>
+                *{padding: 0;margin: 0;}
+                #con{
+                        width: 320px; height: 566px; margin: 0 auto;
+                        border: 1px solid green; cursor: pointer;
+                        position: relative; margin-top: 10px; overflow: hidden;
+                }
+                #box{
+                        width: 320px; height: 566px;
+                        margin: 0 auto; overflow: hidden;
+                        position: absolute; z-index: 1;
+                }
+                #index,#copy{
+                        background: url('./images/background_1.png') no-repeat;
+                }
+                #me{
+                        display: block; position: absolute;
+                        left: 100px; top: 400px; z-index: 10; opacity: 1;
+                }
+                .buiOne{
+                        display: block;position: absolute;z-index: 10;
+                }
+                .enemyOne,.enemyTwo,.enemyThree{
+                        display: block;position: absolute;z-index: 10;
+                }
+                .explode{
+                        display: block;position: absolute;z-index: 10;
+                }
+                #over,#start{
+                        position: absolute;z-index: 16; border: 2px solid #5E6262;
+                        left: 100px; top: 230px; line-height: 40px; border-radius: 10px; width: 100px; text-align: center;opacity: 1;
+                        background: #CCCCCC; display: none;
+                }
+                #start:hover{background: #666;}
+                .copy{
+                        display: block; position: absolute;z-index: 15; width: 100%; height: 100%;
+                }
+                #tmpscore{position: absolute;z-index: 20;}
+        </style>
+        <script>
+                var timeGo;
+                window.onload = function(){
+                        setInterval(function(){explodeNum++},20000);
+                        // 分数
+                        var score = 0;
+                        // 等级
+                        var level = 0;
+                        var explodeNum = 20;
+                        // 射击定时次数 [开始时间，间隔]
+                        var shootTimes = [30,8];
+ 
+                        // 敌军生成定时次数 [开始时间，间隔]
+                        var enemyTimes = [30,60];
+                        var timing;
+                        // 获取元素box 、index 和copy
+                        var con         = document.getElementById('con');
+                        var box         = document.getElementById('box');
+                        var index         = document.getElementById('index');
+                        var copy         = document.getElementById('copy');
+                        var me         = document.getElementById('me');
+ 
+                        // 背景图滚动相关
+                        index.style.height = box.offsetHeight+'px';
+                        copy.style.height = box.offsetHeight+'px';
+                        copy.innerHTML = index.innerHTML;               
+ 
+                        // 键盘上下左右空格事件
+                        document.onkeydown=function(event){
+                                var e = event || window.event || arguments.callee.caller.arguments[0];
+                                if(e && e.keyCode ==37 && (me.offsetLeft>0)){
+                                        me.style.left = (me.offsetLeft-10)+'px';
+                                }
+                                if(e && e.keyCode ==38 && (me.offsetTop>0)){
+                                        me.style.top = (me.offsetTop-10)+'px';
+                                }
+                                if(e && e.keyCode ==39 && (me.offsetLeft<255)){
+                                        me.style.left = (me.offsetLeft+10)+'px';
+                                }
+                                if(e && e.keyCode ==40 && (me.offsetTop<485)){
+                                                me.style.top = (me.offsetTop+10)+'px';
+                                }
+                                if(e && e.keyCode ==32){
+                                                clearInterval(timing);
+                                                start();                               
+                                }
+                                if(e && e.keyCode ==90){
+                                        if(explodeNum <=0){
+                                                return false;
+                                        }
+                                        explodeNum--;
+                                        // 特技
+                                        var width = con.offsetWidth;
+                                        var height = con.offsetHeight+50;
+                                        (function(e){
+                                                        var time = new Date().getTime()+1000*e;
+                                                        var tmp = setInterval(function(){
+                                                                for(var i=-25; i<width-10; i+=20){
+                                                                        shoot(i,height,'./images/bullet2.png');
+                                                                }
+                                                                if(new Date().getTime()>time){
+                                                                        clearInterval(tmp);
+                                                                }
+                                                        },100)
+                                        })(2);
+                                }
+                        }
+ 
+                        // 飞机射击
+                        function shoot(left,top,imgSrc){
+                                var left = left ? left : me.offsetLeft;
+                                var top = top ? top : me.offsetTop;
+                                var imgSrc = imgSrc ? imgSrc :'./images/bullet1.png';
+                                (function(){
+                                        var bui = document.createElement("img");
+                                        bui.setAttribute('src',imgSrc);
+                                        bui.setAttribute('class','buiOne');
+                                        bui.setAttribute('style','left:'+(left+31)+'px;top:'+(top-15)+'px;');
+                                        con.appendChild(bui);
+                                        return 1;
+                                })();
+                        }
+ 
+                        // 定时器
+                        timeGo = function(){
+                                box.setAttribute('style','opacity:1');
+                                me.setAttribute('style','opacity:1;');
+                                var start = document.getElementById('start');
+                                start.setAttribute('style','display:none;');
+ 
+                                timing = setInterval(function(){
+                                        /**  子弹射击  **/
+                                        (function(){
+                                                if(score>50)         shootTimes[1]        =6;
+                                                if(score>100)         shootTimes[1]        =5;
+                                                if(score>150)         shootTimes[1]        =4;
+                                                if(score>200)         shootTimes[1]        =3;
+                                                if(shootTimes[0] > 0){
+                                                        shootTimes[0] --;
+                                                }else{
+                                                        shootTimes[0] = shootTimes[1];
+                                                        shoot();
+                                                }
+                                        })();
+ 
+                                        // 等级
+                                        (function(){level=Math.floor(score/100)})();
+ 
+                                        /**  背景滚动  **/
+                                        box.scrollTop-=4;
+                                        if(box.scrollTop == 0){
+                                                box.scrollTop = box.offsetHeight;
+                                        }
+ 
+                                        /**  敌军生成  **/
+                                        (function(){
+                                                enemyTimes[1] = 60-level*5;
+                                                if(enemyTimes[0] > 0){
+                                                        enemyTimes[0] --;
+                                                }else{
+                                                        enemyTimes[0] = enemyTimes[1];
+                                                        makeEnemy();
+                                                }
+ 
+                                                function makeEnemy(){
+                                                        var enemy = document.createElement("img");
+                                                        var n = Math.ceil(Math.random()*100);
+                                                        if(n>30){
+                                                                enemy.setAttribute('src','./images/enemy1_fly_1.png');
+                                                                enemy.setAttribute('class','enemyOne');
+                                                                enemy.setAttribute('blood','3');
+                                                        }else if(n>2){
+                                                                enemy.setAttribute('src','./images/enemy3_fly_1.png');
+                                                                enemy.setAttribute('class','enemyTwo');
+                                                                enemy.setAttribute('blood','10');       
+                                                        }else if(n>0){
+                                                                enemy.setAttribute('src','./images/enemy2_fly_1.png');
+                                                                enemy.setAttribute('class','enemyThree');       
+                                                                enemy.setAttribute('blood','40');
+                                                        }else{
+                                                                return false;
+                                                        }
+                                                        var left = Math.random()*200;
+                                                        enemy.setAttribute('style','left:'+left+'px;top:0px;');
+                                                        con.appendChild(enemy);
+                                                }
+                                        })();
+ 
+                                        /**  飞行，超出消失  **/
+                                        // 获取所有图片元素
+                                        var bui = document.getElementsByTagName('img');
+ 
+                                        // 定义所有敌军
+                                        var enemy = new Array();
+                                        // 定义所有子弹
+                                        var buis = new Array();
+ 
+                                        // 子弹，敌军，飞行事件   超出范围消失事件
+                                        for(e in bui){
+                                                if(typeof(bui[e])==='object'){
+                                                        var classs = bui[e].getAttribute('class');
+                                                        if((classs =='enemyOne')||(classs == 'enemyTwo')||(classs == 'enemyThree')){
+                                                                // 给大型飞机定义速度
+                                                                speedOne         =        (classs == 'enemyOne')                 ? -1 : 0;
+                                                                speedTwo         =        (classs == 'enemyTwo')                 ? -2 : 0;
+                                                                speedThree         =        (classs == 'enemyThree')         ? -3 : 0;
+                                                                bui[e].style.top = bui[e].offsetTop+5+speedThree+speedTwo+speedOne+level/2+'px';
+                                                                // 敌军消失事件
+                                                                if(bui[e].offsetTop>520){
+                                                                        con.removeChild(bui[e]);
+                                                                }else{
+                                                                        enemy.unshift(bui[e]);
+                                                                }
+                                                        }else if(bui[e].getAttribute('class')=='buiOne'){
+                                                                bui[e].style.top = bui[e].offsetTop-25+'px';
+                                                                // 子弹消失事件
+                                                                if(bui[e].offsetTop<-25){
+                                                                        con.removeChild(bui[e]);
+                                                                }else{
+                                                                        buis.unshift(bui[e]);
+                                                                }
+                                                        }
+                                                }
+                                        }
+ 
+                                        // 子弹和敌军撞击判断
+                                        for(var i in enemy){
+                                                for(var j in buis){
+                                                        if(impact(enemy[i],buis[j])){
+                                                                var blood = parseInt(enemy[i].getAttribute('blood'));
+                                                                enemy[i].setAttribute('blood',blood-1);
+                                                                if(enemy[i].getAttribute('class')=='enemyOne'){
+                                                                        if(blood<0){
+                                                                                explode(enemy[i],2);
+                                                                        }
+                                                                }else if(enemy[i].getAttribute('class')=='enemyTwo'){
+                                                                        if(blood<0){
+                                                                                explode(enemy[i],3);
+                                                                        }
+                                                                }else if(enemy[i].getAttribute('class')=='enemyThree'){
+                                                                        if(blood<0){
+                                                                                explode(enemy[i],4);
+                                                                        }
+                                                                }
+                                                                explode(buis[j],5);
+                                                        }
+                                                }
+                                        }
+ 
+                                        // 自己和敌军撞击判断
+                                        for(e in bui){
+                                                if(typeof(bui[e])==='object'){
+                                                        if((bui[e].getAttribute('class')=='enemyOne')){
+                                                                if(impact(bui[e],me)){
+                                                                        explode(bui[e],2);
+                                                                        explode(me,1);
+                                                                }
+                                                        }else if(bui[e].getAttribute('class')=='enemyTwo'){
+                                                                if(impact(bui[e],me)){
+                                                                        explode(bui[e],3);
+                                                                        explode(me,1);
+                                                                }
+                                                        }else if(bui[e].getAttribute('class')=='enemyThree'){
+                                                                if(impact(bui[e],me)){
+                                                                        explode(bui[e],4);
+                                                                        explode(me,1);
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                        document.getElementById('tmpscore').innerHTML='分数：'+score+'<br />装弹：'+shootTimes+'<br />level：'+level+'<br />特技：'+explodeNum;
+                                },50);
+                        }
+                         
+                        /**
+                        * 检测两个元素是否碰撞
+                        * [url=home.php?mod=space&uid=952169]@Param[/url] 检测的两个元素
+                        * [url=home.php?mod=space&uid=155549]@Return[/url] 如果碰撞返回true 否则返回false
+                        */
+                        function impact(a,b){
+                                var aTop         = a.offsetTop;
+                                var aLeft         = a.offsetLeft;
+                                var aWidth         = a.offsetWidth;
+                                var aHeight = a.offsetHeight;
+                                var bTop         = b.offsetTop;
+                                var bLeft         = b.offsetLeft;
+                                var bWidth         = b.offsetWidth;
+                                var bHeight = b.offsetHeight;
+ 
+                                if((bLeft>(aLeft+aWidth))||(aLeft>(bLeft+bWidth))||(bTop>(aTop+aHeight))||(aTop>(bTop+bHeight))){
+                                        return false;       
+                                }else{
+                                        return true;
+                                }
+                        }
+ 
+                        /**
+                        * 处理爆炸
+                        * @param o需要爆炸的对象 n 1=自身，2=小型敌军，3=中型敌军，4=巨型敌军
+                        * @return over 游戏结束  true，false
+                        */
+                        function explode(o,n){
+                                if(n==5){
+                                        if(o){
+                                                con.removeChild(o);
+                                        }
+                                        return false;
+                                }
+                                switch(n){
+                                        case 1:
+                                                        src = './images/myself.gif';
+                                                        clearInterval(timing);
+                                                        document.getElementById('score').innerHTML = score;
+                                                        document.getElementById('over').style = 'display:block';
+                                                        break;
+                                        case 2: src = './images/small_explode.gif';score+=3;
+                                                        break;
+                                        case 3: src = './images/middle_explode.gif';score+=10;
+                                                        break;
+                                        case 4: src = './images/large_explode.gif';score+=100;
+                                                        break;
+                                        default:
+                                                    break;
+                                }
+                                var top         = o.offsetTop;
+                                var left         = o.offsetLeft;
+                                var explode = document.createElement("img");
+                                explode.setAttribute('src',src);
+                                explode.setAttribute('class','explode');
+                                explode.setAttribute('style','left:'+left+'px;top:'+top+'px;');
+                                con.appendChild(explode);
+                                if(n != 1){
+                                        setTimeout(function(){
+                                                con.removeChild(explode);
+                                        },1000);
+                                }
+                                if(o){
+                                        con.removeChild(o);
+                                }
+                        }
+                        // 游戏开始相关
+                        start();
+                        function start(){
+                                var con        = document.getElementById('con');
+                                con.setAttribute('style','background:url("./images/start.png")');
+                                var box = document.getElementById('box');
+                                box.setAttribute('style','opacity:0');
+                                var me = document.getElementById('me');
+                                me.setAttribute('style','opacity:0;');
+                                var start = document.getElementById('start');
+                                start.setAttribute('style','display:block;top:350px;cursor:pointer;');
+                                start.setAttribute('onclick','timeGo()');
+                        }
+                }
+                 
+        </script>
+</head>
+<body>
+        <div id="con">
+                <span id="tmpscore"></span>
+                <div id="box">
+                        <div id="index"></div>               
+                        <div id="copy"></div>
+                </div>
+                <img src="./images/me.gif" id="me" alt="">
+                <div id="over">
+                        成绩：<span id="score"></span>
+                        <br />
+                        Game Over
+                </div>
+                <div id="start">
+                        开始游戏
+                </div>
+                <div class="copy"></div>
+        </div>
+</body>
+</html>

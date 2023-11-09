@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+	<meta name="keywords" content="autMan,后台模板,后台管理系统">
+	<meta name="description" content="后台管理系统的HTML模板。">
+	<title>autMan后台管理系统模板</title>
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.min.css">
+	<link rel="stylesheet" type="text/css" href="css/animate.min.css">
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+
+		<div class="row">
+			<div class="col-lg-6">
+				<!--card-->
+				<div class="card">
+					<div class="card-body">
+
+						<form method="post" name="edit-form" class="edit-form">
+							<h6>饿了么</h6>
+							<hr>
+							<div class="mb-3">
+								<label for="fanli-enable_ele">开关</label>
+
+								<input class="form-check-input" type="checkbox" checked="" name="fanli-enable_ele"
+									id="fanli-enable_ele">
+
+							</div>
+							<div class="mb-3">
+								<label for="fanli-ele_cron">定时（重启生效）</label>
+								<input class="form-control" type="text" name="fanli-ele_cron" id="fanli-ele_cron"
+									value="" placeholder="" />
+								<small class="text-warning">cron表达式</small>
+							</div>
+							<div class="mb-3">
+								<label for="fanli-ele_activity_id">活动ID</label>
+								<input class="form-control" type="text" name="fanli-ele_activity_id"
+									id="fanli-ele_activity_id" value="" placeholder="" />
+								<small class="text-warning"> 饿了么相关活动id
+									<br>活动ID：10144，饿了么天天领红包，最高抢66元大额红包，预估佣金收益6%。
+									<br>活动ID：10107，吃喝玩乐 尽享优惠，本地生活福利大放送，预估佣金收益8%。
+									<br>活动ID：10174，浏览店铺做任务，抢无门槛红包，预估佣金收益6%。
+									<br>活动ID：10247，零售会场（新），超低价爆品来袭，预估佣金收益4%。
+									<br>活动ID：10405，城市品牌日，女神节活动，预估佣金收益4%。</small>
+							</div>
+							<div class="mb-3">
+								<label for="fanli-ele_pic">附图</label>
+
+								<input class="form-check-input" type="checkbox" checked="" name="fanli-ele_pic" id="fanli-ele_pic">
+
+							</div>
+							<div class="mb-3">
+								<label for="fanli-ele_to_groups">目标群</label>
+								<input class="form-control" type="text" name="fanli-ele_to_groups"
+									id="fanli-ele_to_groups" value="" placeholder="" />
+								<small class="text-warning">qqgroup:123,wxgroup:456,tbgroup:789</small>
+							</div>
+							<div class="mb-3">
+								<button class="btn btn-primary" type="button" onclick="submitParams()">保存</button>
+							</div>
+						</form>
+
+					</div>
+
+				</div>
+			</div>
+
+			<div class="col-lg-6">
+				<!--card-->
+				<div class="card">
+					<div class="card-body">
+
+						<form method="post" name="edit-form" class="edit-form">
+							<h6>美团</h6>
+							<hr>
+							<div class="mb-3">
+								<label for="fanli-enable_meituan">开关</label>
+								<input class="form-check-input" type="checkbox" checked="" name="fanli-enable_meituan"
+									id="fanli-enable_meituan">
+							</div>
+							<div class="mb-3">
+								<label for="fanli-meituan_cron">定时（重启生效）</label>
+								<input class="form-control" type="text" name="fanli-meituan_cron"
+									id="fanli-meituan_cron" value="" placeholder="" />
+								<small class="text-warning">cron表达式</small>
+							</div>
+							<div class="mb-3">
+								<label for="fanli-meituan_act_id">活动ID</label>
+								<input class="form-control" type="text" name="fanli-meituan_act_id"
+									id="fanli-meituan_act_id" value="" placeholder="" />
+								<small class="text-warning">参见：<a
+										href="http://www.zhetaoke.com/one/api3.aspx">http://www.zhetaoke.com/one/api3.aspx</a>美团转链API</small>
+							</div>
+							<div class="mb-3">
+								<label for="fanli-meituan_link_type">链接类型</label>
+								<input class="form-control" type="text" name="fanli-meituan_link_type"
+									id="fanli-meituan_link_type" value="" placeholder="" />
+								<small class="text-warning">参见：<a
+										href="http://www.zhetaoke.com/one/api3.aspx">http://www.zhetaoke.com/one/api3.aspx</a>美团转链API</small>
+							</div>
+							<div class="mb-3">
+								<label for="fanli-meituan_pic">附图</label>
+
+								<input class="form-check-input" type="checkbox" checked="" name="fanli-meituan_pic"
+									id="fanli-meituan_pic">
+
+							</div>
+							<div class="mb-3">
+								<label for="fanli-meituan_mini_code">图的样式</label>
+								<input class="form-control" type="text" name="fanli-meituan_mini_code"
+									id="fanli-meituan_mini_code" value="" placeholder="" />
+								<small class="text-warning">1：小程序二维码，2：长链接二维码推广大图，3：小程序二维码推广大图</small>
+							</div>
+							<div class="mb-3">
+								<label for="fanli-meituan_to_groups">目标群</label>
+								<input class="form-control" type="text" name="fanli-meituan_to_groups"
+									id="fanli-meituan_to_groups" value="" placeholder="" />
+								<small class="text-warning">qqgroup:123,wxgroup:456,tbgroup:789</small>
+							</div>
+							<div class="mb-3">
+								<button class="btn btn-primary" type="button" onclick="submitParams()">保存</button>
+							</div>
+						</form>
+
+					</div>
+
+				</div>
+			</div>
+			<!--end card-->
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/popper.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--加载-->
+	<script type="text/javascript" src="js/lyear-loading.js"></script>
+	<!--通知-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/fill_input.js"></script>
+</body>
+
+</html>

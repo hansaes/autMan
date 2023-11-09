@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>科学计算器</title>
+    <style>
+        .container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .result {
+            margin-bottom: 10px;
+        }
+
+        .button {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            font-size: 20px;
+        }
+
+        .history {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="result">
+            <input type="text" id="result" readonly>
+        </div>
+        <div>
+            <button class="button">C</button>
+            <button class="button">&#9003;</button>
+            <button class="button">=</button>
+            <button class="button">/</button>
+        </div>
+        <div>
+            <button class="button">7</button>
+            <button class="button">8</button>
+            <button class="button">9</button>
+            <button class="button">*</button>
+        </div>
+        <div>
+            <button class="button">4</button>
+            <button class="button">5</button>
+            <button class="button">6</button>
+            <button class="button">-</button>
+        </div>
+        <div>
+            <button class="button">1</button>
+            <button class="button">2</button>
+            <button class="button">3</button>
+            <button class="button">+</button>
+        </div>
+        <div>
+            <button class="button">0</button>
+            <button class="button">.</button>
+            <button class="button">(</button>
+            <button class="button">)</button>
+        </div>
+        <div>
+            <button class="button">sin</button>
+            <button class="button">cos</button>
+            <button class="button">tan</button>
+            <button class="button">√</button>
+        </div>
+        <div>
+            <button class="button">log</button>
+            <button class="button">^</button>
+            <button class="button">abs</button>
+            <button class="button">π</button>
+        </div>
+        <div class="history">
+            <h3>计算历史</h3>
+            <ul id="historyList"></ul>
+        </div>
+    </div>
+
+    <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjs/10.1.1/math.min.js"
+        type="application/javascript"></script>
+    <script>
+        function appendToResult(value) {
+            document.getElementById('result').value += value;
+        }
+
+        function clearResult() {
+            document.getElementById('result').value = '';
+        }
+
+        function deleteLastChar() {
+            var result = document.getElementById('result').value;
+            document.getElementById('result').value = result.slice(0, -1);
+        }
+
+        function calculate() {
+            var result = document.getElementById('result').value;
+            try {
+                var calculatedResult = math.evaluate(result);
+                document.getElementById('result').value = calculatedResult;
+                saveToHistory(result, calculatedResult);
+            } catch (error) {
+                document.getElementById('result').value = 'Error';
+                // 清空错误信息
+                setTimeout(function () {
+                    document.getElementById('result').value = '';
+                }, 2000);
+                return;
+            }
+        }
+
+        function saveToHistory(expression, result) {
+            var historyItem = document.createElement('li');
+            historyItem.textContent = expression + ' = ' + result;
+            document.getElementById('historyList').appendChild(historyItem);
+        }
+
+        function loadHistory() {
+            var history = JSON.parse(localStorage.getItem('calculatorHistory')) || [];
+            var historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+            history.forEach(function (item) {
+                var historyItem = document.createElement('li');
+                historyItem.textContent = item.expression + ' = ' + item.result;
+                historyList.appendChild(historyItem);
+            });
+        }
+
+        function saveHistory() {
+            var expression = document.getElementById('result').value;
+            var result = document.getElementById('result').value;
+            var history = JSON.parse(localStorage.getItem('calculatorHistory')) || [];
+            history.push({ expression: expression, result: result });
+            localStorage.setItem('calculatorHistory', JSON.stringify(history));
+        }
+
+        loadHistory();
+
+        // 添加键盘按钮事件
+        document.addEventListener('keydown', function (event) {
+            var key = event.key;
+            if (key === 'Enter') {
+                calculate();
+            } else if (key === 'Backspace') {
+                deleteLastChar();
+            } else if (key === 'Escape') {
+                clearResult();
+            } else if (key === 'c' || key === 'C') {
+                if (event.ctrlKey || event.metaKey) {
+                    clearResult();
+                }
+            } else if (key.match(/[0-9\.\+\-\*\/\(\)\^]/)) {
+                appendToResult(key);
+            }
+        });
+    </script>
+</body>
+
+</html>

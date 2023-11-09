@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>系统参数 - autMan后台管理系统</title>
+	<link rel="icon" href="favicon.ico" type="image/ico">
+	<meta name="keywords" content="autMan,后台管理系统">
+	<meta name="description" content="autMan后台管理系统">
+	<meta name="author" content="autMan">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<!--card-->
+				<div class="card">
+					<ul class="nav nav-tabs page-tabs">
+						<li> <a href="aut_cookie_pages_login.html">登陆管理</a> </li>
+						<li class="active"> <a href="#!">资产查询</a> </li>
+						<li> <a href="aut_cookie_pages_push.html">资产推送</a> </li>
+						<li> <a href="aut_cookie_pages_notify.html">任务通知</a> </li>
+						<li> <a href="aut_cookie_pages_update.html">东芝更新</a> </li>
+						<li> <a href="aut_cookie_pages_appraise.html">自动评价</a> </li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active">
+
+							<form method="post" name="edit-form" class="edit-form">
+
+								<div class="form-group">
+									<label for="jd_cookie-asset_query_alias">查询命令的别名</label>
+									<input type="text" class="form-control" name="jd_cookie-asset_query_alias"
+										id="jd_cookie-asset_query_alias" value="" placeholder="" />
+									<small class="help-block">重启生效</small>
+								</div>
+
+								<div class="form-group">
+									<label for="jd_cookie-jd_acount_unbind_hint">无绑定账号提示</label>
+									<input type="text" class="form-control" name="jd_cookie-jd_acount_unbind_hint"
+										id="jd_cookie-jd_acount_unbind_hint" value="" placeholder="" />
+									<small class="help-block">默认：未查询到绑定账号，请对我说“登陆”</small>
+								</div>
+
+								<div class="form-group">
+									<label class="lyear-radio radio-inline radio-primary">
+										<input type="radio" name="jd_cookie-bill_enable"  value="true"><span>海报</span>
+									</label>
+									<label class="lyear-radio radio-inline radio-primary">
+										<input type="radio" name="jd_cookie-bill_enable" value="false"><span>文字</span>
+									</label>
+								</div>
+
+								<div class="form-group">
+									<label for="jd_cookie-query_blacklist">黑名单</label>
+									<input type="text" class="form-control" name="jd_cookie-query_blacklist"
+										id="jd_cookie-query_blacklist" value="" placeholder="" />
+									<small class="help-block">禁止某人查询</small>
+								</div>
+
+								<div class="form-group">
+									<label for="jd_cookie-query_wait_time">查询间隔(秒)</label>
+									<input type="text" class="form-control" name="jd_cookie-query_wait_time"
+										id="jd_cookie-query_wait_time" value="" placeholder="" />
+									<small class="help-block">防止密集查询</small>
+								</div>
+
+								<div class="form-group">
+									<label for="jd_cookie-query_time">查询时间段</label>
+									<input type="text" class="form-control" name="jd_cookie-query_time"
+										id="jd_cookie-query_time" value="" placeholder="" />
+									<small class="help-block">控制查询时间段</small>
+								</div>
+
+								<div class="form-group">
+									<button class="btn btn-primary" type="button" onclick="submitParams()">保存</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!--end card-->
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--消息提示-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<script type="text/javascript" src="js/lightyear.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/fill_input.js"></script>
+</body>
+
+</html>
