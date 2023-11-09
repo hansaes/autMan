@@ -20,10 +20,10 @@ RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 	&& apk add php php-cli php-fpm php-mysqli php-json php-openssl \
 	&& apk add icu-data-full
 
-run pip3 install requests user_agent PyExecJS aiohttp -i https://pypi.tuna.tsinghua.edu.cn/simple \
+RUN pip3 install requests user_agent PyExecJS aiohttp -i https://pypi.tuna.tsinghua.edu.cn/simple \
 	&&  npm install axios request require crypto-js hook 
-	
-add . /app/autMan/
+
+ADD . /app/autMan/
 COPY ./docker-entrypoint.sh /bin/
 
 RUN chmod a+x /bin/docker-entrypoint.sh \
