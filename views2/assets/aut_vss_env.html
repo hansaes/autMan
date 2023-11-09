@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="keywords" content="autMan,后台,管理系统">
+  <meta name="description" content="autMan后台管理系统。">
+  <title>autMan后台管理系统</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+  <!--对话框插件css-->
+  <link rel="stylesheet" type="text/css" href="js/jquery-confirm/jquery-confirm.min.css">
+  <!--引入标签插件css-->
+  <link type="text/css" rel="stylesheet" href="js/jquery-tagsinput/jquery.tagsinput.min.css">
+  <!--表格插件css-->
+  <link rel="stylesheet" href="js/bootstrap-table/bootstrap-table.min.css">
+  <!--引入弹出工具栏插件css-->
+  <link rel="stylesheet" type="text/css" href="js/jquery-toolbar/jquery-toolbar.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.min.css">
+  <!--codemirror-->
+  <link rel="stylesheet" href="js/codemirror/6.65.7/codemirror.css">
+  <script src="js/codemirror/6.65.7/codemirror.js"></script>
+</head>
+
+<body>
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <div id="toolbar" class="toolbar-btn-action">
+              <button id="btn_add" type="button" class="btn btn-primary rounded me-1"
+                onclick="autClearModalForm($('#myModal'))">
+                <span class="mdi mdi-plus" aria-hidden="true"></span> 新增
+              </button>
+              <button id="btn_enable" type="button" class="btn btn-success rounded me-1"
+                onclick="autToggleRows($('table').bootstrapTable('getSelections'),'enable','/envs')">
+                <span class="mdi mdi-check" aria-hidden="true"></span> 启用
+              </button>
+              <button id="btn_disable" type="button" class="btn btn-warning rounded me-1"
+                onclick="autToggleRows($('table').bootstrapTable('getSelections'),'disable','/envs')">
+                <span class="mdi mdi-block-helper" aria-hidden="true"></span> 禁用
+              </button>
+              <button id="btn_delete" type="button" class="btn btn-danger rounded me-1"
+                onclick="autDelRows($('table').bootstrapTable('getSelections'),'/envs',autFormatData)">
+                <span class="mdi mdi-trash-can-outline" aria-hidden="true"></span> 删除
+              </button>
+              <button id="btn_fresh" type="button" class="btn btn-pink rounded me-1"
+                onclick="autRefreshTable('/envs',autFormatData)">
+                <span class="mdi mdi-refresh" aria-hidden="true"></span> 刷新
+              </button>
+              <!-- <button id="btn_reload" type="button" class="btn btn-yellow rounded me-1"
+                onclick="autFillTable('', '/envs', autFormatData, columns)">
+                <span class="mdi mdi-reload" aria-hidden="true"></span> 重载
+              </button> -->
+            </div>
+            <table id="table"></table>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!--模态弹出框-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="myModalLabel">环境变量</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="modal" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+            <div class="mb-3 row align-items-center visually-hidden">
+              <label class="col-md-3 control-label" for="id">ID</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="number" name="id" id="id" readonly />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="name">名称<span class="text-danger"> *</span></label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="name" id="name" />
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="value">值<span class="text-danger"> *</label>
+              <div class="col-md-7">
+                <textarea class="form-control rounded" type="text" name="value" id="value" rows="5"></textarea>
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="remarks">备注</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="remarks" id="remarks" value="" placeholder="" />
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-bs-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary"
+                onclick="autSubmitModalForm($('#myModal'),'/envs')">点击保存</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--对话框插件js-->
+  <script type="text/javascript" src="js/jquery-confirm/jquery-confirm.min.js"></script>
+  <!--通知-->
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <!--表格插件js-->
+  <script src="js/bootstrap-table/bootstrap-table.js"></script>
+  <script src="js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+  <!--引入标签插件js-->
+  <script type="text/javascript" src="js/jquery-tagsinput/jquery.tagsinput.min.js"></script>
+  <!--引入弹出工具栏插件js-->
+  <script type="text/javascript" src="js//jquery-toolbar/jquery.toolbar.min.js"></script>
+  <!--引入loading插件js-->
+  <script type="text/javascript" src="js/lyear-loading.js"></script>
+  <!--自定义-->
+  <script type="text/javascript" src="js/aut-table.js"></script>
+  <script>
+    //表格列
+    const columns = [{
+      field: 'example',
+      checkbox: true,
+      // 列的宽度
+      width: 5,
+      // 宽度单位
+      widthUnit: 'rem'
+    }, {
+      title: '序号',
+      halign: 'center',
+      formatter: function (value, row, index) {
+        return index + 1
+      }
+    }, {
+      field: 'id',
+      title: 'ID',
+      halign: 'center',
+      visible: false,
+      // 是否作为排序列
+      sortable: true,
+      width: 8,
+      // 宽度单位
+      widthUnit: 'rem'
+    }, {
+      field: 'position',
+      title: '位置权重',
+      halign: 'center',
+      visible: false,
+      sortable: true,
+    }, {
+      field: 'name',
+      align: 'left',
+      halign: 'center',
+      title: '名称',
+      cellStyle: function (value, row, index) {
+        return {
+          css: {
+            "min-width": "100px",
+            "white-space": "nowrap",
+            "text-overflow": "ellipsis",
+            "overflow": "hidden",
+            "max-width": "60px"
+          }
+        }
+      },
+      formatter: function (value, row, index) {
+        var span = document.createElement('span');
+        span.setAttribute('title', value);
+        if (row.isPinned) {//置顶的要显示图标
+          span.innerHTML = '<i class="mdi mdi-pin text-primary"></i> ' + value;
+        } else {//不置顶的不显示图标
+          span.innerHTML = value;
+        }
+        return span.outerHTML;
+      },
+    }, {
+      field: 'value',
+      title: '值',
+      halign: 'center',
+      cellStyle: function (value, row, index) {
+        return {
+          css: {
+            "min-width": "200px",
+            "white-space": "nowrap",
+            "text-overflow": "ellipsis",
+            "overflow": "hidden",
+            "max-width": "60px"
+          }
+        }
+      },
+      formatter: function (value, row, index) {
+        var span = document.createElement('span');
+        if (value) {
+          span.setAttribute('title', value);
+          span.innerHTML = value;
+        } else {
+          span.innerHTML = '';
+        }
+        return span.outerHTML;
+      },
+    }, {
+      field: 'remarks',
+      title: '备注',
+      halign: 'center',
+      cellStyle: function (value, row, index) {
+        return {
+          css: {
+            "min-width": "200px",
+            "white-space": "nowrap",
+            "text-overflow": "ellipsis",
+            "overflow": "hidden",
+            "max-width": "60px"
+          }
+        }
+      },
+      formatter: function (value, row, index) {
+        var span = document.createElement('span');
+        if (value) {
+          span.setAttribute('title', value);
+          span.innerHTML = value;
+        } else {
+          span.innerHTML = '';
+        }
+        return span.outerHTML;
+      },
+    }, {
+      field: 'updatedAt',
+      title: '更新时间',
+      halign: 'center',
+      sortable: true,
+      formatter: function (value, row, index) {
+        if (value) {
+          //将时间戳转换成时间字符串
+          date = new Date(value);
+          Y = date.getFullYear() + '-';
+          M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+          D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' ';
+          h = date.getHours() < 10 ? '0' + date.getHours() + ':' : date.getHours() + ':';
+          m = date.getMinutes() < 10 ? '0' + date.getMinutes() + ':' : date.getMinutes() + ':';
+          s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+          return Y + M + D + h + m + s;
+        } else {
+          return '';
+        }
+      }
+    }, {
+      field: 'status',
+      title: '状态',
+      halign: 'center',
+      sortable: true,
+      formatter: function (value, row, index) {
+        var status = '';
+        if (row.status == '1') {//空闲
+          status = `<button class="btn btn-danger btn-sm"><i class="mdi mdi-block-helper"></i> 已禁用</button>`
+        } else {
+          status = `<button class="btn btn-success btn-sm"><i class="mdi mdi-check"></i> 已启用</button>`
+        }
+        return status;
+      }
+    }, {
+      field: 'operate',
+      visible: true,
+      align: 'center',
+      halign: 'center',
+      title: '操作',
+      formatter: btnGroup,
+      events: {
+        'click .edit-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autEditRow(row, '/envs', $('#myModal'));
+        },
+        'click .del-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autDelRows([row], '/envs', autFormatData);
+        },
+        'click .enable-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autToggleRows([row], 'enable', '/envs', autFormatData);
+        },
+        'click .disable-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autToggleRows([row], 'disable', '/envs', autFormatData);
+        },
+      }
+    }];
+
+    //操作列的按钮
+    function btnGroup(value, row, index) {
+      let html = ""
+      html += '<div class="btn-group" role="group">' +
+        '<a class="btn btn-sm btn-link rounded" title="更多" data-bs-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-menu"></i></a>' +
+        '<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">' +
+        '<li><a href="#!" class="dropdown-item edit-btn"><i class="mdi mdi-square-edit-outline"></i> 编辑</a></li>'
+      if (row.status) {
+        html += '<li><a href="#!" class="dropdown-item enable-btn"><i class="mdi mdi-check"></i> 启用</a></li>'
+      } else {
+        html += '<li><a href="#!" class="dropdown-item disable-btn"><i class="mdi mdi-block-helper"></i> 禁用</a></li>'
+      }
+      html += '<li><a href="#!" class="dropdown-item del-btn"><i class="mdi mdi-trash-can-outline"></i> 删除</a></li>'
+      html += '</ul></div>';
+      return html;
+    }
+
+    //表单json数据类型整理
+    function autSubmitModalForm(modal, path) {
+      form = modal.find("form");
+      //查找form表单中name为id的元素的值
+      formData = serializaJson(form)
+      method = "POST"
+      if (formData.id) {
+        method = "PUT"
+        formatData = formData
+      } else {
+        formatData = [formData]
+      }
+      //数据类型整理
+      data = JSON.stringify(formatData);
+      console.log(data);
+      //先获取数据
+      $.ajax({
+        url: path, // 请求URL
+        type: method, // 请求方法
+        dataType: 'json', // 返回的数据类型
+        data: data, // 提交的数据
+        contentType: 'application/json',
+        success: function (response) { // 请求成功的回调函数
+          if (response.code == 200) {
+            //showNotify('操作成功', 'success', 1000, 'mdi mdi-emoticon-happy', 'top', 'center');
+            modal.modal('hide');
+            autRefreshTable('/envs', autFormatData)
+          } else {
+            console.error(response);
+            msg = response.message ? response.message : "操作失败"
+            showNotify(msg, 'danger', 3000, 'mdi mdi-emoticon-sad', 'top', 'center');
+          }
+        },
+        error: function (xhr, status, error) { // 请求失败的回调函数
+          console.log('Error:', error);
+        }
+      });
+    }
+
+    //数据整理函数
+    function autFormatData(data) {
+      //按权重排序
+      data.sort(function (a, b) {
+        return b.position - a.position;
+      });
+    }
+
+    //初始化表格
+    autFillTable("", "/envs", autFormatData, columns)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>首页 - autMan后台管理系统</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <meta name="keywords" content="autMan,后台管理系统">
+    <meta name="description" content="autMan后台管理系统">
+    <meta name="author" content="autMan">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="js/bootstrap-multitabs/multitabs.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <!--对话框-->
+    <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+</head>
+
+<body>
+    <div class="lyear-layout-web">
+        <div class="lyear-layout-container">
+            <!--左侧导航-->
+            <aside class="lyear-layout-sidebar">
+
+                <!-- logo -->
+                <div id="logo" class="sidebar-header">
+                    <a><img src="images/logo-buckets-menu.png" title="目录" alt="绑定桶目录" /></a>
+                </div>
+
+                <!--数据桶目录-->
+                <div class="lyear-layout-sidebar-scroll">
+                    <nav class="sidebar-main">
+                        <ul class="nav nav-drawer" id="menu">
+                            <li class="nav-item" id="li_pinQQ"><a href="javascript:void(0);" onclick='autFillKeyValues("pinQQ")'><span>pinQQ</span></a></li>
+                            <li class="nav-item" id="li_pinQB"><a href="javascript:void(0);" onclick='autFillKeyValues("pinQB")'><span>pinQB</span></a></li>
+                            <li class="nav-item" id="li_pinWX"><a href="javascript:void(0);" onclick='autFillKeyValues("pinWX")'><span>pinWX</span></a></li>
+                            <li class="nav-item" id="li_pinWB"><a href="javascript:void(0);" onclick='autFillKeyValues("pinWB")'><span>pinWB</span></a></li>
+                            <li class="nav-item" id="li_pinTB"><a href="javascript:void(0);" onclick='autFillKeyValues("pinTB")'><span>pinTB</span></a></li>
+                            <li class="nav-item" id="li_pinTG"><a href="javascript:void(0);" onclick='autFillKeyValues("pinTG")'><span>pinTG</span></a></li>
+                            <li class="nav-item" id="li_pinWXMP"><a href="javascript:void(0);" onclick='autFillKeyValues("pinWXMP")'><span>pinWXMP</span></a></li>
+                            <li class="nav-item" id="li_pinWXSV"><a href="javascript:void(0);" onclick='autFillKeyValues("pinWXSV")'><span>pinWXSV</span></a></li>
+                            <li class="nav-item" id="li_pinWEB"><a href="javascript:void(0);" onclick='autFillKeyValues("pinWEB")'><span>pinWEB</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+            <!--End 左侧导航-->
+
+            <!--头部信息-->
+            <header class="lyear-layout-header">
+                <nav class="navbar navbar-default">
+                    <div class="topbar">
+                        <div class="topbar-left">
+                            <div class="lyear-aside-toggler">
+                                <span class="lyear-toggler-bar"></span>
+                                <span class="lyear-toggler-bar"></span>
+                                <span class="lyear-toggler-bar"></span>
+                            </div>
+                            <a id="bucket_add_key" class="btn btn-primary m-r-5" href="#!" data-toggle="modal"
+                                data-target="#myModal" onclick="autClearModalForm()"><i class="mdi mdi-plus"></i> 新增</a>
+
+                            <a id="bucket_del_key" class="btn btn-danger" href="#!" onclick="autDelBucketKeys()"><i
+                                    class="mdi mdi-window-close"></i> 删除</a>
+                            <!--存储当前的bucket-->
+                            <input class="hidden" type="text" name="bucket_current" id="bucket_current" />
+                        </div>
+
+                        <div class="topbar-right">
+                            
+                            <!--搜索框-->
+                            <form class="pull-right search-bar">
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <input type="hidden" name="search_field" id="search-field" value="title">
+                                        <button class="btn btn-default dropdown-toggle" id="search-btn"
+                                            data-toggle="dropdown" type="button" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            全搜索 <span class="caret"></span>
+                                        </button>
+                                        <!-- <ul class="dropdown-menu">
+                        <li> <a tabindex="-1" href="javascript:void(0)" data-field="title">标题</a> </li>
+                        <li> <a tabindex="-1" href="javascript:void(0)" data-field="cat_name">栏目</a> </li>
+                      </ul> -->
+                                    </div>
+                                    <input type="text" class="form-control" value="" id="searchInput" name="searchInput"
+                                        placeholder="请输入关键词">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <!--End 头部信息-->
+
+            <!--页面主要内容-->
+            <main class="lyear-layout-content">
+                <div class="container-fluid p-t-15">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-toolbar clearfix">
+                                    <!--内容区-->
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="5%">
+                                                            <label class="lyear-checkbox checkbox-primary">
+                                                                <input type="checkbox" id="check-all"><span></span>
+                                                            </label>
+                                                        </th>
+                                                        <th width="5%">序号</th>
+                                                        <th width="10%">桶</th>
+                                                        <th width="10%">键</th>
+                                                        <th width="50%">值</th>
+                                                        <th width="10%">备注</th>
+                                                        <th width="10%">操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="datasets">
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <!--页码区-->
+                                        <ul class="pagination">
+                                            <li class="disabled"><span>«</span></li>
+                                            <li class="active"><span>1</span></li>
+                                            <li class="disabled"><span>»</span></li>
+                                        </ul>
+                                        <!--
+                            <ul class="pagination">
+                              <li class="disabled"><span>«</span></li>
+                              <li class="active"><span>1</span></li>
+                              <li><a href="#1">2</a></li>
+                              <li><a href="#1">3</a></li>
+                              <li><a href="#1">4</a></li>
+                              <li><a href="#1">5</a></li>
+                              <li><a href="#1">6</a></li>
+                              <li><a href="#1">7</a></li>
+                              <li><a href="#1">8</a></li>
+                              <li class="disabled"><span>...</span></li>
+                              <li><a href="#!">14452</a></li>
+                              <li><a href="#!">14453</a></li>
+                              <li><a href="#!">»</a></li>
+                            </ul>
+                          -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </main>
+            <!--End 页面主要内容-->
+        </div>
+    </div>
+
+    <!--模态弹出框-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">标题</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="buckets_modal" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="bucket_name">Bucket</label>
+                            <div class="col-md-7">
+                                <input class="form-control input-sm" type="text" name="bucket" id="bucket_name" />
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-md-3 control-label" for="bucket_old">Key</label>
+                            <div class="col-md-7">
+                                <input class="form-control input-sm" type="text" name="old" id="bucket_old" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="bucket_key">Key</label>
+                            <div class="col-md-7">
+                                <input class="form-control input-sm" type="text" name="key" id="bucket_key" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="bucket_value">Value</label>
+                            <div class="col-md-7">
+                                <textarea class="form-control input-sm" id="bucket_value" name="value" rows="12"
+                                    placeholder="内容.."></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="bucket_memo">备注</label>
+                            <div class="col-md-7">
+                                <input class="form-control input-sm" type="text" name="memo" id="bucket_memo" />
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" onclick="autSubmitModalForm()">点击保存</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-multitabs/multitabs.js"></script>
+    <script type="text/javascript" src="js/index.min.js"></script>
+    <!--消息提示-->
+    <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+    <script type="text/javascript" src="js/lightyear.js"></script>
+    <!--对话框-->
+    <script type="text/javascript" src="js/jconfirm/jquery-confirm.min.js"></script>
+    <!--自定义-->
+    <script type="text/javascript" src="js/binding.js"></script>
+
+</body>
+
+</html>

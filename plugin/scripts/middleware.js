@@ -1,4 +1,5 @@
 const axios = require('axios');
+const querystring = require("querystring");
 const url = "http://localhost:9999/otto"
 /**
  * 获取本地服务响应
@@ -31,7 +32,7 @@ function getSenderID() {
 
 // 推送消息
 function push(imType, groupCode, userID, title, content) {
-  return accessLocalService(`/push?imType=${imType}&groupCode=${groupCode}&userID=${userID}&title=${title}&content=${content}`, 5000);
+  return accessLocalService(`/push?imType=${imType}&groupCode=${groupCode}&userID=${userID}&title=${title}&content=${content.replace(/\n/g, "%0A")}`, 5000);
 }
 
 // 获取机器人名称
@@ -82,7 +83,7 @@ function bucketDel(bucket, key) {
 // 获取指定数据库所有值为value的keys
 async function bucketKeys(bucket, value) {
   keys = await accessLocalService(`/bucketKeys?bucket=${bucket}&value=${value}`, 5000);
-  return keys.split(",");
+  return keys.toString().split(",");
 }
 
 // 获取指定数据桶内所有的key集合

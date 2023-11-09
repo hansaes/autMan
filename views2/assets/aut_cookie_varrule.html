@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="keywords" content="autMan,后台,管理系统">
+  <meta name="description" content="autMan后台管理系统。">
+  <title>autMan后台管理系统</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+
+  <!--对话框插件css-->
+  <link rel="stylesheet" type="text/css" href="js/jquery-confirm/jquery-confirm.min.css">
+  <!--表格插件css-->
+  <link rel="stylesheet" href="js/bootstrap-table/bootstrap-table.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.min.css">
+
+</head>
+
+<body>
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <div id="toolbar" class="toolbar-btn-action">
+              <button id="btn_add" type="button" class="btn btn-primary rounded me-1"
+                onclick="autClearModalForm($('#myModal'))">
+                <span class="mdi mdi-plus" aria-hidden="true"></span>新增
+              </button>
+              <button id="btn_edit" type="button" class="btn btn-success rounded me-1"
+                onclick="autToggleRows($('table').bootstrapTable('getSelections'),'enable','/varrules')">
+                <span class="mdi mdi-check" aria-hidden="true"></span>启用
+              </button>
+              <button id="btn_edit" type="button" class="btn btn-warning rounded me-1"
+                onclick="autToggleRows($('table').bootstrapTable('getSelections'),'disable','/varrules')">
+                <span class="mdi mdi-block-helper" aria-hidden="true"></span>禁用
+              </button>
+              <button id="btn_delete" type="button" class="btn btn-danger rounded me-1"
+                onclick="autDelRows($('table').bootstrapTable('getSelections'),'/varrules',null)">
+                <span class="mdi mdi-window-close" aria-hidden="true"></span>删除
+              </button>
+              <button id="btn_delete" type="button" class="btn btn-pink rounded me-1"
+                onclick="autRefreshTable('/varrules',autFormatData)">
+                <span class="mdi mdi-refresh" aria-hidden="true"></span> 刷新
+              </button>
+            </div>
+            <table id="table"></table>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!--模态弹出框-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="myModalLabel">变量整理规则</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="modal" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+            <div class="mb-3 row align-items-center visually-hidden">
+              <label class="col-md-3 control-label" for="id">ID</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="number" name="id" id="id" />
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="id">开关</label>
+              <div class="col-md-7">
+                <input class="form-check-input" type="checkbox" name="on" id="on" value="true">
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="cron">定时<span class="text-danger"> *</span></label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="cron" id="cron" />
+                <small class="text-warning">Cron表达式</small>
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="ql">容器</label>
+              <div class="col-md-7">
+                <select class="form-select rounded" id="ql" name="ql" size="1">
+
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="env_name">变量名称</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="env_name" id="env_name" />
+                <small class="text-warning">要整理的变量名称，如JD_COOKIE</small>
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="main_key">变量主键</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="main_key" id="main_key" />
+                <small class="text-warning">如JD_COOKIE的主键为pt_key</small>
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="style">规则</label>
+              <div class="col-md-7">
+                <select class="form-select rounded" id="style" name="style" size="1">
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="head_pins">车头</label>
+              <div class="col-md-7">
+                <textarea class="form-control rounded" name="head_pins" id="head_pins" rows="5"></textarea>
+                <small class="text-warning">只填写pin=后面的内容，英文逗号隔开</small>
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="jv_from">聚合源</label>
+              <div class="col-md-7">
+                <select class="form-select rounded" id="jv_from" name="jv_from" size="5" title="按住ctrl多选"
+                  data-bs-toggle='tooltip' data-placement='right' multiple>
+                </select>
+                <small class="text-warning">按住ctrl多选，要求不少于2个</small>
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="fen_to">分配至</label>
+              <div class="col-md-7">
+                <select class="form-select rounded" id="fen_to" name="fen_to" size="5" title="按住ctrl多选"
+                  data-bs-toggle='tooltip' data-placement='right' multiple>
+                </select>
+                <small class="text-warning">按住ctrl多选，要求不少于2个</small>
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="fen_to_rule">分配原则</label>
+              <div class="col-md-7">
+                <select class="form-select rounded" id="fen_to_rule" name="fen_to_rule" size="1">
+
+                </select>
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="sync_to">同步至</label>
+              <div class="col-md-7">
+                <select class="form-select rounded" id="sync_to" name="sync_to" size="5" title="按住ctrl多选"
+                  data-bs-toggle='tooltip' data-placement='right' multiple>
+                </select>
+                <small class="text-warning">按住ctrl多选，不限数量</small>
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="sync_to_rule">同步规则</label>
+              <div class="col-md-7">
+                <select class="form-select rounded" id="sync_to_rule" name="sync_to_rule" size="1">
+
+                </select>
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="turn_num">轮动数量</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="number" name="turn_num" id="turn_num" />
+                <small class="text-warning">表示每天0天自动把最后面n个ck移动到车头之后其他ck之前</small>
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="max_num">限制数量</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="number" name="max_num" id="max_num" value="" placeholder="" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-bs-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary"
+                onclick="autSubmitModalForm($('#myModal'),autFormJsonData,'/varrules')">点击保存</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--通知-->
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <!--表格插件js-->
+  <script src="js/bootstrap-table/bootstrap-table.js"></script>
+  <script src="js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+  <!--对话框插件js-->
+  <script type="text/javascript" src="js/jquery-confirm/jquery-confirm.min.js"></script>
+  <!--自定义-->
+  <script type="text/javascript" src="js/aut-table.js"></script>
+  <script>
+    //根据类型设置相应的界面
+    function autCheckModalRule(style) {
+      console.log(style)
+      style = style || parseInt($("#style").val())
+      switch (style) {
+        case (1)://聚合容器
+          $("#head_pins").parent().parent().show()
+          $("#jv_from").parent().parent().show()
+          $("#fen_to").parent().parent().hide()
+          $("#fen_to_rule").parent().parent().hide()
+          $("#sync_to").parent().parent().hide()
+          $("#sync_to_rule").parent().parent().hide()
+          $("#max_num").parent().parent().hide()
+          $("#turn_num").parent().parent().hide()
+          break;
+        case (2)://分配主动容器
+          $("#head_pins").parent().parent().hide()
+          $("#jv_from").parent().parent().hide()
+          $("#fen_to").parent().parent().show()
+          $("#fen_to_rule").parent().parent().show()
+          $("#sync_to").parent().parent().hide()
+          $("#sync_to_rule").parent().parent().hide()
+          $("#max_num").parent().parent().hide()
+          $("#turn_num").parent().parent().hide()
+          break;
+        case (3)://同步容器
+          $("#head_pins").parent().parent().hide()
+          $("#jv_from").parent().parent().hide()
+          $("#fen_to").parent().parent().hide()
+          $("#fen_to_rule").parent().parent().hide()
+          $("#sync_to").parent().parent().show()
+          $("#sync_to_rule").parent().parent().show()
+          $("#max_num").parent().parent().hide()
+          $("#turn_num").parent().parent().hide()
+          break;
+        case (4)://普惠容器
+          $("#head_pins").parent().parent().show()
+          $("#jv_from").parent().parent().hide()
+          $("#fen_to").parent().parent().hide()
+          $("#fen_to_rule").parent().parent().hide()
+          $("#sync_to").parent().parent().hide()
+          $("#sync_to_rule").parent().parent().hide()
+          $("#max_num").parent().parent().hide()
+          $("#turn_num").parent().parent().show()
+          break;
+        case (5)://专用容器
+          $("#head_pins").parent().parent().hide()
+          $("#jv_from").parent().parent().hide()
+          $("#fen_to").parent().parent().hide()
+          $("#fen_to_rule").parent().parent().hide()
+          $("#sync_to").parent().parent().hide()
+          $("#sync_to_rule").parent().parent().hide()
+          $("#max_num").parent().parent().hide()
+          $("#turn_num").parent().parent().hide()
+          break;
+        case (6)://被分配容器
+          $("#head_pins").parent().parent().show()
+          $("#jv_from").parent().parent().hide()
+          $("#fen_to").parent().parent().hide()
+          $("#fen_to_rule").parent().parent().hide()
+          $("#sync_to").parent().parent().hide()
+          $("#sync_to_rule").parent().parent().hide()
+          $("#max_num").parent().parent().show()
+          $("#turn_num").parent().parent().hide()
+          break;
+        case (7)://普通容器
+          $("#head_pins").parent().parent().show()
+          $("#jv_from").parent().parent().hide()
+          $("#fen_to").parent().parent().hide()
+          $("#fen_to_rule").parent().parent().hide()
+          $("#sync_to").parent().parent().hide()
+          $("#sync_to_rule").parent().parent().hide()
+          $("#max_num").parent().parent().show()
+          $("#turn_num").parent().parent().hide()
+          break;
+      }
+    }
+
+    //通过id获取东芝规则的名字
+    function autGetRuleNameByStyleID(num) {
+      const ctn = {
+        1: "聚合",
+        2: "分母",
+        3: "同步",
+        4: "普惠",
+        5: "专用",
+        6: "分子",
+        7: "普通",
+      }
+      return ctn[num] + "规则" || '';
+    }
+
+    //填充select的选项，第一个参数为元素，第二个参数为选项
+    function autFillSelectItems(select, options) {
+      select.empty()
+      for (i = 0; i < options.length; i++) {
+        select.append($('<option>', options[i]));
+      }
+    }
+
+
+    $(function () {
+      //填充modal 主容器========================================
+      $.get("/qinglong", function (response) {
+        if (response.code == 200) {
+          //alert(response.data)
+          qls = response.data;//解析成对象
+          var items = []
+          for (var i = 0; i < qls.length; i++) {
+            items.push(
+              { value: qls[i].name, text: qls[i].name }
+            );
+          }
+          var selects = [$("#ql"), $("#jv_from"), $("#fen_to"), $("#sync_to")]
+          for (var i = 0; i < selects.length; i++) {
+            autFillSelectItems(selects[i], items)
+          }
+        }
+      });
+
+      $("#ql").change(function () {
+        //alert("容器改变")
+        var qlName = $("#ql").val()
+        $.get("/qinglong", function (response) {
+          if (response.code == 200) {
+            //alert(response.data)
+            qls = response.data;//解析成对象
+            var items = []
+            for (var i = 0; i < qls.length; i++) {
+              //不包含主容器
+              if (qls[i].name == qlName) {
+                continue
+              }
+              items.push(
+                { value: qls[i].name, text: qls[i].name }
+              );
+            }
+            //填充聚合源和分配目标容器
+            var selects = [$("#jv_from"), $("#fen_to")]
+            for (var i = 0; i < selects.length; i++) {
+              autFillSelectItems(selects[i], items)
+            }
+            autFillSelectItems($("#sync_to"), items)
+          }
+        });
+      })
+
+      //填充容器的规则==============================================
+      var styleItems = []
+      for (i = 1; i <= 7; i++) {
+        styleItems.push(
+          { value: i, text: autGetRuleNameByStyleID(i) }
+        )
+      }
+      autFillSelectItems($("#style"), styleItems)
+      $('#style').change(function () {
+        //整理modal
+        autCheckModalRule()
+      });
+
+      //填充分配原则===========================================
+      var fenRules = {
+        0: "平均",
+        1: "先后",
+        2: "随机"
+      }
+      var fenItems = []
+      for (i = 0; i < 3; i++) {
+        fenItems.push(
+          { value: i, text: fenRules[i] + "规则" || '' }
+        )
+      }
+      autFillSelectItems($("#fen_to_rule"), fenItems)
+
+      //填充同步规则============================================
+      var syncRules = {
+        1: "无偿赠送",
+        2: "严格同步",
+      }
+      var syncItems = []
+      for (i = 1; i <= 2; i++) {
+        syncItems.push(
+          { value: i, text: syncRules[i] + "规则" || '' }
+        )
+      }
+      autFillSelectItems($("#sync_to_rule"), syncItems)
+    })
+
+
+    const columns = [{
+      field: 'example',
+      checkbox: true,
+      // 列的宽度
+      width: 5,
+      // 宽度单位
+      widthUnit: 'rem'
+    }, {
+      title: '序号',
+      align: 'center',
+      halign: 'center',
+      formatter: function (value, row, index) {
+        return index + 1
+      }
+    }, {
+      field: 'id',
+      title: 'ID',
+      visible: false,
+      align: 'center',
+      // 是否作为排序列
+      sortable: true,
+      width: 8,
+      // 宽度单位
+      widthUnit: 'rem'
+    }, {
+      field: 'on',
+      align: 'center',
+      title: '启用',
+      formatter: function (value, row, index) {
+        var value = "";
+        if (row.on) {
+          value = `<div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" checked></div>`;
+        } else {
+          value = `<div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch"></div>`;
+        }
+        return value;
+      },
+      events: {
+        'change .form-check-input': function (event, value, row, index) {
+          event.stopPropagation();
+          checked = $(event.target).prop('checked');
+          action = "enable"
+          if (!checked) {
+            action = "disable"
+          }
+          autToggleRows([row], action, '/varrules');
+        },
+      }
+    }, {
+      field: 'style',
+      align: 'center',
+      title: '类型',
+      formatter: function (value, row, index) {
+        num = parseInt(row.style)
+        //通过id获取东芝规则的名字
+        const ctn = {
+          1: "聚合",
+          2: "分母",
+          3: "同步",
+          4: "普惠",
+          5: "专用",
+          6: "分子",
+          7: "普通",
+        }
+        return ctn[num] + "规则" || '';
+      },
+    }, {
+      field: 'ql',
+      align: 'center',
+      title: '容器名称',
+    }, {
+      field: 'direction',
+      align: 'center',
+      title: '数据流向',
+      formatter: function (value, row, index) {
+        num = parseInt(row.style)
+        //通过id获取东芝规则的名字
+        const ctn = {
+          1: "<span class='mdi mdi-arrow-left mdi-24px text-primary'></span>",
+          2: "<span class='mdi mdi-arrow-right mdi-24px text-success'></span>",
+          3: "<span class='mdi mdi-arrow-right mdi-24px text-success'></span>",
+          4: "<span class='mdi mdi-backup-restore mdi-24px text-warning'></span>",
+          5: "<span class='mdi mdi-backup-restore mdi-24px text-warning'></span>",
+          6: "<span class='mdi mdi-backup-restore mdi-24px text-warning'></span>",
+          7: "<span class='mdi mdi-backup-restore mdi-24px text-warning'></span>",
+        }
+        return ctn[num]
+      },
+    }, {
+      field: 'qls',
+      align: 'center',
+      title: '关联容器',
+      formatter: function (value, row, index) {
+        var span = document.createElement('span');
+        span.setAttribute('title', value);
+        qls = ""
+        if (row.style == 3) {//同步
+          qls = row.sync_to.join(",")
+        } else if (row.style == 2) {//分配
+          qls = row.fen_to.join(",")
+        } else if (row.style == 1) {//聚合
+          qls = row.jv_from.join(",")
+        }
+        span.innerHTML = qls ? qls : "--";
+        return span.outerHTML;
+      },
+    }, {
+      field: 'env_name',
+      align: 'center',
+      title: '变量名称',
+    }, {
+      field: 'main_key',
+      align: 'center',
+      title: '变量主键',
+    }, {
+      field: 'cron',
+      align: 'center',
+      title: '定时',
+    }, {
+      field: 'next_running_time',
+      align: 'center',
+      title: '下次运行',
+    }, {
+      field: 'operate',
+      visible: true,
+      align: 'center',
+      title: '操作',
+      formatter: btnGroup,  // 自定义方法
+      events: {
+        'click .edit-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autEditRow(row, '/varrules', $('#myModal'));
+          console.log(row.style)
+          autCheckModalRule(row.style)
+        },
+        'click .run-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autToggleRows([row], 'run', '/varrules');
+        },
+        'click .upward-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autMoveRows([row], '/varrules', 'upward', null);
+        },
+        'click .downward-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autMoveRows([row], '/varrules', 'downward', null);
+        },
+        'click .del-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autDelRows([row], '/varrules', null);
+        }
+      }
+    }];
+
+    //操作列的按钮
+    function btnGroup() {
+      let html = `<div class="btn-group">` +
+        `<a class="btn btn-xs btn-link edit-btn" href="#!" title="编辑"><i class="mdi mdi-pencil"></i></a>` +
+        `<a class="btn btn-xs btn-link run-btn" href="#!" title="连接测试"><i class="mdi mdi-play"></i></a>` +
+        `<a class="btn btn-xs btn-link upward-btn" href="#!" title="上移"><i class="mdi mdi-arrow-up-bold"></i></a>` +
+        `<a class="btn btn-xs btn-link downward-btn" href="#!" title="下移"><i class="mdi mdi-arrow-down-bold"></i></a>` +
+        `<a class="btn btn-xs btn-link del-btn" href="#!" title="删除"><i class="mdi mdi-window-close"></i></a>`
+      return html;
+    }
+
+    //表单json数据类型整理
+    function autFormJsonData(formData) {
+      formData['style'] = parseInt(formData['style'])
+      formData['head_pins'] = formData['head_pins'] ? formData['head_pins'].split(",") : []
+      formData['fen_to_rule'] = parseInt(formData['fen_to_rule'])
+      formData['sync_to_rule'] = parseInt(formData['sync_to_rule'])
+    }
+
+    function autFormatData() {
+
+    }
+
+    //初始化表格
+    autFillTable("", "/varrules", null, columns)
+
+  </script>
+
+</body>
+
+</html>

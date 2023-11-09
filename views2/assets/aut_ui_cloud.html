@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="keywords" content="autMan,后台,管理系统">
+  <meta name="description" content="autMan后台管理系统">
+  <title>autMan后台管理系统</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="js/jquery-confirm/jquery-confirm.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.min.css">
+  <!--评价组件-->
+  <link rel="stylesheet" href="css/starability-all.min.css">
+  <style>
+    /* 新增样式用于限制介绍文字长度 */
+    .card-text {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .rounded-div {
+      background-color: rgba(0, 123, 255, 0.05);
+      /* 初始颜色 */
+      border-radius: 10px;
+      /* 圆角效果 */
+      padding: 20px;
+      /* 边框 */
+      border: 1px solid rgba(0, 123, 255, 0.5);
+      transition: background-color 0.3s ease-in-out;
+      /* 背景色渐变过渡 */
+    }
+
+    .pinned-rounded-div {
+      background-color: rgba(0, 123, 255, 0.2);
+      /* 初始颜色 */
+      border-radius: 10px;
+      /* 圆角效果 */
+      padding: 20px;
+      /* 边框 */
+      border: 1px solid rgba(0, 123, 255, 0.5);
+      transition: background-color 0.3s ease-in-out;
+      /* 背景色渐变过渡 */
+    }
+
+    .rounded-div:hover {
+      background-color: rgba(0, 123, 255, 0.2);
+      /* 鼠标滑过的颜色 */
+    }
+
+    .pinned-rounded-div:hover {
+      background-color: rgba(0, 123, 255, 0.4);
+      /* 鼠标滑过的颜色 */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-lg-12">
+        <div class="card">
+          <header class="card-header">
+            <div class="row">
+              <!--轮播-->
+              <div class="col-md-6">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                      class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                      aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                      aria-label="Slide 3"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src="images/ads/7.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="images/ads/8.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="images/ads/9.jpg" class="d-block w-100" alt="...">
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">前</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">后</span>
+                  </button>
+                </div>
+              </div>
+              <!--轮播-->
+              <div class="col-md-6">
+                <div id="carouselExampleIndicators2" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="0"
+                      class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="1"
+                      aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="2"
+                      aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="3"
+                      aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="4"
+                      aria-label="Slide 3"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src="images/ads/1.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="images/ads/2.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="images/ads/3.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="images/ads/4.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="images/ads/5.png" class="d-block w-100" alt="...">
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">前</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators2"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">后</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div class="card-body">
+            <!--排行、搜索、我的-->
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <a class="btn btn-success btn-round mr-5" href="#!" onclick="rank('download',this)"><i
+                    class="mdi mdi-arrow-down"></i>
+                  下载排行</a>
+                <a class="btn btn-info btn-round mr-5" href="#!" onclick="rank('appraise',this)"><i
+                    class="mdi mdi-arrow-down"></i>
+                  好评排行</a>
+                <a class="btn btn-warning btn-round mr-5" href="#!" onclick="rank('price',this)"><i
+                    class="mdi mdi-arrow-down"></i>
+                  价格排序</a>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <input type="text" class="form-control rounded-left" id="keyword" placeholder="请输入关键词...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary rounded-right" type="button" onclick="jssearch()">搜索</button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <span style="float: right;" id="aut">(AUT:0)</span>
+                <a class="me-1" style="float: right;" href="javascript:void(0)" onclick="my()"><b>我的</b></a>
+                <a class="me-1" style="float: right;" href="javascript:void(0)" onclick="bought()"><b>已购买</b></a>
+              </div>
+            </div>
+            <!--分类-->
+            <div class="row mb-4">
+              <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:void(0)" onclick="classify('')"><b>全部</b></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:void(0)" onclick="classify('新闻类')"><b>新闻类</b></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:void(0)" onclick="classify('管理类')"><b>管理类</b></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:void(0)" onclick="classify('工具类')"><b>工具类</b></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:void(0)" onclick="classify('生活类')"><b>生活类</b></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:void(0)" onclick="classify('游戏类')"><b>游戏类</b></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:void(0)" onclick="classify('图片类')"><b>图片类</b></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:void(0)" onclick="classify('影音类')"><b>影音类</b></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:void(0)" onclick="classify('娱乐类')"><b>娱乐类</b></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:void(0)" onclick="classify('查询类')"><b>查询类</b></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:void(0)" onclick="classify('开发类')"><b>开发类</b></a>
+                </li>
+              </ul>
+            </div>
+            <!--插件-->
+            <div class="row" id="plugins">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--模态弹出框-详细信息-->
+  <div class="modal fade" id="myModalDescript" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="myModalLabel">插件详情</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <tr>
+              <td width="20%">名称</td>
+              <td width="80%" id="desc-title"></td>
+            </tr>
+            <tr>
+              <td>语言</td>
+              <td id="desc-language"></td>
+            </tr>
+            <tr>
+              <td>价格</td>
+              <td id="desc-price"></td>
+            </tr>
+            <tr>
+              <td>分类</td>
+              <td id="desc-class"></td>
+            </tr>
+            <tr>
+              <td>作者</td>
+              <td id="desc-author"></td>
+            </tr>
+            <tr>
+              <td>时间</td>
+              <td id="desc-created_at"></td>
+            </tr>
+            <tr>
+              <td>版本</td>
+              <td id="desc-version"></td>
+            </tr>
+            <tr>
+              <td>下载</td>
+              <td id="desc-download"></td>
+            </tr>
+            <tr>
+              <td>平台</td>
+              <td id="desc-platform"></td>
+            </tr>
+            <tr>
+              <td>售后</td>
+              <td id="desc-service"></td>
+            </tr>
+            <tr>
+              <td>描述</td>
+              <td id="desc-description"></td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!--模态弹出框-插件配置-->
+  <div class="modal fade" id="myModalSettings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="myModalLabel">插件管理</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="modalSettings" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="title">插件名称</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="title" id="title" />
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="language">编程语言</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="language" id="language" />
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="disable">是否禁用</label>
+              <div class="col-md-7">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" role="switch" name="disable" id="disable"
+                    value="true">
+                </div>
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="admin">管理员权限</label>
+              <div class="col-md-7">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" role="switch" name="admin" id="admin" value="true">
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="rules">触发规则</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="rules" id="rules" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="cron">执行定时</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="cron" id="cron" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="priority">优先级</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="priority" id="priority" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="imtype_white">渠道白名单</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="imtype_white" id="imtype_white" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="imtype_black">渠道黑名单</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="imtype_black" id="imtype_black" />
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="userid_white">用户白名单</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="userid_white" id="userid_white" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="userid_black">用户黑名单</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="userid_black" id="userid_black" />
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="groupid_white">群组白名单</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="groupid_white" id="groupid_white" />
+              </div>
+            </div>
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="groupid_black">群组黑名单</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="groupid_black" id="groupid_black" />
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-bs-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary" onclick="autSubmitModalForm()">点击保存</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal评价 -->
+  <div class="modal fade bs-example-modal-lg" id="myModalAppraise" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="myLargeModalLabel">评价</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <thead>
+              <th>评价人</th>
+              <th>内容</th>
+              <th>时间</th>
+              <th>星级</th>
+            </thead>
+            <tbody id="modalComments">
+
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal评价提交 -->
+  <div class="modal fade" id="myModalRating" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="myModalLabel">评价</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="modalRating" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="title">名称</label>
+              <div class="col-md-7">
+                <input class="form-control input-sm" type="text" name="title" id="title" readonly />
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="comment">评论</label>
+              <div class="col-md-7">
+                <textarea class="form-control input-sm" name="comment" id="comment" rows="10"></textarea>
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="rating">星级</label>
+              <div class="col-md-7">
+                <fieldset class="starability-basic">
+                  <!-- <legend>First rating:</legend> -->
+                  <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked
+                    aria-label="No rating." />
+                  <input type="radio" id="first-rate1" name="rating" value="1" />
+                  <label for="first-rate1" title="Terrible">1 star</label>
+                  <input type="radio" id="first-rate2" name="rating" value="2" />
+                  <label for="first-rate2" title="Not good">2 stars</label>
+                  <input type="radio" id="first-rate3" name="rating" value="3" />
+                  <label for="first-rate3" title="Average">3 stars</label>
+                  <input type="radio" id="first-rate4" name="rating" value="4" />
+                  <label for="first-rate4" title="Very good">4 stars</label>
+                  <input type="radio" id="first-rate5" name="rating" value="5" />
+                  <label for="first-rate5" title="Amazing">5 stars</label>
+                </fieldset>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-bs-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary" onclick="submitModalRating()">点击保存</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 插件参数 -->
+  <div class="modal fade" id="myModalParams" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="myModalLabel">插件配置</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="modalParams" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+            <!-- <div class="form-group">
+							<label class="col-md-3 control-label" for="title">名称</label>
+							<div class="col-md-7">
+								<input class="form-control input-sm" type="text" name="title" id="title" readonly />
+							</div>
+						</div> -->
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-bs-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary" onclick="submitModalParams()">点击保存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <!--对话框插件js-->
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <script type="text/javascript" src="js/jquery-confirm/jquery-confirm.min.js"></script>
+  <!--自定义-->
+  <script type="text/javascript" src="js/aut-utils.js"></script>
+  <script type="text/javascript" src="js/cloud.js"></script>
+</body>
+
+</html>

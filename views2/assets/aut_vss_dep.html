@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="keywords" content="autMan,后台,管理系统">
+  <meta name="description" content="autMan后台管理系统。">
+  <title>autMan后台管理系统</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+  <!--对话框插件css-->
+  <link rel="stylesheet" type="text/css" href="js/jquery-confirm/jquery-confirm.min.css">
+  <!--表格插件css-->
+  <link rel="stylesheet" href="js/bootstrap-table/bootstrap-table.min.css">
+
+  <link rel="stylesheet" type="text/css" href="css/style.min.css">
+</head>
+
+<body>
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <nav>
+              <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-nodejs" type="button" role="tab">Nodejs</button>
+                <button class="nav-link" id="nav-python" type="button" role="tab">Python</button>
+                <button class="nav-link" id="nav-linux" type="button" role="tab">Linux</button>
+              </div>
+            </nav>
+
+            <div id="toolbar" class="toolbar-btn-action">
+              <button id="btn_add" type="button" class="btn btn-primary rounded me-1"
+                onclick="autClearModalForm($('#myModal'))">
+                <span class="mdi mdi-plus" aria-hidden="true"></span> 新增
+              </button>
+              <button id="btn_delete" type="button" class="btn btn-pink rounded me-1">
+                <span class="mdi mdi-refresh" aria-hidden="true"></span> 刷新
+              </button>
+            </div>
+
+            <table id="table"></table>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!--模态弹出框-->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="myModalLabel">依赖</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="modal" class="form-horizontal" action="#!" method="post" onsubmit="return false;">
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="name">名称</label>
+              <div class="col-md-7">
+                <input class="form-control rounded" type="text" name="name" id="name" />
+              </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+              <label class="col-md-3 control-label" for="type">分类</label>
+              <div class="col-md-7">
+                <select class="form-select rounded" name="type" id="type">
+                  <option value="linux">Linux</option>
+                  <option value="python">Python</option>
+                  <option value="nodejs">Nodejs</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-bs-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary" onclick="autSubmitModalForm()">点击保存</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!--日志模态弹出框-->
+  <div class="modal fade" id="logModal">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="logModalLabel">日志</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="log-datasets">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--对话框插件js-->
+  <script type="text/javascript" src="js/jquery-confirm/jquery-confirm.min.js"></script>
+  <!--通知-->
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <!--表格插件js-->
+  <script src="js/bootstrap-table/bootstrap-table.js"></script>
+  <script src="js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+  <!--引入loading插件js-->
+  <script type="text/javascript" src="js/lyear-loading.js"></script>
+  <!--自定义-->
+  <script type="text/javascript" src="js/aut-table.js"></script>
+  <script>
+    tabs = ['nodejs', 'python', 'linux'];
+    for (let i = 0; i < tabs.length; i++) {
+      document.getElementById("nav-" + tabs[i]).addEventListener('click', function () {
+        //移除兄弟元素的active样式
+        for (let j = 0; j < tabs.length; j++) {
+          document.getElementById("nav-" + tabs[j]).classList.remove('active');
+        }
+        //添加active样式
+        this.classList.add('active');
+        autRefreshTable('/dependencies?searchValue=' + tabs[i], autFormatData);
+      });
+    }
+
+    //判断是否有active样式
+    $("#btn_delete").click(function () {
+      if (document.getElementById("nav-nodejs").classList.contains('active')) {
+        autRefreshTable('/dependencies?searchValue=nodejs', autFormatData);
+      } else if (document.getElementById("nav-python").classList.contains('active')) {
+        autRefreshTable('/dependencies?searchValue=python', autFormatData);
+      } else if (document.getElementById("nav-linux").classList.contains('active')) {
+        autRefreshTable('/dependencies?searchValue=linux', autFormatData);
+      }
+    })
+
+    //表格列
+    const columns = [{
+      field: 'example',
+      checkbox: true,
+      // 列的宽度
+      width: 5,
+      // 宽度单位
+      widthUnit: 'rem'
+    }, {
+      title: '序号',
+      halign: 'center',
+      formatter: function (value, row, index) {
+        return index + 1
+      }
+    }, {
+      field: 'id',
+      title: 'ID',
+      halign: 'center',
+      visible: false,
+      // 是否作为排序列
+      sortable: true,
+      width: 8,
+      // 宽度单位
+      widthUnit: 'rem'
+    }, {
+      field: 'name',
+      align: 'left',
+      halign: 'center',
+      title: '名称',
+    }, {
+      field: 'type',
+      align: 'left',
+      halign: 'center',
+      title: '分类',
+    }, {
+      field: 'version',
+      title: '版本',
+      halign: 'center',
+      cellStyle: function (value, row, index) {
+        return {
+          css: {
+            "min-width": "200px",
+            "white-space": "nowrap",
+            "text-overflow": "ellipsis",
+            "overflow": "hidden",
+            "max-width": "60px"
+          }
+        }
+      },
+      formatter: function (value, row, index) {
+        var span = document.createElement('span');
+        if (value) {
+          span.setAttribute('title', value);
+          span.innerHTML = value;
+        } else {
+          span.innerHTML = '';
+        }
+        return span.outerHTML;
+      },
+    }, {
+      field: 'curStatus',
+      title: '状态',
+      halign: 'center',
+      align: 'center',
+      formatter: function (value, row, index) {
+        var status = '';
+        switch (row.status) {
+          case 6://正在安装
+            status = `<button class="btn btn-warning btn-sm"><i class="mdi mdi-spin mdi-chemical-weapon"></i> 安装中</button>`
+            break
+          case 1://已安装
+            status = `<button class="btn btn-success btn-sm"><i class="mdi mdi-clock"></i>  已安装</button>`
+            break
+          case 2://安装失败
+            status = `<button class="btn btn-danger btn-sm"><i class="mdi mdi-close-circle-outline"></i> 已失败</button>`
+            break
+          case 3://已卸载
+            status = `<button class="btn btn-default btn-sm"><i class="mdi mdi-clock"></i> 已卸载</button>`
+            break
+          case 4://卸载失败
+            status = `<button class="btn btn-danger btn-sm"><i class="mdi mdi-close-circle-outline"></i> 已失败</button>`
+            break
+          case 5://正在卸载
+            status = `<button class="btn btn-warning btn-sm"><i class="mdi mdi-spin mdi-chemical-weapon"></i> 卸载中</button>`
+            break
+        }
+        return status;
+      }
+    }, {
+      field: 'operate',
+      visible: true,
+      align: 'center',
+      halign: 'center',
+      title: '操作',
+      formatter: btnGroup,
+      events: {
+        'click .log-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autLogRow(row, '/dependencies', $('#logModal'));
+        },
+        'click .del-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autDelRows([row], '/dependencies', autFormatData);
+        },
+        'click .enable-btn': function (event, value, row, index) {
+          event.stopPropagation();
+          autToggleRows([row], 'enable', '/dependencies', autFormatData);
+        },
+      }
+    }];
+
+    //操作列的按钮
+    function btnGroup(value, row, index) {
+      let html = `<a href="#!" title="日志" class="btn btn-sm btn-link rounded me-1 log-btn"><i class="mdi mdi-file-outline"></i></a>` +
+        `<a href="#!" title="卸载依赖" class="btn btn-sm btn-link rounded me-1 delete-btn"><i class="mdi mdi-window-close"></i></a>` +
+        `<a href="#!" title="强制删除" class="btn btn-sm btn-link rounded me-1 remove-btn"><i class="mdi mdi-delete"></i></a>`
+      return html;
+    }
+
+    //表单json数据类型整理
+    function autFormJsonData(formData) {
+      return formData;
+    }
+
+    //数据整理函数
+    function autFormatData(data) {
+      //排序，把正在运行的排到前面
+    }
+
+    //初始化表格
+    autFillTable("nodejs", "/dependencies", autFormatData, columns)
+  </script>
+</body>
+
+</html>

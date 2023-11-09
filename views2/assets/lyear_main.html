@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+	<meta name="keywords" content="autMan,后台模板,后台管理系统">
+	<meta name="description" content="autMan后台管理系统">
+	<title>autMan后台管理系统</title>
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.min.css">
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6 col-xl-3">
+				<div class="card bg-success text-white">
+					<div class="card-body">
+						<div class="d-flex justify-content-between">
+							<span class="avatar-md rounded-circle bg-white bg-opacity-25 avatar-box">
+								<i class="mdi mdi-emoticon-happy fs-4"></i>
+							</span>
+							<span class="text-end" id="version"></span>
+						</div>
+
+						<div class="text-end" id="time"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-xl-3">
+				<div class="card bg-danger text-white">
+					<div class="card-body">
+						<div class="d-flex justify-content-between">
+							<span class="avatar-md rounded-circle bg-white bg-opacity-25 avatar-box">
+								<i class="mdi mdi-clock-fast fs-4"></i>
+							</span>
+							<span class="text-end" id="started_at"></span>
+						</div>
+						<div class="text-end" id="coffee"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-xl-3">
+				<div class="card bg-warning text-white">
+					<div class="card-body">
+						<div class="d-flex justify-content-between">
+							<span class="avatar-md rounded-circle bg-white bg-opacity-25 avatar-box">
+								<i class="mdi mdi-code-tags fs-4"></i>
+							</span>
+							<span class="text-end" id="total"></span>
+						</div>
+						<div class="text-end" id="finished"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-xl-3">
+				<div class="card bg-primary text-white">
+					<div class="card-body">
+						<div class="d-flex justify-content-between">
+							<span class="avatar-md rounded-circle bg-white bg-opacity-25 avatar-box">
+								<i class="mdi mdi-chip fs-4"></i>
+							</span>
+							<span class="text-end" id="cpu"></span>
+						</div>
+						<div class="text-end" id="memory">CPU实时占用</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<div class="card-title">频分消息</div>
+					</div>
+					<div class="card-body">
+						<canvas class="js-chartjs-bars"></canvas>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<div class="card-title">时分消息</div>
+					</div>
+					<div class="card-body">
+						<canvas class="js-chartjs-lines"></canvas>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-header">
+						<h4>autMan进展及下步开发计划</h4>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>项目名称</th>
+										<th>开始日期</th>
+										<th>截止日期</th>
+										<th>状态</th>
+										<th>进度</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td>安卓端APP</td>
+										<td>2023-01-01</td>
+										<td>2023-12-31</td>
+										<td><span class="label label-warning">待定</span></td>
+										<td>
+											<div class="progress progress-striped progress-sm">
+												<div class="progress-bar progress-bar-warning" style="width: 45%;">
+												</div>
+											</div>
+										</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/popper.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/chart.min.js"></script>
+	<!-- 数字动态滚动增加效果 -->
+	<script type="text/javascript" src="js/scroll-numbers.js"></script>
+	<!--引入chart插件js-->
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--自定义的js-->
+	<script type="text/javascript" src="js/lyear-main.js"></script>
+</body>
+
+</html>

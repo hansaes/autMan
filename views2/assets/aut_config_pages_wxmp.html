@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+	<meta name="keywords" content="autMan,后台模板,后台管理系统">
+	<meta name="description" content="后台管理系统的HTML模板。">
+	<title>网站配置 - autMan后台管理系统模板</title>
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<!--tags插件css-->
+	<link rel="stylesheet" type="text/css" href="js/jquery-tagsinput/jquery.tagsinput.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.min.css">
+	<link rel="stylesheet" type="text/css" href="css/animate.min.css">
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<!--card-->
+				<div class="card">
+					<div class="card-body">
+						<ul class="nav nav-tabs">
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_system.html">基本</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_update.html">更新</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_aut.html">AUT云账号</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_admins.html">管理员</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_notify.html">通知</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_qq.html">QQ框架</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_qqbot.html">QQBOT</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_wx.html">WX框架</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_wxbot.html">WXBOT</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_tg.html">TDLIB</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_tb.html">TGBOT</a> </li>
+							<li class="active"> <a class="nav-link active" href="#!">公众号</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_config_pages_dd.html">钉钉</a> </li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active">
+								<div class="row">
+									<!--未认证的公众号-->
+									<div class="col-sm-12 col-lg-6">
+										<h4>订阅号</h4>
+										<form action="#!" method="post" name="edit-form" class="edit-form">
+											<div class="mb-3">
+												<label for="wxmp-app_id">AppID</label>
+												<input class="form-control rounded" type="text"
+													name="wxmp-app_id" id="wxmp-app_id" value="" placeholder="" />
+												<small class="text-warning">非必需</small>
+											</div>
+											<div class="mb-3">
+												<label for="wxmp-app_secret">AppSecret</label>
+												<input class="form-control rounded" type="text"
+													name="wxmp-app_secret" id="wxmp-app_secret" value=""
+													placeholder="" />
+												<small class="text-warning">非必需</small>
+											</div>
+											<div class="mb-3">
+												<label for="wxmp-token">token</label>
+												<input class="form-control rounded" type="text"
+													name="wxmp-token" id="wxmp-token" value="" placeholder="" />
+												<small class="text-warning">非必需</small>
+											</div>
+											<div class="mb-3">
+												<label for="wxmp-encoding_aes_key">encoding_aes_key</label>
+												<input class="form-control rounded" type="text"
+													name="wxmp-encoding_aes_key" id="wxmp-encoding_aes_key" value=""
+													placeholder="" />
+												<small class="text-warning">非必需</small>
+											</div>
+											<div class="mb-3">
+												<label for="wxmp-subscribe_reply">订阅回复</label>
+												<input class="form-control rounded" type="text"
+													name="wxmp-subscribe_reply" id="wxmp-subscribe_reply" value=""
+													placeholder="感谢订阅！" />
+												<small class="text-warning">非必需</small>
+											</div>
+											<div class="mb-3">
+												<label for="wxmp-default_reply">无回复消息时的默认回复</label>
+												<input class="form-control rounded" type="text"
+													name="wxmp-default_reply" id="wxmp-default_reply" value=""
+													placeholder="无法回复该消息" />
+												<small class="text-warning">非必需</small>
+											</div>
+											<div class="mb-3">
+												<button class="btn btn-primary rounded" type="button"
+													onclick="submitParams()">保存</button>
+											</div>
+										</form>
+									</div>
+									<!--已认证的公众号-->
+									<div class="col-sm-12 col-lg-6">
+										<h4>服务号</h4>
+										<form action="#!" method="post" name="edit-form" class="edit-form">
+											<div class="mb-3">
+												<label for="wxsv-app_id">AppID</label>
+												<input class="form-control rounded" type="text"
+													name="wxsv-app_id" id="wxsv-app_id" value="" placeholder="" />
+												<small class="text-warning">非必需</small>
+											</div>
+											<div class="mb-3">
+												<label for="wxsv-app_secret">AppSecret</label>
+												<input class="form-control rounded" type="text"
+													name="wxsv-app_secret" id="wxsv-app_secret" value=""
+													placeholder="" />
+												<small class="text-warning">非必需</small>
+											</div>
+											<div class="mb-3">
+												<label for="wxsv-token">token</label>
+												<input class="form-control rounded" type="text"
+													name="wxsv-token" id="wxsv-token" value="" placeholder="" />
+												<small class="text-warning">非必需</small>
+											</div>
+											<div class="mb-3">
+												<label for="wxsv-encoding_aes_key">encoding_aes_key</label>
+												<input class="form-control rounded" type="text"
+													name="wxsv-encoding_aes_key" id="wxsv-encoding_aes_key" value=""
+													placeholder="" />
+												<small class="text-warning">非必需</small>
+											</div>
+											<div class="mb-3">
+												<label for="wxsv-subscribe_reply">订阅回复</label>
+												<input class="form-control rounded" type="text"
+													name="wxsv-subscribe_reply" id="wxsv-subscribe_reply" value=""
+													placeholder="感谢订阅！" />
+												<small class="text-warning">非必需</small>
+											</div>
+											<div class="mb-3">
+												<label for="wxsv-default_reply">无回复消息时的默认回复</label>
+												<input class="form-control rounded" type="text"
+													name="wxsv-default_reply" id="wxsv-default_reply" value=""
+													placeholder="无法回复该消息" />
+												<small class="text-warning">非必需</small>
+											</div>
+											<div class="mb-3">
+												<button class="btn btn-primary rounded" type="button"
+													onclick="submitParams()">保存</button>
+											</div>
+										</form>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--end card-->
+			</div>
+
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/popper.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<!--tags插件-->
+	<script type="text/javascript" src="js/jquery-tagsinput/jquery.tagsinput.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--加载-->
+	<script type="text/javascript" src="js/lyear-loading.js"></script>
+	<!--通知-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/fill_input.js"></script>
+</body>
+
+</html>

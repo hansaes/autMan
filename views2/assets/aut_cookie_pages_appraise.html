@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<title>系统参数 - autMan后台管理系统</title>
+	<link rel="icon" href="favicon.ico" type="image/ico">
+	<meta name="keywords" content="autMan,后台管理系统">
+	<meta name="description" content="autMan后台管理系统">
+	<meta name="author" content="autMan">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container-fluid p-t-15">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<!--card-->
+				<div class="card">
+					<ul class="nav nav-tabs page-tabs">
+						<li> <a href="aut_cookie_pages_login.html">登陆管理</a> </li>
+						<li> <a href="aut_cookie_pages_assets.html">资产查询</a> </li>
+						<li> <a href="aut_cookie_pages_push.html">资产推送</a> </li>
+						<li> <a href="aut_cookie_pages_notify.html">任务通知</a> </li>
+						<li> <a href="aut_cookie_pages_update.html">东芝更新</a> </li>
+						<li class="active"> <a href="#!">自动评价</a> </li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active">
+
+							<form method="post" name="edit-form" class="edit-form">
+								<div class="form-group">
+									<label for="jd_cookie-enable_auto_appraise">评价开关</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="jd_cookie-enable_auto_appraise"
+											id="jd_cookie-enable_auto_appraise">
+										<span></span>
+									</label>
+								</div>
+
+								<div class="form-group">
+									<label for="jd_cookie-enable_adition_appraise">追评开关</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="jd_cookie-enable_adition_appraise"
+											id="jd_cookie-enable_adition_appraise">
+										<span></span>
+									</label>
+								</div>
+
+								<div class="form-group">
+									<label for="jd_cookie-appraise_syncto_show">种草秀</label>
+									<label class="lyear-switch switch-solid switch-primary">
+										<input type="checkbox" checked="" name="jd_cookie-appraise_syncto_show"
+											id="jd_cookie-appraise_syncto_show">
+										<span></span>
+									</label>
+								</div>
+
+								<div class="form-group">
+									<label for="jd_cookie-appraise_vess">指定容器</label>
+									<input type="text" class="form-control" name="jd_cookie-appraise_vess"
+										id="jd_cookie-appraise_vess" value="" />
+									<small class="help-block"></small>
+								</div>
+
+								<div class="form-group">
+									<label for="jd_cookie-appraise_limit">限定账号数</label>
+									<input type="text" class="form-control" name="jd_cookie-appraise_limit"
+										id="jd_cookie-appraise_limit" value="" />
+									<small class="help-block"></small>
+								</div>
+
+								<div class="form-group">
+									<label for="jd_cookie-appraise_limit">自动评价定时</label>
+									<input type="text" class="form-control" name="jd_cookie-appraise_cron"
+										id="jd_cookie-appraise_cron" value="" />
+									<small class="help-block">留空表示不定时</small>
+								</div>
+
+								<div class="form-group">
+									<label for="jd_cookie-appraise_limit_comment">限定评价单数</label>
+									<input type="text" class="form-control" name="jd_cookie-appraise_limit_comment"
+										id="jd_cookie-appraise_limit_comment" value="" />
+									<small class="help-block">留空表示不定时</small>
+								</div>
+
+								<div class="form-group">
+									<label for="jd_cookie-appraise_limit_adition_comment">限定追评单数</label>
+									<input type="text" class="form-control"
+										name="jd_cookie-appraise_limit_adition_comment"
+										id="jd_cookie-appraise_limit_adition_comment" value="" />
+									<small class="help-block">留空表示不定时</small>
+								</div>
+
+								<div class="form-group">
+									<button class="btn btn-primary" type="button" onclick="submitParams()">保存</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!--end card-->
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--消息提示-->
+	<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+	<script type="text/javascript" src="js/lightyear.js"></script>
+	<script type="text/javascript" src="js/main.min.js"></script>
+	<!--自定义-->
+	<script type="text/javascript" src="js/fill_input.js"></script>
+</body>
+
+</html>

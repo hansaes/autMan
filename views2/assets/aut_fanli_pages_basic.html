@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+	<meta name="keywords" content="autMan,后台模板,后台管理系统">
+	<meta name="description" content="后台管理系统的HTML模板。">
+	<title>autMan后台管理系统模板</title>
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<!--tags插件css-->
+	<link rel="stylesheet" type="text/css" href="js/jquery-tagsinput/jquery.tagsinput.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.min.css">
+	<link rel="stylesheet" type="text/css" href="css/animate.min.css">
+	<!--slider-->
+	<link rel="stylesheet" type="text/css" href="js/ion-rangeslider/ion.rangeSlider.min.css">
+</head>
+
+<body>
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<!--card-->
+				<div class="card">
+					<div class="card-body">
+						<ul class="nav nav-tabs">
+							<li class="nav-item active"> <a class="nav-link active" href="#!">返利参数</a> </li>
+							<li class="nav-item"> <a class="nav-link" href="aut_fanli_mode.html">显示模式</a> </li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active">
+								<div class="mb-3">
+									<input class="btn btn-primary rounded" type="button" onclick="checkFanliParams()"
+										value="返利参数错误排查">
+								</div>
+								<div class="mb-3">
+									<label>反佣金比例</label>
+									<input id="range">
+									<small class="text-warning">0为不返用户佣金，1为购买商品产生的佣金全部返还用户，即时生效</small>
+								</div>
+
+
+								<form method="post" name="edit-form" class="edit-form">
+
+
+									<!-- 创建一个普通的水平分割线 -->
+									<hr class="mt-5 mb-5">
+
+									<div class="mb-3">
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value=""
+												id="fanli-orders_realtime_update">
+											<label class="form-check-label" for="fanli-orders_realtime_update">
+												实时更新订单
+											</label>
+										</div>
+										<small class="text-warning">不建议开启，容易导致京品库的应用被封禁</small>
+									</div>
+									<div class="mb-3">
+										<label for="fanli-jd_union_id">京东联盟ID</label>
+										<input class="form-control rounded" type="text"
+											id="fanli-jd_union_id" name="fanli-jd_union_id" value="" placeholder="">
+										<small class="text-warning"></small>
+									</div>
+									<div class="mb-3">
+										<label for="fanli-jd_union_appkey">京东联盟AppKey</label>
+										<input type="text" class="form-control rounded"
+											name="fanli-jd_union_appkey" id="fanli-jd_union_appkey" value="" />
+										<small class="text-warning"></small>
+									</div>
+									<div class="mb-3">
+										<label for="fanli-jd_union_secretkey">京东联盟SecretKey</label>
+										<input class="form-control rounded" type="text"
+											id="fanli-jd_union_secretkey" name="fanli-jd_union_secretkey" value=""
+											placeholder="">
+										<small class="text-warning"></small>
+									</div>
+									<div class="mb-3">
+										<label for="fanli-jingpinku_appid">京品库AppID</label>
+										<input type="text" class="form-control rounded"
+											id="fanli-jingpinku_appid" name="fanli-jingpinku_appid" placeholder="">
+										<small class="text-warning"></small>
+									</div>
+									<div class="mb-3">
+										<label for="fanli-jingpinku_appkey">京品库AppKey</label>
+										<input type="text" class="form-control rounded"
+											id="fanli-jingpinku_appkey" name="fanli-jingpinku_appkey" placeholder="">
+										<small class="text-warning"></small>
+									</div>
+
+									<!-- 创建一个普通的水平分割线 -->
+									<hr class="mt-5 mb-5">
+
+									<div class="mb-3">
+										<label for="fanli-zhe_sid">折淘客sid</label>
+										<input class="form-control rounded" type="text"
+											id="fanli-zhe_sid" name="fanli-zhe_sid" value="" placeholder="">
+										<small class="text-warning"></small>
+									</div>
+									<div class="mb-3">
+										<label for="fanli-zhe_appkey">折淘客appkey</label>
+										<input type="text" class="form-control rounded"
+											name="fanli-zhe_appkey" id="fanli-zhe_appkey" value="" />
+										<small class="text-warning"></small>
+									</div>
+									<div class="mb-3">
+										<label for="fanli-tb_union_pid">淘宝联盟pid</label>
+										<input class="form-control rounded" type="text"
+											id="fanli-tb_union_pid" name="fanli-tb_union_pid" value="" placeholder="">
+										<small class="text-warning"></small>
+									</div>
+
+									<!-- 创建一个普通的水平分割线 -->
+									<hr class="mt-5 mb-5">
+
+									<div class="mb-3">
+										<label for="fanli-client_id">多多联盟ClientID</label>
+										<input class="form-control rounded" type="text"
+											id="fanli-client_id" name="fanli-client_id" value="" placeholder="">
+										<small class="text-warning"></small>
+									</div>
+									<div class="mb-3">
+										<label for="fanli-client_secret">多多联盟ClientSecret</label>
+										<input type="text" class="form-control rounded"
+											name="fanli-client_secret" id="fanli-client_secret" value="" />
+										<small class="text-warning"></small>
+									</div>
+									<div class="mb-3">
+										<label for="fanli-pid">多多联盟pid</label>
+										<input class="form-control rounded" type="text" id="fanli-pid"
+											name="fanli-pid" value="" placeholder="">
+										<small class="text-warning"></small>
+									</div>
+
+									<!-- 创建一个普通的水平分割线 -->
+									<hr class="mt-5 mb-5">
+
+									<div class="mb-3">
+										<label for="fanli-watching_remind">价格监控开关</label>
+										<label class="lyear-switch switch-solid switch-primary">
+											<input type="checkbox" checked="" name="fanli-watching_remind"
+												id="fanli-watching_remind">
+											<span></span>
+										</label>
+										<small class="text-warning">对加入autMan购物车的商品进行价格监控及提示</small>
+									</div>
+
+									<div class="mb-3">
+										<label for="fanli-transfer_remind">自主转发开关</label>
+										<label class="lyear-switch switch-solid switch-primary">
+											<input type="checkbox" checked="" name="fanli-transfer_remind"
+												id="fanli-transfer_remind">
+											<span></span>
+										</label>
+										<small class="text-warning">对你发给机器人的商品转链后，提示是否转发至默认目标群</small>
+									</div>
+
+									<div class="mb-3">
+										<label for="fanli-transfer_default">默认转发开关</label>
+										<label class="lyear-switch switch-solid switch-primary">
+											<input type="checkbox" checked="" name="fanli-transfer_default"
+												id="fanli-transfer_default">
+											<span></span>
+										</label>
+										<small class="text-warning">对管理员发的商品转链后自主转发至目标群</small>
+									</div>
+
+									<div class="mb-3">
+										<label for="fanli-transferTo">转发目标群（京东）</label>
+										<input class="form-control" type="text" name="fanli-transferTo"
+											id="fanli-transferTo" value="" placeholder="" />
+										<small class="text-warning">格式：qqgroup:123,wxgroup:456,tggroup:789</small>
+									</div>
+
+									<div class="mb-3">
+										<label for="fanli-transferTbTo">转发目标群（淘宝）</label>
+										<input class="form-control" type="text" name="fanli-transferTbTo"
+											id="fanli-transferTbTo" value="" placeholder="" />
+										<small class="text-warning">格式：qqgroup:123,wxgroup:456,tggroup:789</small>
+									</div>
+
+									<div class="mb-3">
+										<label for="fanli-transferPddTo">转发目标群（拼多多）</label>
+										<input class="form-control" type="text" name="fanli-transferPddTo"
+											id="fanli-transferPddTo" value="" placeholder="" />
+										<small class="text-warning">格式：qqgroup:123,wxgroup:456,tggroup:789</small>
+									</div>
+
+									<div class="mb-3">
+										<button class="btn btn-primary rounded" type="button"
+											onclick="submitParams()">保存</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--end card-->
+			</div>
+
+		</div>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/popper.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<!--tags插件-->
+		<script type="text/javascript" src="js/jquery-tagsinput/jquery.tagsinput.min.js"></script>
+		<script type="text/javascript" src="js/main.min.js"></script>
+		<!--加载-->
+		<script type="text/javascript" src="js/lyear-loading.js"></script>
+		<!--通知-->
+		<script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+		<!--slider-->
+		<script type="text/javascript" src="js/ion-rangeslider/ion.rangeSlider.min.js"></script>
+		<!--自定义-->
+		<script type="text/javascript" src="js/fill_input.js"></script>
+		<!--自定义-->
+		<!-- <script type="text/javascript" src="js/fill_input.js"></script> -->
+		<script>
+			$(function () {
+				// 初始化 ion-rangeslider 插件
+				var range = $("#range"),
+					instance;
+
+				$.get("/system/fanli-ratio", function (response) {
+					//alert("返回值是："+response)
+					var min = 0,
+						max = 1,
+						step = 0.01,
+						round = 2;
+					from = parseFloat(response.data).toFixed(round);
+
+					range.ionRangeSlider({
+						type: "single",
+						min: min,
+						max: max,
+						step: step,
+						from: from,
+						grid: true
+					});
+
+					instance = range.data("ionRangeSlider");
+				})
+
+				// 监听 ion-rangeslider 插件的 change 事件
+				range.on("change", function () {
+					var val = parseFloat($(this).val()).toFixed(2);
+					//alert("提交数据：" + val)
+
+					// 向后台发送 Ajax 请求
+					$.ajax({
+						url: "/system/params", // 后台地址
+						method: "POST", // 提交方式
+						data: { // 提交数据
+							"fanli-ratio": val
+						},
+						success: function (response) { // 成功响应后的操作
+							console.log("Data submitted successfully: " + response);
+						},
+						error: function (error) { // 响应错误后的操作
+							console.error("Error submitting data: " + error);
+						}
+					});
+				});
+			});
+
+			function checkFanliParams() {
+				$.ajax({
+					url: "/fanli/check_params",
+					type: "PUT",
+					contentType: "application/json",
+					success: function (result) {
+						showNotify(result.data.replace(/\n/g, "<br>"), "success", 20000, "glyphicon glyphicon-ok-sign", "top", "center");
+						console.log(result);
+					},
+					error: function (xhr, status, error) {
+						console.log("AJAX PUT请求出错，错误信息：", error);
+					}
+				});
+			}
+		</script>
+</body>
+
+</html>
