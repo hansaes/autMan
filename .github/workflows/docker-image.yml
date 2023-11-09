@@ -25,6 +25,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Query version number
+        id: get_version
+        shell: bash
+        run: |
+          echo "using version tag ${GITHUB_REF:10}"
+          echo ::set-output name=version::"${GITHUB_REF:10}"
+
       - 
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -61,5 +69,5 @@ jobs:
             linux/arm64
           tags: |
             ${{ env.DOCKERHUB_REPO }}:latest
-            ${{ env.DOCKERHUB_REPO }}:${{ github.ref }}
+            ${{ env.DOCKERHUB_REPO }}:${{ steps.get_version.outputs.VERSION }}
 
