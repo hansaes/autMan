@@ -48,5 +48,5 @@ jobs:
             linux/arm64
           tags: |
             ${{ env.DOCKERHUB_REPO }}:latest
-            ${{ env.DOCKERHUB_REPO }}:${{ github.event.release.tag_name }}
+            ${{ env.DOCKERHUB_REPO }}:${{ github.event.release.tag }}
 
