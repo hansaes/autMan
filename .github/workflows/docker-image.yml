@@ -46,8 +46,8 @@ jobs:
         name: Get version
         id: get_version
         run: | 
-        echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-        echo ${{ steps.get_version.outputs.VERSION }}
+          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+          echo ${{ steps.get_version.outputs.VERSION }}
 
       -
         name: Build and push
