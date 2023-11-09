@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKERHUB_REPO: hansa/autMan
+  DOCKERHUB_REPO: hansaes/autman
 
 jobs:
   build:
