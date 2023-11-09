@@ -46,6 +46,16 @@ jobs:
         name: Get version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+      - 
+        name: Save state
+        run: echo "{name}={value}" >> $GITHUB_STATE && echo ${{ GITHUB_STATE }}
+        
+
+      - 
+        name: Set output
+        run: echo "{name}={value}" >> $GITHUB_OUTPUT && echo ${{ GITHUB_OUTPUT }}
+      
       -
         name: Build and push
         uses: docker/build-push-action@v3
