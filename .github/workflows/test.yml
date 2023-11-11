@@ -4,8 +4,7 @@ on:
   workflow_dispatch: 
 
 env:
-  DOCKERHUB_REPO: hansaes/autman
-
+  DOCKERHUB_REPO: hdbjlizhe/autman
 jobs:
   build:
     runs-on: ubuntu-latest
