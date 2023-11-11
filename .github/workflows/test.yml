@@ -21,7 +21,6 @@ jobs:
         run: |
           curl -L -o autMan_amd64.tar.gz "$browser_download_url"
           tar -zxvf autMan_amd64.tar.gz
-	  
       - name: edit dockerfile
         run: |
           curl -O https://raw.githubusercontent.com/hansaes/autMan/master/Dockerfile && curl -O https://github.com/hansaes/autMan/raw/master/docker-entrypoint.sh
@@ -30,7 +29,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
@@ -40,4 +38,4 @@ jobs:
             linux/arm64
           tags: |
             ${{ env.DOCKERHUB_REPO }}:latest
-            ${{ env.DOCKERHUB_REPO }}:${{ steps.get_version.outputs.VERSION }}
+            ${{ env.DOCKERHUB_REPO }}:${{TAG_NAME}}
