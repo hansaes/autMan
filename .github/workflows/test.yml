@@ -13,14 +13,7 @@ jobs:
           echo "API Response: $API_RESPONSE"
           TAG_NAME=$(echo "$API_RESPONSE" | grep -oP '"tag_name": "\K.*?(?=")')
           echo "Tag Name: $TAG_NAME"
-
-      - name: Show Variable Value
-        run: |
-          VARIABLE_VALUE="${{ steps.get-variable.outputs.variable_value }}"
-          echo "Setting environment variable MY_VARIABLE to: $VARIABLE_VALUE"
-          echo "MY_VARIABLE=$VARIABLE_VALUE" >> $GITHUB_ENV
-
+          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
       - name: Use Variable in Another Step
         run: |
-          # 访问 TAG_NAME 环境变量
           echo "Accessing TAG_NAME: $TAG_NAME"
