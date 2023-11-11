@@ -2,35 +2,38 @@ name: Docker Image CI
 
 on:
   workflow_dispatch: 
+
 env:
   DOCKERHUB_REPO: hansaes/autman
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Get GitHub Release Tag
+        id: get_tag
         run: |
           API_RESPONSE=$(curl -s "https://api.github.com/repos/hdbjlizhe/fanli/releases/latest")
-          # echo "API Response: $API_RESPONSE"
           browser_download_url=$(echo "$API_RESPONSE" | jq -r '.assets[] | select(.name == "autMan_amd64.tar.gz").browser_download_url')
-          # echo "Download URL: $browser_download_url"
-          TAG_NAME=$(echo "$API_RESPONSE" | grep -oP '"tag_name": "\K.*?(?=")')
-          # echo "Tag Name: $TAG_NAME"
+          TAG_NAME=$(echo "$API_RESPONSE" | jq -r '.tag_name')
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
           echo "browser_download_url=$browser_download_url" >> $GITHUB_ENV
+
       - name: download tar 
         run: |
           curl -L -o autMan_amd64.tar.gz "$browser_download_url"
           tar -zxvf autMan_amd64.tar.gz
+
       - name: edit dockerfile
         run: |
           curl -O https://raw.githubusercontent.com/hansaes/autMan/master/Dockerfile && curl -O https://github.com/hansaes/autMan/raw/master/docker-entrypoint.sh
+
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
@@ -41,4 +44,4 @@ jobs:
             linux/arm64
           tags: |
             ${{ env.DOCKERHUB_REPO }}:latest
-            ${{ env.DOCKERHUB_REPO }}:${{ TAG_NAME }}
+            ${{ env.DOCKERHUB_REPO }}:${{ steps.get_tag.outputs.TAG_NAME }}
