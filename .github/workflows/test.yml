@@ -2,7 +2,9 @@ name: Docker Image CI
 
 on:
   workflow_dispatch: 
-
+env:
+  DOCKERHUB_REPO: hansaes/autman
+  
 jobs:
   build:
     runs-on: ubuntu-latest
