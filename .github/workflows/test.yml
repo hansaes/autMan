@@ -10,5 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: show version
-      run: curl -s "https://ghproxy.homeboyc.cn/https://api.github.com/repos/hdbjlizhe/fanli/releases/latest"
+      - name: Get Variable with curl
+        id: get-variable
+        run: |
+          # 使用curl获取变量的值
+          VARIABLE_VALUE=$(curl -s "https://ghproxy.homeboyc.cn/https://api.github.com/repos/hdbjlizhe/fanli/releases/latest" | grep -oP '"tag_name": "\K.*?(?=")')
+          echo "Fetched variable value: $VARIABLE_VALUE"
+          echo "::set-output name=variable_value::$VARIABLE_VALUE"
+
+      - name: Show Variable Value
+        run: |
+          # 使用输出的值设置环境变量
+          VARIABLE_VALUE="${{ steps.get-variable.outputs.variable_value }}"
+          echo "Setting environment variable MY_VARIABLE to: $VARIABLE_VALUE"
+          echo "MY_VARIABLE=$VARIABLE_VALUE" >> $GITHUB_ENV
+
+      - name: Use Variable in Another Step
+        run: |
+          # 在这个步骤中访问 MY_VARIABLE 环境变量
+          echo "Accessing MY_VARIABLE: $MY_VARIABLE"
