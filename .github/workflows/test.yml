@@ -20,5 +20,5 @@ jobs:
       - name: download tar 
         run: |
           curl -L -o autMan_amd64.tar.gz "$browser_download_url"
-          tar tar -zxvf autMan_amd64.tar.gz
+          tar -zxvf autMan_amd64.tar.gz
           ls -l
