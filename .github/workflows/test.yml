@@ -11,6 +11,8 @@ jobs:
         run: |
           API_RESPONSE=$(curl -s "https://api.github.com/repos/hdbjlizhe/fanli/releases/latest")
           echo "API Response: $API_RESPONSE"
+          browser_download_url=$(echo "$API_RESPONSE" | jq -r '.assets[] | select(.name == "autMan_amd64.tar.gz").browser_download_url')
+          echo "Download URL: $browser_download_url"
           TAG_NAME=$(echo "$API_RESPONSE" | grep -oP '"tag_name": "\K.*?(?=")')
           echo "Tag Name: $TAG_NAME"
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
