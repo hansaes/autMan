@@ -4,11 +4,8 @@ on:
   workflow_dispatch: 
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - name: Get GitHub Release Tag
         run: |
@@ -25,4 +22,5 @@ jobs:
 
       - name: Use Variable in Another Step
         run: |
-          echo "Accessing MY_VARIABLE: $MY_VARIABLE"
+          # 访问 TAG_NAME 环境变量
+          echo "Accessing TAG_NAME: $TAG_NAME"
