@@ -1,0 +1,14 @@
+name: Docker Image CI
+
+on:
+  workflow_dispatch: 
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: show version
+      run: curl -s "https://ghproxy.homeboyc.cn/https://api.github.com/repos/hdbjlizhe/fanli/releases/latest"
