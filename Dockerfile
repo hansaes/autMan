@@ -21,7 +21,7 @@ RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 	&& apk add icu-data-full
 
 RUN pip3 install requests user_agent PyExecJS aiohttp -i https://pypi.tuna.tsinghua.edu.cn/simple \
-	&&  npm install axios request require crypto-js hook 
+	&&  npm install axios request require crypto-js hook -g
 
 ADD . /app/autMan/
 COPY ./docker-entrypoint.sh /bin/
