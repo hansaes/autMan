@@ -17,7 +17,16 @@ jobs:
           TAG_NAME=$(echo "$API_RESPONSE" | jq -r '.tag_name')
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
           echo "browser_download_url=$browser_download_url" >> $GITHUB_ENV
-
+      - name: Check Docker Hub Tag
+        id: check_docker_hub_tag
+        run: |
+          DOCKERHUB_TAGS=$(curl -s "https://hub.docker.com/v2/repositories/${{ env.DOCKERHUB_REPO }}/tags/")
+          SECOND_TAG_NAME=$(echo "$DOCKERHUB_TAGS" | jq -r '.results[1].name')
+          if [ "$SECOND_TAG_NAME" = "${{ env.TAG_NAME }}" ]; then
+            echo "The second tag on Docker Hub matches TAG_NAME. Exiting..."
+            exit 78
+          fi
+          
       - name: download tar 
         run: |
           curl -L -o autMan_amd64.tar.gz "$browser_download_url"
