@@ -2,7 +2,9 @@ name: Docker Image CI
 
 on:
   workflow_dispatch: 
-
+  schedule:
+    - cron: '0 0 * * *'
+    
 env:
   DOCKERHUB_REPO: hdbjlizhe/autman
 jobs:
@@ -17,6 +19,7 @@ jobs:
           TAG_NAME=$(echo "$API_RESPONSE" | jq -r '.tag_name')
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
           echo "browser_download_url=$browser_download_url" >> $GITHUB_ENV
+          
       - name: Check Docker Hub Tag
         id: check_docker_hub_tag
         run: |
